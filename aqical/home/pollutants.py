@@ -1,4 +1,5 @@
 from typing import Dict
+from systems import *
 aqiindex = Dict[str, int]
 class pollutants:
     '''All values in ppm'''
