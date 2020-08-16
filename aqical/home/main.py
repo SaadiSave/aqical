@@ -3,7 +3,7 @@ import pollutants as p
 
 def inp():
     pdict: p.pin = {
-        'pm' : (0, 'u'),
+        'pm2' : (0, 'u'),
         'pm10' : (0, 'u'),
         'no2' : (0, 'u'),
         'co' : (0, 'u'),

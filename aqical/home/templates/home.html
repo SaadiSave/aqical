@@ -3,9 +3,30 @@
     <head>
         <link rel = "stylesheet" type = "text/css" href = "static/1.css" />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-        <title>homepage</title>
+        <title>AQI calculator Universal</title>
     </head>
     <body>
-        hello there!
+        <h1>AQI calculator Universal</h1>
+        <form>
+            <label for="pollutants">Pollutant: </label>
+            <select name="pollutants" id="pollutants">
+                <option value="pm2">PM2</option>
+                <option value="pm10">PM10</option>
+                <option value="co">CO</option>
+                <option value="no2">NO2</option>
+                <option value="o3">O3</option>
+            </select><br>
+            <label for="value">Concentration: </label>
+            <input type="text" id="value" name="value" style="width: 50px">
+            <select name="unit" id="unit">
+                <option value="ug">µg/m3</option>
+                <option value="ppm">ppm</option>
+                <option value="ppb">ppb</option>
+            </select>
+            {% if s %}
+                AQI: {{ s[0] }}
+                AQI Category: <p style="backgroud-color: {{ s[2] }}">{{ s[1] }}</p>
+            {% endif %}
+        </form>
     </body>
 </html>
