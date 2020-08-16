@@ -1,6 +1,6 @@
-from typing import Dict, NewType
+from typing import Dict
 from aqical.home.aqisys import *
-pin = Dict[float, str]
+pin = Dict[str, tuple]
 class inp:
-    def __init__(self, polldict: pin) -> None:
-        pass
+    def __init__(self, pdict: pin) -> None:
+        self.__poll = polldict

@@ -1,9 +1,13 @@
-from pollutants import pollutants
+from aqical.home.pollutants import inp
 from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
 from functools import wraps
-
+# This is a message
+# I shall need the pollutant as str, value as float, and unit as str
+# Pollutant accepted values: pm2, pm10, co, no2, o3
+# units acc values: µg, ppm, ppb
+# which will all be eventually converted to ppb
 # Configure application
 app = Flask(__name__)
 
