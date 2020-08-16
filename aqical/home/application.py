@@ -1,4 +1,4 @@
-from aqical.home.pollutants import inp
+from pollutants import inp
 from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp

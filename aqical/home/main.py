@@ -1,5 +1,5 @@
 # A file to test the prog
-import aqical.home.pollutants as p
+import pollutants as p
 
 def inp():
     pdict: p.pin = {
