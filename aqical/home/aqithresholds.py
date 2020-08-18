@@ -8,7 +8,7 @@ EAQI = pd.DataFrame({
     4 : [240, 400, 500, 100, 50],
     5 : [600, 1000, 1250, 1200, 800]
 })
-
+#Tbe
 USAQI = pd.DataFrame({
     'Pollutants' : ['O3', 'NO2', 'SO2', 'PM10', 'PM2.5'],
     1 : [80, 40, 100, 20, 10],
