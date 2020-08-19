@@ -1,5 +1,5 @@
 import pandas as pd
-
+#Tbe
 EAQI = pd.DataFrame({
     'Pollutants' : ['O3', 'NO2', 'SO2', 'PM10', 'PM2.5'],
     1 : [80, 40, 100, 20, 10],
