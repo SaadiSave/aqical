@@ -1,4 +1,7 @@
 import pandas as pd
+class aqi:
+    def __init__(self, syst: str):
+        try: assert((syst == 'eur') or (syst == 'ind') or (syst == 'usa'))
 EAQI = pd.DataFrame({
     'Pollutants' : ['PM2', 'PM10', 'NO2', 'SO2', 'O3'],
     1 : [10, 20, 40, 100, 50],
