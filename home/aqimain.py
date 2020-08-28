@@ -27,7 +27,7 @@ class eaqi(inp):
             'o3' : [50, 100, 130, 240, 380, 800],
         })
     def setres(self):
-        pass
+        for i in self.__vals: pass
 #Tbe
 USAQI = pd.DataFrame({
     'Pollutants' : ['O3', 'NO2', 'SO2', 'PM10', 'PM2.5'],
