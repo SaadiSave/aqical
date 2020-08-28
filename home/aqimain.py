@@ -1,5 +1,6 @@
 import pandas as pd
 from typing import Dict
+# Class input format
 # pdict = {
 #     'pm2' : 0.0,
 #     'pm10' : 0.0,
@@ -28,12 +29,3 @@ class eaqi(inp):
         })
     def setres(self):
         for i in self.__vals: pass
-#Tbe
-USAQI = pd.DataFrame({
-    'Pollutants' : ['O3', 'NO2', 'SO2', 'PM10', 'PM2.5'],
-    1 : [80, 40, 100, 20, 10],
-    2 : [120, 100, 200, 35, 20],
-    3 : [180, 200, 350, 50, 25],
-    4 : [240, 400, 500, 100, 50],
-    5 : [600, 1000, 1250, 1200, 800]
-})
