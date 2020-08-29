@@ -43,7 +43,7 @@ class eaqi(aqi):
             'so2' : [100, 200, 350, 500, 750, 1250]
         })
     def setres(self):
-        for i in self.__vals: pass
+        pass
 
 class naqi(aqi):
     def __init__(self, co: float) -> None:
