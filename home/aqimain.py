@@ -19,8 +19,10 @@ from typing import Dict
 class aqi:
     def __init__(self, syst: str, pm2: float, pm10: float, no2: float, o3: float, so2: float) -> None:
         try: assert((syst == 'eur') or (syst == 'ind'))
-        except AssertionError: raise ValueError
-        self.__system = syst
+        except AssertionError:
+            print("Only ind and eur are accepted values")
+            raise ValueError
+        self.system = syst
         self.__vals: Dict[str, float] = {
             'pm2' : pm2,
             'pm10' : pm10,
