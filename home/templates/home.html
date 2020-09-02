@@ -9,7 +9,6 @@
     <body>
         <h1>AQI calculator Universal</h1>
         <form action="/" method="post">
-            <label for="Countries">Country: </label>
             <select name="country" id="countries">
                 <option value="GBR">European Union</option>
                 <option value="IND">India</option>
@@ -22,14 +21,13 @@
                 <option value="no2">NO₂</option>
                 <option value="o3">O₃</option>
                 <option value="so2">SO₂</option>
-            </select><br>
-            <label for="value">Concentration: </label>
+            </select>
             <input type="text" id="value" name="value" style="width: 50px">
-            <select name="unit" id="unit">
+            <select>
                 <option value="ug">µg/m3</option>
                 <option value="ppm">ppm</option>
                 <option value="ppb">ppb</option>
-            </select>
+            </select><br?
             <input type="submit">
         </form>
         {% if s %}
