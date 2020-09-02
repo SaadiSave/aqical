@@ -13,6 +13,7 @@
 
 #     You should have received a copy of the GNU Affero General Public License
 #     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+from os import system
 import pandas as pd
 from typing import Dict
 
@@ -31,6 +32,7 @@ class aqi:
             'so2' : so2
         }
         self.__res: str
+        self.cat: int # 1, 2, 3, 4, 5, 6
     def getres(self) -> str:
         return self.__res
 
