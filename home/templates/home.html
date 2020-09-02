@@ -8,7 +8,7 @@
     </head>
     <body>
         <h1>AQI calculator Universal</h1>
-        <form>
+        <form action="/" method="post">
             <label for="Countries">Country: </label>
             <select name="country" id="countries">
                 <option value="GBR">UK</option>
@@ -30,11 +30,12 @@
                 <option value="ppm">ppm</option>
                 <option value="ppb">ppb</option>
             </select>
-            {% if s %}
-                {{ s }}
-                <!--AQI: {{ s[0] }}-->
-                <!--AQI Category: <p>{{ s[1] }}</p>-->
-            {% endif %}
+            <input type="submit">
         </form>
+        {% if s %}
+            {{ s }}
+            <!--AQI: {{ s[0] }}-->
+            <!--AQI Category: <p>{{ s[1] }}</p>-->
+        {% endif %}
     </body>
 </html>
