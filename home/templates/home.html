@@ -11,7 +11,6 @@
         <form>
             <label for="Countries">Country: </label>
             <select name="country" id="countries">
-                <option value="USA">US</option>
                 <option value="GBR">UK</option>
                 <option value="IND">INDIA</option>
             </select><br>
@@ -32,8 +31,9 @@
                 <option value="ppb">ppb</option>
             </select>
             {% if s %}
-                AQI: {{ s[0] }}
-                AQI Category: <p style="backgroud-color: {{ s[2] }}">{{ s[1] }}</p>
+                {{ s }}
+                <!--AQI: {{ s[0] }}-->
+                <!--AQI Category: <p>{{ s[1] }}</p>-->
             {% endif %}
         </form>
     </body>
