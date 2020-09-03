@@ -13,7 +13,6 @@
 
 #     You should have received a copy of the GNU Affero General Public License
 #     along with this program.  If not, see <https://www.gnu.org/licenses/>.
-from os import system
 import pandas as pd
 from typing import Dict
 
@@ -21,7 +20,7 @@ class aqi:
     def __init__(self, syst: str, pm2: float, pm10: float, no2: float, o3: float, so2: float) -> None:
         try: assert((syst == 'eur') or (syst == 'ind'))
         except AssertionError:
-            print("Only ind and eur are accepted values")
+            print("Only ind and eur are accepted values for system")
             raise ValueError
         self.system = syst
         self.__vals: Dict[str, float] = {
