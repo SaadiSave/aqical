@@ -45,5 +45,7 @@ def home():
         return render_template("home.html")
     else:
         s = []
-        s += [request.form.get("country"), request.form.get("value"), request.form.get("unit")]
+        for f in ["PM2.5", "PM10", "CO", "NO2", "O3", "SO2"]:
+            s += [[f, request.form.get(f"value{ f }"), request.form.get(f"unit{ f }")]]
+        s += [request.form.get("country")]
         return render_template("home.html", s = s)
