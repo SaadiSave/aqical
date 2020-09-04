@@ -14,6 +14,7 @@
 #     You should have received a copy of the GNU Affero General Public License
 #     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from typing import Dict
 import aqimain as AQI
 from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
@@ -44,7 +45,15 @@ def home():
     if request.method == "GET":
         return render_template("home.html")
     else:
-        s = []
+        s: Dict[str, float]
+        casedict: Dict[str, str] = {
+            'PM2.5' : 'pm2',
+            'PM10' : 'pm10',
+            'CO' : 'co',
+            'NO2' : 'no2',
+            'O3' : 'o3',
+            'SO2' : 'so2'
+        }
         for f in ["PM2.5", "PM10", "CO", "NO2", "O3", "SO2"]:
             s += [[f, request.form.get(f"value{ f }"), request.form.get(f"unit{ f }")]]
         s += [request.form.get("country")]
