@@ -9,29 +9,50 @@
     <body>
         <h1>AQI calculator Universal</h1>
         <form action="/" method="post">
-            <select name="country" id="countries">
+                PM₂.₅ <input type="text" id="valuePM2.5" name="valuePM2.5" style="width: 50px">
+                <select id="unitPM2.5" name="unitPM2.5">
+                    <option value="ug">µg/m3</option>
+                    <option value="ppm">ppm</option>
+                    <option value="ppb">ppb</option>
+                </select><p></p>
+                PM₁₀ <input type="text" id="valuePM10" name="valuePM10" style="width: 50px">
+                <select id="unitPM10" name="unitPM10">
+                    <option value="ug">µg/m3</option>
+                    <option value="ppm">ppm</option>
+                    <option value="ppb">ppb</option>
+                </select><p></p>
+                CO <input type="text" id="valueCO" name="valueCO" style="width: 50px">
+                <select id="unitCO" name="unitCO">
+                    <option value="ug">µg/m3</option>
+                    <option value="ppm">ppm</option>
+                    <option value="ppb">ppb</option>
+                </select><p></p>
+                NO₂ <input type="text" id="valueNO2" name="valueNO2" style="width: 50px">
+                <select id="unitNO2" name="unitNO2">
+                    <option value="ug">µg/m3</option>
+                    <option value="ppm">ppm</option>
+                    <option value="ppb">ppb</option>
+                </select><p></p>
+                O₃ <input type="text" id="valueO3" name="valueO3" style="width: 50px">
+                <select id="unitO3" name="unitO3">
+                    <option value="ug">µg/m3</option>
+                    <option value="ppm">ppm</option>
+                    <option value="ppb">ppb</option>
+                </select><p></p>
+                SO₂ <input type="text" id="valueSO2" name="value" style="width: 50px">
+                <select id="unitSO2" name="unitSO2">
+                    <option value="ug">µg/m3</option>
+                    <option value="ppm">ppm</option>
+                    <option value="ppb">ppb</option>
+                </select><p></p>
+            <input type="submit"><p></p>
+            <select name="country" id="countries" class="co">
                 <option value="GBR">European Union</option>
                 <option value="IND">India</option>
-            </select><br>
-            <label for="pollutants">Pollutant: </label>
-            <select name="pollutants" id="pollutants">
-                <option value="pm2">PM₂.₅</option>
-                <option value="pm10">PM₁₀</option>
-                <option value="co">CO</option>
-                <option value="no2">NO₂</option>
-                <option value="o3">O₃</option>
-                <option value="so2">SO₂</option>
-            </select>
-            <input type="text" id="value" name="value" style="width: 50px">
-            <select>
-                <option value="ug">µg/m3</option>
-                <option value="ppm">ppm</option>
-                <option value="ppb">ppb</option>
-            </select><br?
-            <input type="submit">
+            </select><p></p>
         </form>
         {% if s %}
-            {{ s }}
+            <p>{{ s }}</p>
             <!--AQI: {{ s[0] }}-->
             <!--AQI Category: <p>{{ s[1] }}</p>-->
         {% endif %}
