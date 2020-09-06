@@ -44,7 +44,7 @@ def home():
     if request.method == "GET":
         return render_template("home.html")
     else:
-        s = Dict[str, float]
+        s: Dict[str, float]
         casedict: Dict[str, str] = {
             'PM2.5' : 'pm2',
             'PM10' : 'pm10',
@@ -63,5 +63,4 @@ def home():
             s.update({
                 f : value
             })
-        AQI.aqi(None, s)
         return render_template("home.html", s = s)
