@@ -19,7 +19,6 @@ import aqimain as AQI
 from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
-from functools import wraps
 
 app = Flask(__name__)
 
@@ -45,7 +44,6 @@ def home():
     if request.method == "GET":
         return render_template("home.html")
     else:
-        l = []
         s = dict()
         casedict: Dict[str, str] = {
             'PM2.5' : 'pm2',
@@ -59,6 +57,7 @@ def home():
             value = request.form.get(f"value{ f }")
             value = str(value)
             unit = request.form.get(f"unit{ f }")
+            unit = str(unit)
             value = AQI.conversion(f, float(value), unit)
             f = casedict.get(f)
             s.update({
