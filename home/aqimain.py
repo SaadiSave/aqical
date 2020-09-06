@@ -56,7 +56,7 @@ class naqi(aqi):
         pass
 
 
-def conversion(pollutant, value, unit):
+def conversion(pollutant: str, value: float, unit: str):
     y = {
         'CO' : 28,
         'NO2' : 46,
