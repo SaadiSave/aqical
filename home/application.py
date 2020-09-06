@@ -57,14 +57,12 @@ def home():
         }
         for f in ["PM2.5", "PM10", "CO", "NO2", "O3", "SO2"]:
             value = request.form.get(f"value{ f }")
+            value = str(value)
             unit = request.form.get(f"unit{ f }")
-            # l.append([f, value, unit])
             value = conversion(f, int(value), unit)
+            f = casedict.get(f)
             s.update({
                 f : value
-            })
-        s.update({
-                "country" : request.form.get("country")
             })
         return render_template("home.html", s = s)
 
