@@ -45,7 +45,8 @@ def home():
     if request.method == "GET":
         return render_template("home.html")
     else:
-        s: Dict[str, float]
+        l = []
+        s = dict()
         casedict: Dict[str, str] = {
             'PM2.5' : 'pm2',
             'PM10' : 'pm10',
@@ -55,6 +56,32 @@ def home():
             'SO2' : 'so2'
         }
         for f in ["PM2.5", "PM10", "CO", "NO2", "O3", "SO2"]:
-            s += [[f, request.form.get(f"value{ f }"), request.form.get(f"unit{ f }")]]
-        s += [request.form.get("country")]
+            value = request.form.get(f"value{ f }")
+            unit = request.form.get(f"unit{ f }")
+            # l.append([f, value, unit])
+            value = conversion(f, int(value), unit)
+            s.update({
+                f : value
+            })
+        s.update({
+                "country" : request.form.get("country")
+            })
         return render_template("home.html", s = s)
+
+def conversion(pollutant, value, unit):
+    y = {
+        'CO' : 28,
+        'NO2' : 46,
+        'O3' : 48,
+        'SO2' : 64
+    }
+    if unit == "ug":
+        return round(value, 2)
+    elif unit == "ppm":
+        mass = y[pollutant]
+        v = value * 0.0409 * mass * 1000
+        return round(v, 2)
+    elif unit == "ppb":
+        mass = y[pollutant]
+        v = value * 0.0409 * mass
+        return round(v, 2)
