@@ -54,3 +54,22 @@ class naqi(aqi):
         })
     def setres(self):
         pass
+
+
+def conversion(pollutant, value, unit):
+    y = {
+        'CO' : 28,
+        'NO2' : 46,
+        'O3' : 48,
+        'SO2' : 64
+    }
+    if unit == "ug":
+        return round(value, 2)
+    elif unit == "ppm":
+        mass = y[pollutant]
+        v = value * 0.0409 * mass * 1000
+        return round(v, 2)
+    elif unit == "ppb":
+        mass = y[pollutant]
+        v = value * 0.0409 * mass
+        return round(v, 2)
