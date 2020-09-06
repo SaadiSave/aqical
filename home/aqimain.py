@@ -17,19 +17,13 @@ import pandas as pd
 from typing import Dict
 
 class aqi:
-    def __init__(self, syst: str, pm2: float, pm10: float, no2: float, o3: float, so2: float) -> None:
+    def __init__(self, syst: str, pdict: Dict[str, float]) -> None:
         try: assert((syst == 'eur') or (syst == 'ind'))
         except AssertionError:
             print("Only ind and eur are accepted values for system")
             raise ValueError
         self.system = syst
-        self.__vals: Dict[str, float] = {
-            'pm2' : pm2,
-            'pm10' : pm10,
-            'no2' : no2,
-            'o3' : o3,
-            'so2' : so2
-        }
+        self.__vals = pdict
         self.__res: str
         self.cat: int # 1, 2, 3, 4, 5, 6
     def getres(self) -> str:
@@ -49,7 +43,7 @@ class eaqi(aqi):
         pass
 
 class naqi(aqi):
-    def __init__(self, co: float) -> None:
+    def __init__(self) -> None:
         self.__NAQI = pd.DataFrame({
             'AQI' : ['Good', 'Fair', 'Moderate', 'Poor', 'Very Poor', 'Extremely Poor'],
             'pm2' : [10, 20, 25, 50, 75, 800],
@@ -58,6 +52,5 @@ class naqi(aqi):
             'o3' : [50, 100, 130, 240, 380, 800],
             'so2' : [100, 200, 350, 500, 750, 1250]
         })
-        self.__vals['co'] = co
     def setres(self):
         pass
