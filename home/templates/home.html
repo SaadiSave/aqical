@@ -42,15 +42,17 @@
                     <option value="ppb">ppb</option>
                 </select><p></p>
             <input type="submit"><p></p>
-            <select name="country" id="countries" class="co">
-                <option value="GBR">European Union</option>
-                <option value="IND">India</option>
-            </select><p></p>
+            <div class="col-md-12 text-right">
+                <select name="country" id="countries" class="pull-right">
+                    <option value="GBR">European Union</option>
+                    <option value="IND">India</option>
+                </select><p></p>
+            </div>
+            <div class="col-md-12 text-right" style="position: right;">
+                {% if s %}
+                    <p style="background-color: #58FF09; width: 100px; text-align: center" class="pull-right">{{ s }}</p>
+                {% endif %}
+            </div>
         </form>
-        {% if s %}
-            <p>{{ s }}</p>
-            <!--AQI: {{ s[0] }}-->
-            <!--AQI Category: <p>{{ s[1] }}</p>-->
-        {% endif %}
     </body>
 </html>

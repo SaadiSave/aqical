@@ -39,6 +39,18 @@ class eaqi(aqi):
             'o3' : [50, 100, 130, 240, 380, 800],
             'so2' : [100, 200, 350, 500, 750, 1250]
         })
+
+    def get_eaqi_color(self, aqi_category):
+        eaqi_color = {
+            "Good" : "cyan",
+            "Fair" : "#00CC99",
+            "Moderate" : "yellow",
+            "Poor" : "#F75133",
+            "Very poor" : "maroon",
+            "Extremely poor" : "purple"
+        }
+        return eaqi_color.get(aqi_category)
+
     def setres(self):
         pass
 
@@ -52,6 +64,18 @@ class naqi(aqi):
             'o3' : [50, 100, 130, 240, 380, 800],
             'so2' : [100, 200, 350, 500, 750, 1250]
         })
+
+    def get_naqi_color(self, aqi_category):
+        naqi_color = {
+            "Good" : "#009933",
+            "Satisfactory" : "#58FF09",
+            "Moderate" : "yellow",
+            "Poor" : "orange",
+            "Very poor" : "red",
+            "Severe" : "#990000"
+        }
+        return naqi_color.get(aqi_category)
+
     def setres(self):
         pass
 
