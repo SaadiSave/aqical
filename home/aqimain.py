@@ -20,36 +20,47 @@ class aqi:
     def __init__(self, syst: str, pdict: Dict[str, float]) -> None:
         try: assert((syst == 'eur') or (syst == 'ind'))
         except AssertionError:
-            print("Only ind and eur are accepted values for system")
+            print('Only ind and eur are accepted values for system')
             raise ValueError
         self.system = syst
         self.__vals = pdict
-        self.__res: str
-        self.cat: int # 1, 2, 3, 4, 5, 6
-    def getres(self) -> str:
+        self.__res: int
+        self.des: str
+    def getres(self) -> int:
         return self.__res
 
 class eaqi(aqi):
     def __init__(self) -> None:
         self.__EAQI = pd.DataFrame({
-            'AQI' : ['Good', 'Fair', 'Moderate', 'Poor', 'Very Poor', 'Extremely Poor'],
+            'AQI' : [1, 2, 3, 4, 5, 6],
             'pm2' : [10, 20, 25, 50, 75, 800],
             'pm10' : [20, 40, 50, 100, 150, 1200],
             'no2' : [40, 90, 120, 230, 340, 1000],
             'o3' : [50, 100, 130, 240, 380, 800],
             'so2' : [100, 200, 350, 500, 750, 1250]
         })
-
-    def get_eaqi_color(self, aqi_category):
-        eaqi_color = {
-            "Good" : "cyan",
-            "Fair" : "#00CC99",
-            "Moderate" : "yellow",
-            "Poor" : "#F75133",
-            "Very poor" : "maroon",
-            "Extremely poor" : "purple"
+        self.__edes: Dict[int, str] = {
+            1 : 'Good', 
+            2 : 'Fair', 
+            3 : 'Moderate', 
+            4 : 'Poor', 
+            5 : 'Very Poor', 
+            6 : 'Extremely Poor'
         }
-        return eaqi_color.get(aqi_category)
+    
+    def set_eaqi_des(self):
+        self.des = self.__edes.get(self.__res, 'Invalid')
+    
+    def get_eaqi_colour(self):
+        eaqi_colour = {
+            'Good' : 'cyan',
+            'Fair' : '#00CC99',
+            'Moderate' : 'yellow',
+            'Poor' : '#F75133',
+            'Very Poor' : 'maroon',
+            'Extremely Poor' : 'purple'
+        }
+        return eaqi_colour.get(self.des)
 
     def setres(self):
         pass
@@ -64,21 +75,31 @@ class naqi(aqi):
             'o3' : [50, 100, 130, 240, 380, 800],
             'so2' : [100, 200, 350, 500, 750, 1250]
         })
-
-    def get_naqi_color(self, aqi_category):
-        naqi_color = {
-            "Good" : "#009933",
-            "Satisfactory" : "#58FF09",
-            "Moderate" : "yellow",
-            "Poor" : "orange",
-            "Very poor" : "red",
-            "Severe" : "#990000"
+        self.__ndes: Dict[int, str] = {
+            1 : 'Good', 
+            2 : 'Fair', 
+            3 : 'Satisfactory', 
+            4 : 'Poor', 
+            5 : 'Very Poor', 
+            6 : 'Severe'
         }
-        return naqi_color.get(aqi_category)
+
+    def set_eaqi_des(self):
+        self.des = self.__ndes.get(self.__res, 'Invalid')
+    
+    def get_naqi_color(self):
+        naqi_color = {
+            'Good' : '#009933',
+            'Satisfactory' : '#58FF09',
+            'Moderate' : 'yellow',
+            'Poor' : 'orange',
+            'Very Poor' : 'red',
+            'Severe' : '#990000'
+        }
+        return naqi_color.get(self.des)
 
     def setres(self):
         pass
-
 
 def conversion(pollutant: str, value: float, unit: str):
     y = {
@@ -87,13 +108,13 @@ def conversion(pollutant: str, value: float, unit: str):
         'O3' : 48,
         'SO2' : 64
     }
-    if unit == "ug":
+    if unit == 'ug':
         return round(value, 2)
-    elif unit == "ppm":
+    elif unit == 'ppm':
         mass = y[pollutant]
         v = value * 0.0409 * mass * 1000
         return round(v, 2)
-    elif unit == "ppb":
+    elif unit == 'ppb':
         mass = y[pollutant]
         v = value * 0.0409 * mass
         return round(v, 2)
