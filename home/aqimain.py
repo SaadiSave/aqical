@@ -60,7 +60,7 @@ class eaqi(aqi):
             'Very Poor' : 'maroon',
             'Extremely Poor' : 'purple'
         }
-        return eaqi_colour.get(self.des)
+        return eaqi_colour.get(self.des, 'Invalid')
 
     def setres(self):
         pass
@@ -96,7 +96,7 @@ class naqi(aqi):
             'Very Poor' : 'red',
             'Severe' : '#990000'
         }
-        return naqi_color.get(self.des)
+        return naqi_color.get(self.des, 'Invalid')
 
     def setres(self):
         pass
