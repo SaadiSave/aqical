@@ -74,14 +74,14 @@ class eaqi(aqi):
 
 class naqi(aqi):
     def __init__(self) -> None:
-        self.__NAQI = pd.DataFrame({
+        self.__NAQI = {
             'AQI' : ['Good', 'Fair', 'Moderate', 'Poor', 'Very Poor', 'Extremely Poor'],
             'pm2' : [10, 20, 25, 50, 75, 800],
             'pm10' : [20, 40, 50, 100, 150, 1200],
             'no2' : [40, 90, 120, 230, 340, 1000],
             'o3' : [50, 100, 130, 240, 380, 800],
             'so2' : [100, 200, 350, 500, 750, 1250]
-        })
+        }
         self.__ndes: Dict[int, str] = {
             1 : 'Good',
             2 : 'Satisfactory',
