@@ -14,7 +14,7 @@
 #     You should have received a copy of the GNU Affero General Public License
 #     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import pandas as pd
-from typing import Dict
+from typing import Dict, List
 
 class aqi:
     def __init__(self, syst: str, pdict: Dict[str, float]) -> None:
@@ -22,7 +22,7 @@ class aqi:
         except AssertionError:
             print('Only ind and eur are accepted values for system')
             raise ValueError
-        self.system = syst
+        self.__system = syst
         self.__vals = pdict
         self.__res: int
         self.des: str
@@ -31,14 +31,14 @@ class aqi:
 
 class eaqi(aqi):
     def __init__(self) -> None:
-        self.__EAQI = pd.DataFrame({
+        self.__EAQI = {
             'AQI' : [1, 2, 3, 4, 5, 6],
             'pm2' : [10, 20, 25, 50, 75, 800],
             'pm10' : [20, 40, 50, 100, 150, 1200],
             'no2' : [40, 90, 120, 230, 340, 1000],
             'o3' : [50, 100, 130, 240, 380, 800],
             'so2' : [100, 200, 350, 500, 750, 1250]
-        })
+        }
         self.__edes: Dict[int, str] = {
             1 : 'Good',
             2 : 'Fair',
@@ -63,7 +63,14 @@ class eaqi(aqi):
         return eaqi_colour.get(self.des, 'Invalid')
 
     def setres(self):
-        pass
+        caqi: List[int] = []
+        for i in self.__vals:
+            thresh = self.__EAQI.get(i)
+            j = 0
+            for j in thresh:
+                if self.__vals.get(i) <= j: break
+            caqi.append(thresh.index(j) + 1)
+        self.__res = max(caqi)
 
 class naqi(aqi):
     def __init__(self) -> None:
@@ -108,9 +115,7 @@ def conversion(pollutant: str, value: float, unit: str):
         'O3' : 48,
         'SO2' : 64
     }
-    if unit == 'ug':
-        return round(value, 2)
-    elif unit == 'ppm':
+    if unit == 'ppm':
         mass = y[pollutant]
         v = value * 0.0409 * mass * 1000
         return round(v, 2)
@@ -118,3 +123,4 @@ def conversion(pollutant: str, value: float, unit: str):
         mass = y[pollutant]
         v = value * 0.0409 * mass
         return round(v, 2)
+    else: return round(value, 2)

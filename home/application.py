@@ -61,13 +61,13 @@ def home():
             value = str(value)
             try:
                 value = AQI.conversion(f, float(value), unit)
-                f = casedict.get(f)
+                f = casedict.get(f, '')
                 s.update({
                     f : value
                 })
             except ValueError:
                 pass
-        y = s.pop("co", None)
+        y = s.pop("co", 0)
         if not s:
             return render_template("home.html", message = "Fill atleast 1 field except CO")
         s.update({
