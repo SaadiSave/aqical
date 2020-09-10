@@ -8,6 +8,9 @@
     </head>
     <body>
         <h1>AQI calculator Universal</h1>
+        {% if message %}
+            <div><b>{{ message }}</b></div>
+        {% endif %}
         <form action="/" method="post">
                 PM₂.₅ <input type="text" id="valuePM2.5" name="valuePM2.5" style="width: 50px">
                 <select id="unitPM2.5" name="unitPM2.5">

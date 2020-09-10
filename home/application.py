@@ -58,13 +58,24 @@ def home():
             value = str(value)
             unit = request.form.get(f"unit{ f }")
             unit = str(unit)
-            value = AQI.conversion(f, float(value), unit)
-            f = casedict.get(f)
-            s.update({
-                f : value
-            })
+            value = str(value)
+            try:
+                value = AQI.conversion(f, float(value), unit)
+                f = casedict.get(f)
+                s.update({
+                    f : value
+                })
+            except ValueError:
+                pass
+        y = s.pop("co", None)
+        if not s:
+            return render_template("home.html", message = "Fill atleast 1 field except CO")
+        s.update({
+            "co" : y
+        })
         country = request.form.get("country")
         if country == "GBR":
+            s.pop("co", None)
             AQI.aqi("eur", s)
         elif country == "IND":
             AQI.aqi("ind", s)

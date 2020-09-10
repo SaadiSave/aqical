@@ -40,17 +40,17 @@ class eaqi(aqi):
             'so2' : [100, 200, 350, 500, 750, 1250]
         })
         self.__edes: Dict[int, str] = {
-            1 : 'Good', 
-            2 : 'Fair', 
-            3 : 'Moderate', 
-            4 : 'Poor', 
-            5 : 'Very Poor', 
+            1 : 'Good',
+            2 : 'Fair',
+            3 : 'Moderate',
+            4 : 'Poor',
+            5 : 'Very Poor',
             6 : 'Extremely Poor'
         }
-    
+
     def set_eaqi_des(self):
         self.des = self.__edes.get(self.__res, 'Invalid')
-    
+
     def get_eaqi_colour(self):
         eaqi_colour = {
             'Good' : 'cyan',
@@ -76,17 +76,17 @@ class naqi(aqi):
             'so2' : [100, 200, 350, 500, 750, 1250]
         })
         self.__ndes: Dict[int, str] = {
-            1 : 'Good', 
-            2 : 'Fair', 
-            3 : 'Satisfactory', 
-            4 : 'Poor', 
-            5 : 'Very Poor', 
+            1 : 'Good',
+            2 : 'Satisfactory',
+            3 : 'Moderate',
+            4 : 'Poor',
+            5 : 'Very Poor',
             6 : 'Severe'
         }
 
-    def set_eaqi_des(self):
+    def set_naqi_des(self):
         self.des = self.__ndes.get(self.__res, 'Invalid')
-    
+
     def get_naqi_color(self):
         naqi_color = {
             'Good' : '#009933',
