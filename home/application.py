@@ -75,7 +75,7 @@ def home():
                 "co" : y
             })
         country = request.form.get("country")
-        if country == "GBR":
+        if country == "EUR":
             s.pop("co", None)
             AQI.aqi("eur", s)
         elif country == "IND":
