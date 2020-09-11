@@ -70,9 +70,10 @@ def home():
         y = s.pop("co", 0)
         if not s:
             return render_template("home.html", message = "Fill atleast 1 field except CO")
-        s.update({
-            "co" : y
-        })
+        if y != 0:
+            s.update({
+                "co" : y
+            })
         country = request.form.get("country")
         if country == "GBR":
             s.pop("co", None)
