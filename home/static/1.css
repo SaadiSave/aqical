@@ -2,6 +2,12 @@ h1 {
     text-align: center;
 }
 
+.flex {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
 form {
     margin-left: 15px;
 }
