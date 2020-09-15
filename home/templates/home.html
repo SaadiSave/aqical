@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
         <link href="../static/1.css" rel="stylesheet">
         <title>AQI calculator Universal</title>
@@ -12,7 +13,7 @@
         {% endif %}
         <form action="/" method="post">
             <div class="flex">
-            <div class="iform">    
+            <div class="iform">
                 <div class="input">
                 PM₂.₅ <input type="text" id="valuePM2.5" name="valuePM2.5" style="width: 50px; margin-left:10px">
                 <select id="unitPM2.5" name="unitPM2.5">
@@ -67,11 +68,9 @@
                 <input type="submit"><p></p>
             </div>
             <div class="output">
-            <div class="col-md-12 text-right" style="position: right;">
                 {% if s %}
-                    <p style="background-color: #58FF09; width: 140px; text-align: center" class="pull-right">{{ s }}</p>
+                    <p style="background-color: #58FF09; width: 140px; text-align: center; margin-left: auto; position: absolute; right: 15px;">{{ s }}</p>
                 {% endif %}
-            </div>
             </div>
             </div>
         </form>
