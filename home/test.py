@@ -10,6 +10,7 @@ class aqi:
         self.__system = syst
         self.__vals = pdict
         self.__res: int
+        self.__aqi: int
         self.des = ""
         if self.__system == "eur":
             self.__EAQI = {
@@ -46,8 +47,13 @@ class aqi:
                 5 : 'Very Poor',
                 6 : 'Severe'
             }
+            self.__Ival = {
+                'AQI' : ['Good', 'Fair', 'Moderate', 'Poor', 'Very Poor'],
+                'Ilow' : [0, 51, 101, 201, 301],
+                'Ihigh' : [50, 100, 200, 300, 400]
+            }
     def getres(self) -> int:
-        return self.__res
+        return self.__aqi
 
     def set_des(self):
         if (self.des == ""):
@@ -78,8 +84,8 @@ class aqi:
             return naqi_color.get(self.des, 'Invalid')
 
     def setres(self):
+        caqi: List[int] = []
         if self.__system == "eur":
-            caqi: List[int] = []
             for i in self.__vals:
                 thresh = self.__EAQI.get(i)
                 if (self.__vals.get(i) > thresh[5]):
@@ -88,9 +94,36 @@ class aqi:
                 for j in thresh:
                     if self.__vals.get(i) <= j: break
                 caqi.append(thresh.index(j) + 1)
-            self.__res = max(caqi)
+            self.__aqi = max(caqi)
+            self.__res = self.__aqi
         else:
-            pass
+            naqi: List[int] = []
+            for i in self.__vals:
+                thresh = self.__NAQI.get(i)
+                if self.__vals.get(i) > thresh[4]:
+                    self.des = "How are you even alive?"
+                j = 0
+                for j in range(len(thresh)):
+                    if self.__vals.get(i) <= thresh[j]:
+                        low = 0
+                        if i == 'co' and j != 0:
+                            low = thresh[j - 1] + 1000
+                        elif j != 0:
+                            low = thresh[j - 1] + 1
+                        if self.__vals.get(i) <= low:
+                            y = j - 1
+                        else:
+                            y = j
+                        caqi.append(j + 1)
+                        low = 0
+                        if i == 'co' and y != 0:
+                            low = thresh[y - 1] + 1000
+                        elif j != 0:
+                            low = thresh[y - 1] + 1
+                        self.__aqi = (self.__Ival.get('Ihigh')[y] - self.__Ival.get('Ilow')[y])*(thresh[y] - low) + self.__Ival.get('Ilow')[y]
+                        naqi.append(self.__aqi)
+            self.__res = max(caqi)
+            self.__aqi = max(naqi)
 
 def conversion(pollutant: str, value: float, unit: str):
     y = {
