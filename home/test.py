@@ -10,7 +10,7 @@ class aqi:
         self.__system = syst
         self.__vals = pdict
         self.__res: int
-        self.des: str
+        self.des = ""
         if self.__system == "eur":
             self.__EAQI = {
             'AQI' : [1, 2, 3, 4, 5, 6],
@@ -49,26 +49,29 @@ class aqi:
         return self.__res
 
     def set_des(self):
-        self.des = self.__ades.get(self.__res, 'Invalid')
+        if (self.des == ""):
+            self.des = self.__ades.get(self.__res, 'Invalid')
 
     def get_color(self):
+        if (self.des == "How are you even alive?"):
+            return "#000000"
         if self.__system == 'eur':
             eaqi_colour = {
-            'Good' : 'cyan',
-            'Fair' : '#00CC99',
-            'Moderate' : 'yellow',
-            'Poor' : '#F75133',
-            'Very Poor' : 'maroon',
-            'Extremely Poor' : 'purple'
+            'Good' : '#00ffff',
+            'Fair' : '#00cc99',
+            'Moderate' : '#ffff00',
+            'Poor' : '#f75133',
+            'Very Poor' : '#800000',
+            'Extremely Poor' : '#800080'
             }
             return eaqi_colour.get(self.des, 'Invalid')
         else:
             naqi_color = {
             'Good' : '#009933',
-            'Satisfactory' : '#58FF09',
-            'Moderate' : 'yellow',
-            'Poor' : 'orange',
-            'Very Poor' : 'red',
+            'Satisfactory' : '#58ff09',
+            'Moderate' : '#ffff00',
+            'Poor' : '#ffa500',
+            'Very Poor' : '#ff0000',
             'Severe' : '#990000'
             }
             return naqi_color.get(self.des, 'Invalid')
@@ -78,6 +81,8 @@ class aqi:
             caqi: List[int] = []
             for i in self.__vals:
                 thresh = self.__EAQI.get(i)
+                if (self.__vals.get(i) > thresh[5]):
+                    self.des = "How are you even alive?"
                 j = 0
                 for j in thresh:
                     if self.__vals.get(i) <= j: break
