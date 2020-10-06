@@ -1,5 +1,5 @@
 # this works quite well but a few changes will have to be made to accomodate NAQI properly.
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 class aqi:
     def __init__(self, syst: str, pdict: Dict[str, float]) -> None:
@@ -30,14 +30,17 @@ class aqi:
                 6 : 'Extremely Poor'
             }
         else:
+            x = self.__vals.get('co', None)
+            if x != None:
+                self.__vals['co'] = x / 1000
             self.__NAQI = {
-                'AQI' : ['Good', 'Fair', 'Moderate', 'Poor', 'Very Poor'],
-                'pm2' : [50, 100, 250, 350, 430],
-                'pm10' : [30, 60, 90, 120, 250],
+                'AQI' : [1, 2, 3, 4, 5],
+                'pm2' : [30, 60, 90, 120, 250],
+                'pm10' : [50, 100, 250, 350, 430],
                 'no2' : [40, 80, 180, 280, 400],
                 'o3' : [50, 100, 168, 208, 748],
                 'so2' : [40, 80, 380, 800, 1600],
-                'co' : [1000, 2000, 10000, 17000, 34000]
+                'co' : [1, 2, 10, 17, 34]
             }
             self.__ades: Dict[int, str] = {
                 1 : 'Good',
@@ -47,10 +50,12 @@ class aqi:
                 5 : 'Very Poor',
                 6 : 'Severe'
             }
-            self.__Ival = {
-                'AQI' : ['Good', 'Fair', 'Moderate', 'Poor', 'Very Poor'],
-                'Ilow' : [0, 51, 101, 201, 301],
-                'Ihigh' : [50, 100, 200, 300, 400]
+            self.__Ival: Dict[int, Tuple[int]] = {
+                1 : (0, 50),
+                2 : (51, 100),
+                3 : (101, 200),
+                4 : (201, 300),
+                5 : (301, 400)
             }
     def getres(self) -> int:
         return self.__aqi
@@ -97,33 +102,18 @@ class aqi:
             self.__aqi = max(caqi)
             self.__res = self.__aqi
         else:
-            naqi: List[int] = []
             for i in self.__vals:
                 thresh = self.__NAQI.get(i)
-                if self.__vals.get(i) > thresh[4]:
-                    self.des = "How are you even alive?"
-                j = 0
-                for j in range(len(thresh)):
-                    if self.__vals.get(i) <= thresh[j]:
-                        low = 0
-                        if i == 'co' and j != 0:
-                            low = thresh[j - 1] + 1000
-                        elif j != 0:
-                            low = thresh[j - 1] + 1
-                        if self.__vals.get(i) <= low:
-                            y = j - 1
-                        else:
-                            y = j
-                        caqi.append(j + 1)
-                        low = 0
-                        if i == 'co' and y != 0:
-                            low = thresh[y - 1] + 1000
-                        elif j != 0:
-                            low = thresh[y - 1] + 1
-                        self.__aqi = (self.__Ival.get('Ihigh')[y] - self.__Ival.get('Ilow')[y])*(thresh[y] - low) + self.__Ival.get('Ilow')[y]
-                        naqi.append(self.__aqi)
-            self.__res = max(caqi)
-            self.__aqi = max(naqi)
+                if (self.__vals.get(i) > thresh[4]):
+                    caqi.append(int(round((((401/thresh[4]) * (self.__vals.get(i) - thresh[4])) + 401), 0)))
+                else:
+                    j = 0
+                    for j in thresh:
+                        if self.__vals.get(i) <= j: break
+                    Il, Ih = self.__Ival.get((thresh.index(j) + 1), (0, 0))
+                    Bh, Bl = (j, thresh[thresh.index(j) - 1])
+            self.__aqi = max(caqi)
+            self.__res = self.__aqi
 
 def conversion(pollutant: str, value: float, unit: str):
     y = {
