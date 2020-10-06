@@ -102,10 +102,12 @@ class aqi:
             self.__aqi = max(caqi)
             self.__res = self.__aqi
         else:
+            res: List[int] = []
             for i in self.__vals:
                 thresh = self.__NAQI.get(i)
                 if (self.__vals.get(i) > thresh[4]):
                     caqi.append(int(round((((401/thresh[4]) * (self.__vals.get(i) - thresh[4])) + 401), 0)))
+                    res.append(6)
                 else:
                     j = 0
                     for j in thresh:
@@ -113,7 +115,7 @@ class aqi:
                     Il, Ih = self.__Ival.get((thresh.index(j) + 1), (0, 0))
                     Bh, Bl = (j, thresh[thresh.index(j) - 1])
             self.__aqi = max(caqi)
-            self.__res = self.__aqi
+            self.__res = max(res)
 
 def conversion(pollutant: str, value: float, unit: str):
     y = {
