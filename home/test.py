@@ -50,7 +50,7 @@ class aqi:
                 5 : 'Very Poor',
                 6 : 'Severe'
             }
-            self.__Ival: Dict[int, Tuple[int]] = {
+            self.__Ival = {
                 1 : (0, 50),
                 2 : (51, 100),
                 3 : (101, 200),
@@ -112,8 +112,12 @@ class aqi:
                     j = 0
                     for j in thresh:
                         if self.__vals.get(i) <= j: break
-                    Il, Ih = self.__Ival.get((thresh.index(j) + 1), (0, 0))
-                    Bh, Bl = (j, thresh[thresh.index(j) - 1])
+                    x = thresh.index(j) + 1
+                    Il, Ih = self.__Ival.get(x, (0, 0))
+                    if thresh.index(j) != 0:
+                        Bl = thresh[thresh.index(j) - 1] + 1
+                    else: Bl = 0
+                    Bh = j
             self.__aqi = max(caqi)
             self.__res = max(res)
 
