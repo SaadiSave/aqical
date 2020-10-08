@@ -15,7 +15,7 @@
 #     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from typing import Dict
-import aqimain as AQI
+from aqimain import aqi, conversion
 from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
@@ -60,7 +60,7 @@ def home():
             unit = str(unit)
             value = str(value)
             try:
-                value = AQI.conversion(f, float(value), unit)
+                value = conversion(f, float(value), unit)
                 f = casedict.get(f, '')
                 s.update({
                     f : value
@@ -77,7 +77,18 @@ def home():
         country = request.form.get("country")
         if country == "EUR":
             s.pop("co", None)
-            AQI.aqi("eur", s)
+            s = aqi("eur", s)
+            s.setres()
+            s.set_des()
+            if s.des == "How are you even alive?":
+                show = s.des
+            else:
+                show = s.getres()
+            color = s.get_color()
         elif country == "IND":
-            AQI.aqi("ind", s)
-        return render_template("home.html", s = s)
+            s = aqi("ind", s)
+            s.setres()
+            s.set_des()
+            show = s.getres()
+            color = s.get_color()
+        return render_template("home.html", s = show, color = color)
