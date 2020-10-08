@@ -13,7 +13,7 @@
 
 #     You should have received a copy of the GNU Affero General Public License
 #     along with this program.  If not, see <https://www.gnu.org/licenses/>.
-from typing import Dict, List, Tuple
+from typing import Dict, List
 
 class aqi:
     def __init__(self, syst: str, pdict: Dict[str, float]) -> None:
@@ -132,6 +132,9 @@ class aqi:
                         Bl = thresh[thresh.index(j) - 1] + 1
                     else: Bl = 0
                     Bh = j
+                    caqi.append(int(round(((((Ih - Il)/(Bh - Bl)) * (self.__vals.get(i) - Bl)) + Il), 0)))
+                    res.append(thresh.index(j) + 1)
+
             self.__aqi = max(caqi)
             self.__res = max(res)
 
