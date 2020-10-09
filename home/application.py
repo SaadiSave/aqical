@@ -77,18 +77,18 @@ def home():
         country = request.form.get("country")
         if country == "EUR":
             s.pop("co", None)
-            s = aqi("eur", s)
-            s.setres()
-            s.set_des()
-            if s.des == "How are you even alive?":
-                show = s.des
+            d = aqi("eur", s)
+            d.setres()
+            d.set_des()
+            if d.des == "How are you even alive?":
+                show = d.des
             else:
-                show = s.getres()
-            color = s.get_color()
+                show = d.getres()
+            color = d.get_color()
         elif country == "IND":
-            s = aqi("ind", s)
-            s.setres()
-            s.set_des()
-            show = s.getres()
-            color = s.get_color()
-        return render_template("home.html", s = show, color = color)
+            d = aqi("ind", s)
+            d.setres()
+            d.set_des()
+            show = d.getres()
+            color = d.get_color()
+        return render_template("home.html", f = show, color = color)
