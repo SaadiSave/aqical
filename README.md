@@ -1,5 +1,5 @@
 # Air Quality Calculation Suite
-<h2>Covers the following air quality indexes</h2>
+<h2>Covers the following air quality indices</h2>
 <ul>
 <li>European Air Quality Index
 <li>Indian National Air Quality Index
