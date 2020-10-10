@@ -1,6 +1,5 @@
 # A file to test the prog
-import ctypes
-aqim = ctypes.CDLL("aqim.c")
+import aqim
 O = aqim.aqi('eur', pdict={
     'pm2' : 50,
     'pm10' : 100,

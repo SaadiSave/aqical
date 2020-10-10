@@ -67,28 +67,22 @@ def home():
                 })
             except ValueError:
                 pass
-        y = s.pop("co", 0)
-        if not s:
-            return render_template("home.html", message = "Fill atleast 1 field except CO")
-        if y != 0:
-            s.update({
-                "co" : y
-            })
         country = request.form.get("country")
         if country == "EUR":
             s.pop("co", None)
+            if not s:
+                return render_template("home.html", message = "Fill atleast 1 field except CO")
             d = aqi("eur", s)
             d.setres()
             d.set_des()
-            if d.des == "How are you even alive?":
-                show = d.des
-            else:
-                show = d.getres()
+            show = d.getres()
+            des = d.des
             color = d.get_color()
         elif country == "IND":
             d = aqi("ind", s)
             d.setres()
             d.set_des()
             show = d.getres()
+            des = d.des
             color = d.get_color()
-        return render_template("home.html", f = show, color = color)
+        return render_template("home.html", f = show, color = color, de = des)
