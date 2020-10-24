@@ -61,4 +61,100 @@ class eaqi(aqi):
             self.des = self.__DES.get(self.__idx, 'Invalid')
 
     def set_col(self):
-        self.col = self.__colour.get(self.__idx, '#ffffff')
+        if (self.des == 'How are you even alive?'):
+            self.col = '#000000'
+        else:
+            self.col = self.__colour.get(self.__idx, '#ffffff')
+
+class naqi(aqi):
+    def __init__(self, pdict) -> None:
+        aqi.__init__(self, pdict)
+        self.__NAQI: Dict[str, List[int]] = {
+            'AQI' : [1, 2, 3, 4, 5],
+            'pm2' : [30, 60, 90, 120, 250],
+            'pm10' : [50, 100, 250, 350, 430],
+            'no2' : [40, 80, 180, 280, 400],
+            'o3' : [50, 100, 168, 208, 748],
+            'so2' : [40, 80, 380, 800, 1600],
+            'co' : [10, 20, 100, 170, 340]
+        }
+        self.__idx: int = 0
+        self.__DES: Dict[int, str] = {
+            1 : 'Good',
+            2 : 'Satisfactory',
+            3 : 'Moderate',
+            4 : 'Poor',
+            5 : 'Very Poor',
+            6 : 'Severe'
+        }
+        self.__Ival: Dict[int, Tuple[int, int]] = {
+            1 : (0, 50),
+            2 : (51, 100),
+            3 : (101, 200),
+            4 : (201, 300),
+            5 : (301, 400)
+        }
+        self.__colour: Dict[int, str] = {
+            1 : '#009933',
+            2 : '#58ff09',
+            3 : '#ffff00',
+            4 : '#ffa500',
+            5 : '#ff0000',
+            6 : '#990000'
+        }
+
+    def set_res(self):
+        caqi: List[int] = []
+        idx: List[int] = []
+        for i in self.__vals:
+            thresh = self.__NAQI.get(i)
+            if (self.__vals.get(i) > thresh[4]):
+                caqi.append(int(round((((401/thresh[4]) * (self.__vals.get(i) - thresh[4])) + 401), 0)))
+                idx.append(6)
+            else:
+                j = 0
+                for j in thresh:
+                    if (self.__vals.get(i) <= j): break
+                x = thresh.index(j) + 1
+                Il, Ih = self.__Ival.get(x, (0, 0))
+                if (thresh.index(j) != 0):
+                    Bl = thresh[thresh.index(j) - 1] + 1
+                else: Bl = 0
+                Bh = j
+                caqi.append(int(round(((((Ih - Il)/(Bh - Bl)) * (self.__vals.get(i) - Bl)) + Il), 0)))
+                idx.append(thresh.index(j) + 1)
+
+        self.res = str(max(caqi))
+        self.__idx = max(idx)
+
+    def set_des(self):
+        if (int(self.res) > 500):
+            self.des = 'DO NOT STEP OUTSIDE YOUR HOME. SHUT ALL WINDOWS.'
+        else:
+            self.des = self.__DES.get(self.__idx, '')
+
+    def set_col(self):
+        if (self.des == 'DO NOT STEP OUTSIDE YOUR HOME. SHUT ALL WINDOWS.'):
+            self.col = '#000000'
+        else:
+            self.col = self.__colour.get(self.__idx, '#ffffff')
+
+def conversion(pollutant: str, value: float, unit: str):
+    y = {
+        'CO' : 28,
+        'NO2' : 46,
+        'O3' : 48,
+        'SO2' : 64
+    }
+    if unit == 'ppm':
+        mass = y[pollutant]
+        v = value * 0.0409 * mass * 1000
+        return round(v, 2)
+    elif unit == 'ppb':
+        mass = y[pollutant]
+        v = value * 0.0409 * mass
+        return round(v, 2)
+    else: return round(value, 2)
+
+def compare(a: List[List[int]]) -> float:
+    return 0
