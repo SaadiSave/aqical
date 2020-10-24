@@ -4,4 +4,4 @@ if naqi < 500
 (1 - ((naqi * 6)/(eaqi * 500))) * 100
 round to 1 decimal
 else
-0.0
+0.1
