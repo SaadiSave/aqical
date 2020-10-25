@@ -71,7 +71,7 @@ class eaqi(aqi):
 class naqi(aqi):
     def __init__(self, pdict) -> None:
         aqi.__init__(self, pdict)
-        self.vals['co'] = self.vals['co'] / 100
+        self.vals['co'] /= 100
         self.__NAQI: Dict[str, List[int]] = {
             'AQI' : [1, 2, 3, 4, 5],
             'pm2' : [30, 60, 90, 120, 250],
@@ -151,14 +151,22 @@ def conversion(pollutant: str, value: float, unit: str):
     }
     if unit == 'ppm':
         mass = y[pollutant]
-        v = value * 0.0409 * mass * 1000
-        return round(v, 2)
+        value *= 0.0409 * mass * 1000
     elif unit == 'ppb':
         mass = y[pollutant]
-        v = value * 0.0409 * mass
-        return round(v, 2)
-    else: return round(value, 2)
+        value *= 0.0409 * mass
+    else: pass    
+    return round(value, 2)
 
-def compare(a: List[List[int]]) -> float:
-    pass
-    return 0
+def compare(a: Tuple[int, int], b: Tuple[int, int]) -> Union[int, str]:
+    '''a is the index to be compared with b
+    \nformat:
+    \ncompare(a=(a, amax), b=(b, bmax))
+    '''
+    a1, a2 = a
+    b1, b2 = b
+    if (a1 <= a2) and (b1 <= b2):
+        c = int(round((1 - ((b1 * a2)/(a1 * b2))) * 100, 0))
+    else:
+        c = 'Invalid'
+    return c
