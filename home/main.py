@@ -1,6 +1,6 @@
 # A file to test the prog
 import aqim
-import test as t
+import test2 as t
 # O = aqim.aqi('eur', pdict={
 #     'pm2' : 50,
 #     'pm10' : 100,
@@ -12,7 +12,7 @@ import test as t
 # O.set_des()
 # print(f"{O.getres()}\n{O.des}\n{O.get_color()}")
 
-O = t.eaqi(pdict={
+O = t.Eaqi(pdict={
     'pm2' : 50,
     'pm10' : 100,
     'so2' : 100,
@@ -30,7 +30,7 @@ try:
 except AssertionError:
     print(f"{O.res}\n{O.des}\n{O.col}")
 
-O = t.naqi(pdict={
+O = t.Naqi(pdict={
     'pm2' : 50,
     'pm10' : 100,
     'so2' : 100,
