@@ -2,14 +2,16 @@ from typing import Dict, List, Tuple, Union
 
 class aqi:
     def __init__(self, pdict: Dict[str, float]) -> None:
-        self.__vals = pdict
-        self.res: str
-        self.des: Union[Tuple[str, str], str]
-        self.col: str
+        self.vals = pdict
+        self.res: str = ''
+        self.des: Union[Tuple[str, str], str] = ''
+        self.col: str = ''
 
 class eaqi(aqi):
     def __init__(self, pdict) -> None:
         aqi.__init__(self, pdict)
+        try: self.vals.pop('co')
+        except KeyError: pass
         self.__EAQI: Dict[str, List[int]] = {
             'AQI' : [1, 2, 3, 4, 5, 6],
             'pm2' : [10, 20, 25, 50, 75, 800],
@@ -46,13 +48,13 @@ class eaqi(aqi):
 
     def set_res(self):
         caqi: List[int] = []
-        for i in self.__vals:
+        for i in self.vals:
             thresh = self.__EAQI.get(i)
-            if (self.__vals.get(i) > thresh[5]):
+            if (self.vals.get(i) > thresh[5]):
                 self.des = 'How are you even alive?'
             j = 0
             for j in thresh:
-                if self.__vals.get(i) <= j: break
+                if self.vals.get(i) <= j: break
             caqi.append(thresh.index(j) + 1)
         self.__idx = max(caqi)
         self.res = self.__IDX.get(self.__idx, '')
@@ -69,6 +71,7 @@ class eaqi(aqi):
 class naqi(aqi):
     def __init__(self, pdict) -> None:
         aqi.__init__(self, pdict)
+        self.vals['co'] = self.vals['co'] / 100
         self.__NAQI: Dict[str, List[int]] = {
             'AQI' : [1, 2, 3, 4, 5],
             'pm2' : [30, 60, 90, 120, 250],
@@ -106,22 +109,22 @@ class naqi(aqi):
     def set_res(self):
         caqi: List[int] = []
         idx: List[int] = []
-        for i in self.__vals:
+        for i in self.vals:
             thresh = self.__NAQI.get(i)
-            if (self.__vals.get(i) > thresh[4]):
-                caqi.append(int(round((((401/thresh[4]) * (self.__vals.get(i) - thresh[4])) + 401), 0)))
+            if (self.vals.get(i) > thresh[4]):
+                caqi.append(int(round((((401/thresh[4]) * (self.vals.get(i) - thresh[4])) + 401), 0)))
                 idx.append(6)
             else:
                 j = 0
                 for j in thresh:
-                    if (self.__vals.get(i) <= j): break
+                    if (self.vals.get(i) <= j): break
                 x = thresh.index(j) + 1
                 Il, Ih = self.__Ival.get(x, (0, 0))
                 if (thresh.index(j) != 0):
                     Bl = thresh[thresh.index(j) - 1] + 1
                 else: Bl = 0
                 Bh = j
-                caqi.append(int(round(((((Ih - Il)/(Bh - Bl)) * (self.__vals.get(i) - Bl)) + Il), 0)))
+                caqi.append(int(round(((((Ih - Il)/(Bh - Bl)) * (self.vals.get(i) - Bl)) + Il), 0)))
                 idx.append(thresh.index(j) + 1)
 
         self.res = str(max(caqi))
