@@ -24,7 +24,7 @@ O.set_res()
 O.set_des()
 O.set_col()
 try:
-    assert(isinstance(O.des, tuple)) 
+    assert(isinstance(O.des, tuple))
     a, b = O.des
     print(f"{O.res}\n{a}\n{b}\n{O.col}")
 except AssertionError:

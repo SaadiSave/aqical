@@ -3,6 +3,9 @@ from typing import Dict, List, Tuple, Union
 
 class Aqi:
     def __init__(self, pdict: Dict[str, float]) -> None:
+        for i in pdict:
+            if i not in ["pm2", "pm10", "no2", "o3", "so2", "co"]:
+                raise ValueError("invalid pollutant used")
         self.vals = pdict
         self.res: str = ''
         self.des: Union[Tuple[str, str], str] = ''
@@ -16,6 +19,8 @@ class Eaqi(Aqi):
             self.vals.pop('co')
         except KeyError:
             pass
+        if not self.vals:
+            raise ValueError("pdict should contain atleast one other pollutant than 'co' for Eaqi")
         self.__EAQI: Dict[str, List[int]] = {
             'AQI': [1, 2, 3, 4, 5, 6],
             'pm2': [10, 20, 25, 50, 75, 800],
@@ -83,7 +88,10 @@ class Eaqi(Aqi):
 class Naqi(Aqi):
     def __init__(self, pdict) -> None:
         Aqi.__init__(self, pdict)
-        self.vals['co'] /= 100
+        try:
+            self.vals['co'] /= 100
+        except KeyError:
+            pass
         self.__NAQI: Dict[str, List[int]] = {
             'AQI': [1, 2, 3, 4, 5],
             'pm2': [30, 60, 90, 120, 250],
@@ -130,6 +138,9 @@ class Naqi(Aqi):
                 j = 0
                 for j in thresh:
                     if self.vals.get(i) <= j: break
+                idx.append(thresh.index(j) + 1)
+                if self.vals.get(i) < thresh[thresh.index(j) - 1] + 1:
+                    j = thresh[thresh.index(j) - 1]
                 x = thresh.index(j) + 1
                 Il, Ih = self.__Ival.get(x, (0, 0))
                 if thresh.index(j) != 0:
@@ -138,7 +149,6 @@ class Naqi(Aqi):
                     Bl = 0
                 Bh = j
                 caqi.append(int(round(((((Ih - Il) / (Bh - Bl)) * (self.vals.get(i) - Bl)) + Il), 0)))
-                idx.append(thresh.index(j) + 1)
 
         self.res = str(max(caqi))
         self.__idx = max(idx)
