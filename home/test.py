@@ -142,7 +142,7 @@ class naqi(aqi):
         else:
             self.col = self.__colour.get(self.__idx, '#ffffff')
 
-def conversion(pollutant: str, value: float, unit: str):
+def convert(pollutant: str, value: float, unit: str):
     y = {
         'CO' : 28,
         'NO2' : 46,
