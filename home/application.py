@@ -15,7 +15,7 @@
 #     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from typing import Dict
-from aqimain import aqi, conversion
+from test2 import Eaqi, Naqi, convert
 from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
@@ -60,7 +60,7 @@ def home():
             unit = str(unit)
             value = str(value)
             try:
-                value = conversion(f, float(value), unit)
+                value = convert(f, float(value), unit)
                 f = casedict.get(f, '')
                 s.update({
                     f : value
@@ -69,20 +69,26 @@ def home():
                 pass
         country = request.form.get("country")
         if country == "EUR":
-            s.pop("co", None)
-            if not s:
+            try:
+                d = Eaqi(s)
+            except ValueError:
                 return render_template("home.html", message = "Fill atleast 1 field except CO")
-            d = aqi("eur", s)
-            d.setres()
+            d.set_res()
             d.set_des()
-            show = d.getres()
-            des = d.des
-            color = d.get_color()
+            d.set_col()
+            show = d.res
+            color = d.col
+            try:
+                des1, des2 = d.des
+                return render_template("home.html", f = show, color = color, des1 = des1, des2 = des2)
+            except ValueError:
+                des1 = d.des
         elif country == "IND":
-            d = aqi("ind", s)
-            d.setres()
+            d = Naqi(s)
+            d.set_res()
             d.set_des()
-            show = d.getres()
-            des = d.des
-            color = d.get_color()
-        return render_template("home.html", f = show, color = color, de = des)
+            d.set_col()
+            show = d.res
+            des1 = d.des
+            color = d.col
+        return render_template("home.html", f = show, color = color, des1 = des1)

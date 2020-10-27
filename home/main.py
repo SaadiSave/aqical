@@ -1,5 +1,5 @@
 # A file to test the prog
-import aqim
+# import aqim
 import test2 as t
 # O = aqim.aqi('eur', pdict={
 #     'pm2' : 50,

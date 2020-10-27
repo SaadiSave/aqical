@@ -89,8 +89,12 @@
                 <input type="submit"><p></p>
             </div>
             <div class="output" style="margin-left: auto; position: absolute; right: 15px; text-align: center;">
-                {% if f %}
-                    Your AQI is: <p style="background-color: {{ color }}; width: 200px; color: #ffffff">{{ f }}<br>{{ de }}</p>
+                {% if des2 %}
+                    Your AQI is: <p style="background-color: {{ color }}; width: 850px; color: #ffffff">{{ f }}<br>{{ des1 }}<br>{{ des2 }}</p>
+                {% else %}
+                {% if des1 %}
+                    Your AQI is: <p style="background-color: {{ color }}; width: 450px; color: #ffffff">{{ f }}<br>{{ des1 }}</p>
+                {% endif %}
                 {% endif %}
             </div>
             </div>
