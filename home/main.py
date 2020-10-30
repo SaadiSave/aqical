@@ -1,6 +1,7 @@
 # A file to test the prog
 # import aqim
 import test2 as t
+import usarr as arr
 # O = aqim.aqi('eur', pdict={
 #     'pm2' : 50,
 #     'pm10' : 100,
@@ -12,7 +13,38 @@ import test2 as t
 # O.set_des()
 # print(f"{O.getres()}\n{O.des}\n{O.get_color()}")
 
-O = t.Eaqi(pdict={
+# O = t.Eaqi(pdict={
+#     'pm2' : 50,
+#     'pm10' : 100,
+#     'so2' : 100,
+#     'no2' : 100,
+#     'o3' : 100,
+#     'co' : 1000
+# })
+# O.set_res()
+# O.set_des()
+# O.set_col()
+# try:
+#     assert(isinstance(O.des, tuple))
+#     a, b = O.des
+#     print(f"{O.res}\n{a}\n{b}\n{O.col}")
+# except AssertionError:
+#     print(f"{O.res}\n{O.des}\n{O.col}")
+
+# O = t.Naqi(pdict={
+#     'pm2' : 50,
+#     'pm10' : 100,
+#     'so2' : 100,
+#     'no2' : 100,
+#     'o3' : 100,
+#     'co' : 1000
+# })
+# O.set_res()
+# O.set_des()
+# O.set_col()
+# print(f"{O.res}\n{O.des}\n{O.col}")
+
+O = arr.Eaqi(pdict={
     'pm2' : 50,
     'pm10' : 100,
     'so2' : 100,
@@ -30,7 +62,7 @@ try:
 except AssertionError:
     print(f"{O.res}\n{O.des}\n{O.col}")
 
-O = t.Naqi(pdict={
+O = arr.Naqi(pdict={
     'pm2' : 50,
     'pm10' : 100,
     'so2' : 100,
