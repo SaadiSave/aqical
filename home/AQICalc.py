@@ -96,22 +96,33 @@ cls()
 a = None
 while True:
     try:
-        a = int(input("Choose an index:\n1\tEuropean Air Quality Index\n2\tNational Air Quality Index\nEnter a number from the options above\n> "))
-        assert((a == 1) or (a == 2))
+        a = int(input("Choose an index:\n1\tEuropean Air Quality Index\n2\tNational Air Quality Index\n3\tBombay Air Quality Index\nEnter a number from the options above\n> "))
+        assert((a == 1) or (a == 2) or (a == 3))
         break
     except AssertionError or ValueError: print("Enter only from one of the given options")
 
 print("\n\n")
 if a == 1:
-    O = t.Eaqi(pdict=pd)
-    O.set_res()
-    O.set_des()
-    O.set_col()
-    a, b = O.des
-    print(f"AQI: {O.res}\nHealthy individuals: {a}\nIndividuals with pre existing conditions: {b}")
+    E = t.Eaqi(pdict=pd)
+    E.set_res()
+    E.set_des()
+    E.set_col()
+    if isinstance(E.des, tuple):
+        a, b = E.des
+    else: a, b = ('Dead', 'Dead')
+    print(f"AQI: {E.res}\nHealthy individuals: {a}\nIndividuals with pre existing conditions: {b}")
 elif a == 2:
-    O = t.Naqi(pdict=pd)
-    O.set_res()
-    O.set_des()
-    O.set_col()
-    print(f"AQI: {O.res}\nDescription: {O.des}")
+    N = t.Naqi(pdict=pd)
+    N.set_res()
+    N.set_des()
+    N.set_col()
+    print(f"AQI: {N.res}\nDescription: {N.des}")
+elif a == 3:
+    B = t.Baqi(pdict=pd)
+    B.set_res()
+    B.set_des()
+    B.set_col()
+    if isinstance(B.des, tuple):
+        a, b = B.des
+    else: a, b = ('Dead', 'Dead')
+    print(f"AQI: {B.res}\nHealthy individuals: {a}\nIndividuals with pre existing conditions: {b}")

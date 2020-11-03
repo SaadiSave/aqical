@@ -165,6 +165,93 @@ class Naqi(Aqi):
         else:
             self.col = self.__colour.get(self.__idx, '#ffffff')
 
+class Baqi(Aqi):
+    def __init__(self, pdict) -> None:
+        Aqi.__init__(self, pdict)
+        try:
+            self.vals.pop('co')
+        except KeyError:
+            pass
+        if not self.vals:
+            raise ValueError("pdict should contain atleast one other pollutant than 'co' for Eaqi")
+        self.__BAQI: Dict[str, List[int]] = {
+            'AQI': [1, 2, 3, 4, 5],
+            'pm2': [10, 20, 25, 50, 75],
+            'pm10': [20, 40, 50, 100, 150],
+            'no2': [40, 90, 120, 230, 340],
+            'o3': [50, 100, 130, 240, 380],
+            'so2': [100, 200, 350, 500, 750]
+        }
+        self.__idx: int = 0
+        self.__DES: Dict[int, Tuple[str, str]] = {
+            1: ('The air quality is good. Enjoy your usual outdoor activities.',
+                'The air quality is good. Enjoy your usual outdoor activities.'),
+            2: ('Enjoy your usual outdoor activities.', 'Enjoy your usual outdoor activities.'),
+            3: ('Enjoy your usual outdoor activities.',
+                'Consider reducing intense outdoor activities, if you experience symptoms.'),
+            4: (
+            'Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.',
+            'Consider reducing physical activities, particularly outdoors, especially if you experience symptoms.'),
+            5: (
+            'Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.',
+            'Reduce physical activities, particularly outdoors, especially if you experience symptoms.'),
+            6: ('Reduce physical activities outdoors.', 'Avoid physical activities outdoors.')
+        }
+        self.__Ival: Dict[int, Tuple[int, int]] = {
+            1: (0, 50),
+            2: (51, 100),
+            3: (101, 200),
+            4: (201, 300),
+            5: (301, 400)
+        }
+        self.__colour: Dict[int, str] = {
+            1: '#00ffff',
+            2: '#00cc99',
+            3: '#ffff00',
+            4: '#f75133',
+            5: '#800000',
+            6: '#800080'
+        }
+    
+    def set_res(self):
+        caqi: List[int] = []
+        idx: List[int] = []
+        for i in self.vals:
+            thresh = self.__BAQI.get(i)
+            if self.vals.get(i) > thresh[4]:
+                caqi.append(int(round((((401 / thresh[4]) * (self.vals.get(i) - thresh[4])) + 401), 0)))
+                idx.append(6)
+            else:
+                j = 0
+                for j in thresh:
+                    if self.vals.get(i) <= j: break
+                idx.append(thresh.index(j) + 1)
+                if self.vals.get(i) < thresh[thresh.index(j) - 1] + 1:
+                    j = thresh[thresh.index(j) - 1]
+                x = thresh.index(j) + 1
+                Il, Ih = self.__Ival.get(x, (0, 0))
+                if thresh.index(j) != 0:
+                    Bl = thresh[thresh.index(j) - 1] + 1
+                else:
+                    Bl = 0
+                Bh = j
+                caqi.append(int(round(((((Ih - Il) / (Bh - Bl)) * (self.vals.get(i) - Bl)) + Il), 0)))
+
+        self.res = str(max(caqi))
+        self.__idx = max(idx)
+
+    def set_des(self):
+        if int(self.res) > 500:
+            self.des = 'DO NOT STEP OUTSIDE YOUR HOME. SHUT ALL WINDOWS.'
+        else:
+            self.des = self.__DES.get(self.__idx, '')
+
+    def set_col(self):
+        if self.des == 'DO NOT STEP OUTSIDE YOUR HOME. SHUT ALL WINDOWS.':
+            self.col = '#000000'
+        else:
+            self.col = self.__colour.get(self.__idx, '#ffffff')
+
 
 def convert(pollutant: str, value: float, unit: str):
     y = {
@@ -191,6 +278,7 @@ def compare(a: Tuple[int, int], b: Tuple[int, int]) -> Union[int, str]:
     """
     a1, a2 = a
     b1, b2 = b
+    c: Union[int, str]
     if (a1 <= a2) and (b1 <= b2):
         c = int(round((1 - ((b1 * a2) / (a1 * b2))) * 100, 0))
     else:

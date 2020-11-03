@@ -44,8 +44,8 @@ import usarr as arr
 # O.set_col()
 # print(f"{O.res}\n{O.des}\n{O.col}")
 
-O = arr.Eaqi(pdict={
-    'pm2' : 50,
+O = t.Eaqi(pdict={
+    'pm2' : 85,
     'pm10' : 100,
     'so2' : 100,
     'no2' : 100,
@@ -62,8 +62,8 @@ try:
 except AssertionError:
     print(f"{O.res}\n{O.des}\n{O.col}")
 
-O = arr.Naqi(pdict={
-    'pm2' : 50,
+O = t.Naqi(pdict={
+    'pm2' : 85,
     'pm10' : 100,
     'so2' : 100,
     'no2' : 100,
@@ -74,6 +74,24 @@ O.set_res()
 O.set_des()
 O.set_col()
 print(f"{O.res}\n{O.des}\n{O.col}")
+
+O = t.Baqi(pdict={
+    'pm2' : 85,
+    'pm10' : 100,
+    'so2' : 100,
+    'no2' : 100,
+    'o3' : 100,
+    'co' : 1000
+})
+O.set_res()
+O.set_des()
+O.set_col()
+try:
+    assert(isinstance(O.des, tuple))
+    a, b = O.des
+    print(f"{O.res}\n{a}\n{b}\n{O.col}")
+except AssertionError:
+    print(f"{O.res}\n{O.des}\n{O.col}")
 
 # s = aqim.aqi('ind', pdict={
 #     'pm2' : 56,
