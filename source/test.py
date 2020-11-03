@@ -1,7 +1,6 @@
 # A file to test the prog
 # import aqim
-import test2 as t
-import usarr as arr
+import aqi as t
 # O = aqim.aqi('eur', pdict={
 #     'pm2' : 50,
 #     'pm10' : 100,

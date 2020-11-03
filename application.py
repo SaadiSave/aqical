@@ -15,7 +15,7 @@
 #     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from typing import Dict
-from test2 import Eaqi, Naqi, convert
+from aqi import Eaqi, Naqi, convert
 from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
