@@ -243,8 +243,9 @@ class Baqi(Aqi):
                 for j in thresh:
                     if self.vals.get(i) <= j: break
                 idx.append(thresh.index(j) + 1)
-                if self.vals.get(i) < thresh[thresh.index(j) - 1] + 1:
-                    j = thresh[thresh.index(j) - 1]
+                if thresh.index(j) != 0:
+                    if self.vals.get(i) < thresh[thresh.index(j) - 1] + 1:
+                        j = thresh[thresh.index(j) - 1]
                 x = thresh.index(j) + 1
                 Il, Ih = self.__Ival.get(x, (0, 0))
                 if thresh.index(j) != 0:
