@@ -65,14 +65,14 @@ export class Eaqi extends Aqi {
             const x = this.vals.keys[i];
             let thresh = this.EAQI.getval(x);
             if (this.vals.getval(x) > thresh[5]) {
-                this.des = 'How are you still alive?'                
+                this.des = 'How are you still alive?'
             }
             let j = 0;
             for (let k = 0; k < thresh.length; k++) {
                 j = thresh[k];
                 if (this.vals.getval(x) <= j) {
                     break
-                }                
+                }
             }
             let y = thresh.indexOf(j) + 1;
             caqi.push(y);
@@ -131,7 +131,7 @@ export class Naqi extends Aqi {
                     j = thresh[k];
                     if (this.vals.getval(x) <= j) {
                         break
-                    }                
+                    }
                 }
                 let y = thresh.indexOf(j) + 1;
                 ind.push(y);
