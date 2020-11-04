@@ -182,7 +182,7 @@ export function convert(pollutant: string, value: number, unit: string): number 
     return Math.round(value * 100) / 100
 }
 
-export function compare(a: Array<number>, b: Array<number>): number | undefined {
+export function compare(a: Array<number>, b: Array<number>): number | any {
     /*
     a is the index to be compared with b 
     format:

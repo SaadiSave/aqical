@@ -79,7 +79,8 @@ var Eaqi = (function (_super) {
     };
     Eaqi.prototype.setdes = function () {
         if (this.des === '') {
-            this.des = "Healthy Individuals: " + this.DES.getval(this.idx, ['Invalid', 'Invalid'])[0] + " \nIndividuals with pre-existing conditions: " + this.DES.getval(this.idx, ['Invalid', 'Invalid'])[1];
+            var _a = this.DES.getval(this.idx, ['Invalid', 'Invalid']), a = _a[0], b = _a[1];
+            this.des = "Healthy Individuals: " + a + " \nIndividuals with pre-existing conditions: " + b;
         }
     };
     Eaqi.prototype.setcol = function () {
@@ -169,3 +170,35 @@ var Naqi = (function (_super) {
     return Naqi;
 })(Aqi);
 exports.Naqi = Naqi;
+function convert(pollutant, value, unit) {
+    var y = new dict(['co', 'no2', 'o3', 'so2'], [28, 46, 48, 64]);
+    if (unit === 'ppm') {
+        var m = y.getval(pollutant);
+        value = value * 40.9 * m;
+    }
+    else if (unit === 'ppb') {
+        var m = y.getval(pollutant);
+        value = value * 0.0409 * m;
+    }
+    else { }
+    return Math.round(value * 100) / 100;
+}
+exports.convert = convert;
+function compare(a, b) {
+    /*
+    a is the index to be compared with b
+    format:
+    a = [aval, amax]
+    b = [bval, bmax]
+    compare(a, b)
+    */
+    var a1 = a[0], a2 = a[1];
+    var b1 = b[0], b2 = b[1];
+    if ((a1 <= a2) && (b1 <= b2)) {
+        return Math.round((1 - ((b1 * a2) / (a1 * b2))) * 100);
+    }
+    else {
+        return undefined;
+    }
+}
+exports.compare = compare;
