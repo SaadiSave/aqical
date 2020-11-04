@@ -123,10 +123,7 @@ if a == 1:
     E.set_res()
     E.set_des()
     E.set_col()
-    if isinstance(E.des, tuple):
-        a, b = E.des
-    else: a, b = ('Dead', 'Dead')
-    print(f"AQI: {E.res}\nHealthy individuals: {a}\nIndividuals with pre existing conditions: {b}")
+    print(f"AQI: {E.res}\n{E.des}")
 elif a == 2:
     N = t.Naqi(pdict=pd)
     N.set_res()
@@ -138,7 +135,4 @@ elif a == 3:
     B.set_res()
     B.set_des()
     B.set_col()
-    if isinstance(B.des, tuple):
-        a, b = B.des
-    else: a, b = ('Dead', 'Dead')
-    print(f"AQI: {B.res}\nHealthy individuals: {a}\nIndividuals with pre existing conditions: {b}")
+    print(f"AQI: {B.res}\n{B.des}")
