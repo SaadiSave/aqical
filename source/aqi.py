@@ -55,17 +55,11 @@ class Eaqi(Aqi):
         }
         self.__idx: int = 0
         self.__DES: Dict[int, Tuple[str, str]] = {
-            1: ('The air quality is good. Enjoy your usual outdoor activities.',
-                'The air quality is good. Enjoy your usual outdoor activities.'),
+            1: ('The air quality is good. Enjoy your usual outdoor activities.', 'The air quality is good. Enjoy your usual outdoor activities.'),
             2: ('Enjoy your usual outdoor activities.', 'Enjoy your usual outdoor activities.'),
-            3: ('Enjoy your usual outdoor activities.',
-                'Consider reducing intense outdoor activities, if you experience symptoms.'),
-            4: (
-            'Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.',
-            'Consider reducing physical activities, particularly outdoors, especially if you experience symptoms.'),
-            5: (
-            'Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.',
-            'Reduce physical activities, particularly outdoors, especially if you experience symptoms.'),
+            3: ('Enjoy your usual outdoor activities.', 'Consider reducing intense outdoor activities, if you experience symptoms.'),
+            4: ('Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.', 'Consider reducing physical activities, particularly outdoors, especially if you experience symptoms.'),
+            5: ('Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.', 'Reduce physical activities, particularly outdoors, especially if you experience symptoms.'),
             6: ('Reduce physical activities outdoors.', 'Avoid physical activities outdoors.')
         }
         self.__colour: Dict[int, str] = {
@@ -201,17 +195,11 @@ class Baqi(Aqi):
         }
         self.__idx: int = 0
         self.__DES: Dict[int, Tuple[str, str]] = {
-            1: ('The air quality is good. Enjoy your usual outdoor activities.',
-                'The air quality is good. Enjoy your usual outdoor activities.'),
+            1: ('The air quality is good. Enjoy your usual outdoor activities.', 'The air quality is good. Enjoy your usual outdoor activities.'),
             2: ('Enjoy your usual outdoor activities.', 'Enjoy your usual outdoor activities.'),
-            3: ('Enjoy your usual outdoor activities.',
-                'Consider reducing intense outdoor activities, if you experience symptoms.'),
-            4: (
-            'Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.',
-            'Consider reducing physical activities, particularly outdoors, especially if you experience symptoms.'),
-            5: (
-            'Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.',
-            'Reduce physical activities, particularly outdoors, especially if you experience symptoms.'),
+            3: ('Enjoy your usual outdoor activities.', 'Consider reducing intense outdoor activities, if you experience symptoms.'),
+            4: ('Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.', 'Consider reducing physical activities, particularly outdoors, especially if you experience symptoms.'),
+            5: ('Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.', 'Reduce physical activities, particularly outdoors, especially if you experience symptoms.'),
             6: ('Reduce physical activities outdoors.', 'Avoid physical activities outdoors.')
         }
         self.__Ival: Dict[int, Tuple[int, int]] = {
@@ -262,8 +250,8 @@ class Baqi(Aqi):
         if int(self.res) > 500:
             self.des = 'DO NOT STEP OUTSIDE YOUR HOME. SHUT ALL WINDOWS.'
         else:
-            a = self.__DES.get(self.__idx, ('Invalid', 'Invalid'))
-            self.des = f'Healthy Individuals: {a[0]} \nIndividuals with pre-existing conditions: {a[1]}'
+            a, b = self.__DES.get(self.__idx, ('Invalid', 'Invalid'))
+            self.des = f'Healthy Individuals: {a} \nIndividuals with pre-existing conditions: {b}'
 
     def set_col(self):
         if self.des == 'DO NOT STEP OUTSIDE YOUR HOME. SHUT ALL WINDOWS.':
