@@ -9,7 +9,7 @@ export class dict {
             throw Error('The number of keys is not equal to the number of values. This dict is invalid.');
         }
     }
-    getval(key: any, otherwise: any = undefined) {
+    getval(key: any, otherwise: any = undefined): any {
         let x: number = this.keys.indexOf(key);
         if (x === -1) {
             return otherwise
@@ -82,7 +82,8 @@ export class Eaqi extends Aqi {
     }
     setdes() {
         if (this.des === '') {
-            this.des = `Healthy Individuals: ${this.DES.getval(this.idx, ['Invalid', 'Invalid'])[0]} \nIndividuals with pre-existing conditions: ${this.DES.getval(this.idx, ['Invalid', 'Invalid'])[1]}`
+            let [a, b] = this.DES.getval(this.idx, ['Invalid', 'Invalid']);
+            this.des = `Healthy Individuals: ${a} \nIndividuals with pre-existing conditions: ${b}`;
         }
     }
     setcol() {
@@ -167,4 +168,33 @@ export class Naqi extends Aqi {
             this.col = this.colour.getval(this.idx, '#ffffff')
         }
     }
+}
+
+export function convert(pollutant: string, value: number, unit: string): number {
+    let y = new dict(['co', 'no2', 'o3', 'so2'], [28, 46, 48, 64]);
+    if (unit === 'ppm') {
+        let m = y.getval(pollutant);
+        value = value * 40.9 * m;
+    } else if (unit === 'ppb') {
+        let m = y.getval(pollutant);
+        value = value * 0.0409 * m;
+    } else {}
+    return Math.round(value * 100) / 100
+}
+
+export function compare(a: Array<number>, b: Array<number>): number | undefined {
+    /*
+    a is the index to be compared with b 
+    format:
+    a = [aval, amax]
+    b = [bval, bmax]
+    compare(a, b)
+    */
+   let [a1, a2] = a;
+   let [b1, b2] = b;
+   if ((a1 <= a2) && (b1 <= b2)) {
+       return Math.round((1 - ((b1 * a2) / (a1 * b2))) * 100)
+   } else {
+       return undefined
+   }
 }
