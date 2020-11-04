@@ -16,9 +16,10 @@
 
 from typing import Dict
 from source.aqi import Eaqi, Naqi, convert
-from flask import Flask, redirect, render_template, request, session
+from flask import Flask, redirect, render_template, request, session, jsonify
 from flask_session import Session
 from tempfile import mkdtemp
+import json
 
 app = Flask(__name__)
 
@@ -92,3 +93,7 @@ def home():
             des1 = d.des
             color = d.col
         return render_template("home.html", f = show, color = color, des1 = des1)
+
+@app.route("/aqi", methods=["POST"])
+def aqi():
+    return request.body
