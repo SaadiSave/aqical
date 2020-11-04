@@ -24,7 +24,7 @@ class Aqi:
                 raise ValueError("invalid pollutant used")
         self.vals = pdict
         self.res: str = ''
-        self.des: Union[Tuple[str, str], str] = ''
+        self.des: str = ''
         self.col: str = ''
 
 
@@ -92,8 +92,8 @@ class Eaqi(Aqi):
 
     def set_des(self):
         if self.des == '':
-            self.des = self.__DES.get(self.__idx, 'Invalid')
-
+            a = self.__DES.get(self.__idx, ('Invalid', 'Invalid'))
+            self.des = f'Healthy Individuals: {a[0]} \nIndividuals with pre-existing conditions: {a[1]}'
     def set_col(self):
         if self.des == 'How are you even alive?':
             self.col = '#000000'
@@ -260,7 +260,8 @@ class Baqi(Aqi):
         if int(self.res) > 500:
             self.des = 'DO NOT STEP OUTSIDE YOUR HOME. SHUT ALL WINDOWS.'
         else:
-            self.des = self.__DES.get(self.__idx, '')
+            a = self.__DES.get(self.__idx, ('Invalid', 'Invalid'))
+            self.des = f'Healthy Individuals: {a[0]} \nIndividuals with pre-existing conditions: {a[1]}'
 
     def set_col(self):
         if self.des == 'DO NOT STEP OUTSIDE YOUR HOME. SHUT ALL WINDOWS.':
