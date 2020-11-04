@@ -6,3 +6,5 @@ O.setres();
 console.log(O.res);
 O.setdes();
 console.log(O.des);
+O.setcol();
+console.log(O.col);
