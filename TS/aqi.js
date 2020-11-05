@@ -183,17 +183,18 @@ var Mmaqi = (function (_super) {
             }
         }
         catch (error) { }
-        this.NAQI = new dict(['pm2', 'pm10', 'no2', 'o3', 'so2', 'co'], [[10, 20, 50, 75, 150], [20, 50, 75, 150, 230], [40, 80, 120, 230, 340], [50, 100, 130, 240, 380], [20, 80, 200, 500, 750], [20, 100, 150, 250, 340]]);
-        this.DES = new dict([1, 2, 3, 4, 5, 6], ['Good', 'Satisfactory', 'Moderate', 'Poor', 'Very Poor', 'Severe']);
+        this.MmAQI = new dict(['pm2', 'pm10', 'no2', 'o3', 'so2', 'co'], [[10, 25, 50, 75, 150], [20, 50, 75, 150, 230], [40, 80, 120, 230, 340], [50, 100, 130, 240, 380], [20, 80, 200, 500, 750], [20, 100, 150, 250, 340]]);
+        this.DES = new dict([1, 2, 3, 4, 5, 6, 7], ['Good', 'Fair', 'Moderate', 'Poor', 'Very Poor', 'Extremely Poor', 'Severe']);
+        this.HM = new dict([1, 2, 3, 4, 5, 6, 7], [['The air quality is good. Enjoy your usual outdoor activities.', 'The air quality is good. Enjoy your usual outdoor activities.'], ['Enjoy your usual outdoor activities.', 'Enjoy your usual outdoor activities.'], ['Enjoy your usual outdoor activities.', 'Consider reducing intense outdoor activities, if you experience symptoms.'], ['Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.', 'Consider reducing physical activities, particularly outdoors, especially if you experience symptoms.'], ['Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.', 'Reduce physical activities, particularly outdoors, especially if you experience symptoms.'], ['Reduce physical activities outdoors.', 'Avoid physical activities outdoors.'], ['Avoid physical activities outdoors.', 'Do not go outdoors.']]);
         this.Ival = new dict([1, 2, 3, 4, 5], [[0, 50], [51, 100], [101, 200], [201, 300], [301, 400]]);
-        this.colour = new dict([1, 2, 3, 4, 5, 6], ['#009933', '#58ff09', '#ffff00', '#ffa500', '#ff0000', '#990000']);
+        this.colour = new dict([1, 2, 3, 4, 5, 6, 7], ['#0000ff', '#00cc99', '#ffff00', '#f75133', '#800000', '#800080', '#000000']);
     }
     Mmaqi.prototype.setres = function () {
         var caqi = [];
         var ind = [];
         for (var i = 0; i < this.vals.keys.length; i++) {
             var x = this.vals.keys[i];
-            var thresh = this.NAQI.getval(x);
+            var thresh = this.MmAQI.getval(x);
             if (this.vals.getval(x) > thresh[4]) {
                 caqi.push(Math.round((((401 / thresh[4]) * (this.vals.getval(x) - thresh[4])) + 401)));
                 ind.push(6);
@@ -226,22 +227,16 @@ var Mmaqi = (function (_super) {
         }
         this.res = Math.max.apply(Math, caqi).toString();
         this.idx = Math.max.apply(Math, ind);
+        if (parseInt(this.res) > 500) {
+            this.idx = 7;
+        }
     };
     Mmaqi.prototype.setdes = function () {
-        if (parseInt(this.res) > 500) {
-            this.des = 'Severe. Avoid going outdoors.';
-        }
-        else {
-            this.des = this.DES.getval(this.idx);
-        }
+        var _a = this.HM.getval(this.idx, ['Invalid', 'Invalid']), a = _a[0], b = _a[1];
+        this.des = this.DES.getval(this.idx, 'Invalid') + "\nHealthy individuals: " + a + "\nIndividuals with pre-existing conditions: " + b;
     };
     Mmaqi.prototype.setcol = function () {
-        if (parseInt(this.res) > 700) {
-            this.col = '#000000';
-        }
-        else {
-            this.col = this.colour.getval(this.idx, '#ffffff');
-        }
+        this.col = this.colour.getval(this.idx, '#ffffff');
     };
     return Mmaqi;
 })(Aqi);
