@@ -98,7 +98,7 @@ export class Eaqi extends Aqi {
     setdes() {
         if (this.des === '') {
             let [a, b] = this.DES.getval(this.idx, ['Invalid', 'Invalid']);
-            this.des = `Healthy Individuals: ${a} \nIndividuals with pre-existing conditions: ${b}`;
+            this.des = `Health messages\nGeneral population: ${a} \nSensitive populations: ${b}`;
         }
     }
     setcol() {
@@ -129,6 +129,7 @@ export class Naqi extends Aqi {
         } catch (error) {}
         this.NAQI = new dict(['pm2', 'pm10', 'no2', 'o3', 'so2', 'co'], [[30, 60, 90, 120, 250], [50, 100, 250, 350, 430], [40, 80, 180, 280, 400], [50, 100, 168, 208, 748], [40, 80, 380, 800, 1600], [10, 20, 100, 170, 340]]);
         this.DES = new dict([1, 2, 3, 4, 5, 6], ['Good', 'Satisfactory', 'Moderate', 'Poor', 'Very Poor', 'Severe']);
+        this.HM = new dict([1, 2, 3,4, 5, 6], ['Minimal Impact', 'May cause minor breathing discomfort to sensitive people', 'May cause breathing discomfort to the people with lung disease such as asthma and discomfort to people with heart disease, children and older adults', 'May cause breathing discomfort to people on prolonged exposure and discomfort to people with heart disease with short exposure', 'May cause respiratory illness to the people on prolonged exposure. Effects may be more pronounced in people with lung and heart diseases', 'May cause respiratory effects even on healthy people and serious health impacts on people with lung/heart diseases. The health impacts may be experienced even during light physical activity'])
         this.Ival = new dict([1, 2, 3, 4, 5], [[0, 50], [51, 100], [101, 200], [201, 300], [301, 400]]);
         this.colour = new dict([1, 2, 3, 4, 5, 6], ['#009933', '#58ff09', '#ffff00', '#ffa500', '#ff0000', '#990000']);
     }
@@ -172,9 +173,9 @@ export class Naqi extends Aqi {
     }
     setdes() {
         if (parseInt(this.res) > 500) {
-            this.des = 'Severe. Avoid going outdoors.';
+            this.des = 'Extremely severe. Avoid going outdoors.';
         } else {
-            this.des = this.DES.getval(this.idx);
+            this.des = `Description: ${this.DES.getval(this.idx)}\nHealth messages: ${this.HM.getval(this.idx)}`;
         }
     }
     setcol() {
@@ -252,7 +253,7 @@ export class Mmaqi extends Aqi {
     }
     setdes() {
         let [a, b] = this.HM.getval(this.idx, ['Invalid', 'Invalid']);
-        this.des = `${this.DES.getval(this.idx, 'Invalid')}\nHealthy individuals: ${a}\nIndividuals with pre-existing conditions: ${b}`;
+        this.des = `${this.DES.getval(this.idx, 'Invalid')}\nHealth messages:\nGeneral population: ${a}\nSensitive populations: ${b}`;
     }
     setcol() {
         this.col = this.colour.getval(this.idx, '#ffffff');
@@ -271,7 +272,7 @@ export function convert(pollutant: string, value: number, unit: string): number 
     return Math.round(value * 100) / 100
 }
 
-export function compare(a: Array<number>, b: Array<number>): number | any {
+export function compare(a: Array<number>, b: Array<number>): number | string {
     /*
     a is the index to be compared with b 
     format:
@@ -284,6 +285,6 @@ export function compare(a: Array<number>, b: Array<number>): number | any {
    if ((a1 <= a2) && (b1 <= b2)) {
        return Math.round((1 - ((b1 * a2) / (a1 * b2))) * 100);
    } else {
-       return undefined;
+       return 'Invalid';
    }
 }
