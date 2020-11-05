@@ -170,6 +170,81 @@ export class Naqi extends Aqi {
     }
 }
 
+export class Mmaqi extends Aqi {
+    NAQI: dict;
+    idx: number;
+    DES: dict;
+    Ival: dict;
+    colour: dict;
+
+    constructor(pdict: dict) {
+        super(pdict);
+        try {
+            if (this.vals.getval('co') === undefined) {
+                throw Error('key co does not exist')
+            } else {
+                this.vals.update('co', (this.vals.getval('co') / 100))
+            }
+        } catch (error) {}
+        this.NAQI = new dict(['pm2', 'pm10', 'no2', 'o3', 'so2', 'co'], [[30, 60, 90, 120, 250], [50, 100, 250, 350, 430], [40, 80, 180, 280, 400], [50, 100, 168, 208, 748], [40, 80, 380, 800, 1600], [10, 20, 100, 170, 340]]);
+        this.DES = new dict([1, 2, 3, 4, 5, 6], ['Good', 'Satisfactory', 'Moderate', 'Poor', 'Very Poor', 'Severe']);
+        this.Ival = new dict([1, 2, 3, 4, 5], [[0, 50], [51, 100], [101, 200], [201, 300], [301, 400]]);
+        this.colour = new dict([1, 2, 3, 4, 5, 6], ['#009933', '#58ff09', '#ffff00', '#ffa500', '#ff0000', '#990000']);
+    }
+    setres() {
+        let caqi: Array<number> = [];
+        let ind: Array<number> = [];
+        for (let i = 0; i < this.vals.keys.length; i++) {
+            const x = this.vals.keys[i];
+            let thresh = this.NAQI.getval(x);
+            if (this.vals.getval(x) > thresh[4]) {
+                caqi.push(Math.round((((401 / thresh[4]) * (this.vals.getval(x) - thresh[4])) + 401)));
+                ind.push(6);
+            } else {
+                let j = 0;
+                for (let k = 0; k < thresh.length; k++) {
+                    j = thresh[k];
+                    if (this.vals.getval(x) <= j) {
+                        break
+                    }
+                }
+                let y = thresh.indexOf(j) + 1;
+                ind.push(y);
+                if (y !== 0) {
+                    if (this.vals.getval(x) < thresh[y - 1] + 1) {
+                        j = thresh[y - 1];
+                        y = thresh.indexOf(j);
+                    }
+                }
+                const z = y + 1;
+                let [Il, Ih] = this.Ival.getval(z, [0, 0]);
+                let Bl = 0;
+                if (y !== 0) {
+                    Bl = thresh[y - 1] + 1
+                }
+                let Bh = j;
+                caqi.push(Math.round((((Ih - Il) / (Bh - Bl)) * (this.vals.getval(x) - Bl)) + Il));
+            }
+        }
+        this.res = Math.max(...caqi).toString();
+        this.idx = Math.max(...ind);
+    }
+    setdes() {
+        if (parseInt(this.res) > 500) {
+            this.des = 'Severe. Avoid going outdoors.'
+        } else {
+            this.des = this.DES.getval(this.idx)
+        }
+    }
+    setcol() {
+        if (parseInt(this.res) > 700) {
+            this.col = '#000000'
+        } else {
+            this.col = this.colour.getval(this.idx, '#ffffff')
+        }
+    }
+}
+
 export function convert(pollutant: string, value: number, unit: string): number {
     let y = new dict(['co', 'no2', 'o3', 'so2'], [28, 46, 48, 64]);
     if (unit === 'ppm') {
