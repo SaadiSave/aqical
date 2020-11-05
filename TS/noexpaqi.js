@@ -3,6 +3,21 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+/* AQICALC for the calculation of air quality index
+    Copyright (C) 2020  Varun Jain , Saadi Save
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 var dict = (function () {
     function dict(keys, vals) {
         this.keys = keys;
@@ -78,7 +93,7 @@ var Eaqi = (function (_super) {
     Eaqi.prototype.setdes = function () {
         if (this.des === '') {
             var _a = this.DES.getval(this.idx, ['Invalid', 'Invalid']), a = _a[0], b = _a[1];
-            this.des = "Healthy Individuals: " + a + " \nIndividuals with pre-existing conditions: " + b;
+            this.des = "Health messages\nGeneral population: " + a + " \nSensitive populations: " + b;
         }
     };
     Eaqi.prototype.setcol = function () {
@@ -106,6 +121,7 @@ var Naqi = (function (_super) {
         catch (error) { }
         this.NAQI = new dict(['pm2', 'pm10', 'no2', 'o3', 'so2', 'co'], [[30, 60, 90, 120, 250], [50, 100, 250, 350, 430], [40, 80, 180, 280, 400], [50, 100, 168, 208, 748], [40, 80, 380, 800, 1600], [10, 20, 100, 170, 340]]);
         this.DES = new dict([1, 2, 3, 4, 5, 6], ['Good', 'Satisfactory', 'Moderate', 'Poor', 'Very Poor', 'Severe']);
+        this.HM = new dict([1, 2, 3, 4, 5, 6], ['Minimal Impact', 'May cause minor breathing discomfort to sensitive people', 'May cause breathing discomfort to the people with lung disease such as asthma and discomfort to people with heart disease, children and older adults', 'May cause breathing discomfort to people on prolonged exposure and discomfort to people with heart disease with short exposure', 'May cause respiratory illness to the people on prolonged exposure. Effects may be more pronounced in people with lung and heart diseases', 'May cause respiratory effects even on healthy people and serious health impacts on people with lung/heart diseases. The health impacts may be experienced even during light physical activity']);
         this.Ival = new dict([1, 2, 3, 4, 5], [[0, 50], [51, 100], [101, 200], [201, 300], [301, 400]]);
         this.colour = new dict([1, 2, 3, 4, 5, 6], ['#009933', '#58ff09', '#ffff00', '#ffa500', '#ff0000', '#990000']);
     }
@@ -150,10 +166,10 @@ var Naqi = (function (_super) {
     };
     Naqi.prototype.setdes = function () {
         if (parseInt(this.res) > 500) {
-            this.des = 'Severe. Avoid going outdoors.';
+            this.des = 'Extremely severe. Avoid going outdoors.';
         }
         else {
-            this.des = this.DES.getval(this.idx);
+            this.des = "Description: " + this.DES.getval(this.idx) + "\nHealth messages: " + this.HM.getval(this.idx);
         }
     };
     Naqi.prototype.setcol = function () {
@@ -179,17 +195,18 @@ var Mmaqi = (function (_super) {
             }
         }
         catch (error) { }
-        this.NAQI = new dict(['pm2', 'pm10', 'no2', 'o3', 'so2', 'co'], [[30, 60, 90, 120, 250], [50, 100, 250, 350, 430], [40, 80, 180, 280, 400], [50, 100, 168, 208, 748], [40, 80, 380, 800, 1600], [10, 20, 100, 170, 340]]);
-        this.DES = new dict([1, 2, 3, 4, 5, 6], ['Good', 'Satisfactory', 'Moderate', 'Poor', 'Very Poor', 'Severe']);
+        this.MmAQI = new dict(['pm2', 'pm10', 'no2', 'o3', 'so2', 'co'], [[10, 25, 50, 75, 150], [20, 50, 75, 150, 230], [40, 80, 120, 230, 340], [50, 100, 130, 240, 380], [20, 80, 200, 500, 750], [20, 100, 150, 250, 340]]);
+        this.DES = new dict([1, 2, 3, 4, 5, 6, 7], ['Good', 'Fair', 'Moderate', 'Poor', 'Very Poor', 'Extremely Poor', 'Severe']);
+        this.HM = new dict([1, 2, 3, 4, 5, 6, 7], [['The air quality is good. Enjoy your usual outdoor activities.', 'The air quality is good. Enjoy your usual outdoor activities.'], ['Enjoy your usual outdoor activities.', 'Enjoy your usual outdoor activities.'], ['Enjoy your usual outdoor activities.', 'Consider reducing intense outdoor activities, if you experience symptoms.'], ['Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.', 'Consider reducing physical activities, particularly outdoors, especially if you experience symptoms.'], ['Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.', 'Reduce physical activities, particularly outdoors, especially if you experience symptoms.'], ['Reduce physical activities outdoors.', 'Avoid physical activities outdoors.'], ['Avoid physical activities outdoors.', 'Do not go outdoors.']]);
         this.Ival = new dict([1, 2, 3, 4, 5], [[0, 50], [51, 100], [101, 200], [201, 300], [301, 400]]);
-        this.colour = new dict([1, 2, 3, 4, 5, 6], ['#009933', '#58ff09', '#ffff00', '#ffa500', '#ff0000', '#990000']);
+        this.colour = new dict([1, 2, 3, 4, 5, 6, 7], ['#0000ff', '#00cc99', '#ffff00', '#f75133', '#800000', '#800080', '#000000']);
     }
     Mmaqi.prototype.setres = function () {
         var caqi = [];
         var ind = [];
         for (var i = 0; i < this.vals.keys.length; i++) {
             var x = this.vals.keys[i];
-            var thresh = this.NAQI.getval(x);
+            var thresh = this.MmAQI.getval(x);
             if (this.vals.getval(x) > thresh[4]) {
                 caqi.push(Math.round((((401 / thresh[4]) * (this.vals.getval(x) - thresh[4])) + 401)));
                 ind.push(6);
@@ -222,22 +239,16 @@ var Mmaqi = (function (_super) {
         }
         this.res = Math.max.apply(Math, caqi).toString();
         this.idx = Math.max.apply(Math, ind);
+        if (parseInt(this.res) > 500) {
+            this.idx = 7;
+        }
     };
     Mmaqi.prototype.setdes = function () {
-        if (parseInt(this.res) > 500) {
-            this.des = 'Severe. Avoid going outdoors.';
-        }
-        else {
-            this.des = this.DES.getval(this.idx);
-        }
+        var _a = this.HM.getval(this.idx, ['Invalid', 'Invalid']), a = _a[0], b = _a[1];
+        this.des = this.DES.getval(this.idx, 'Invalid') + "\nHealth messages:\nGeneral population: " + a + "\nSensitive populations: " + b;
     };
     Mmaqi.prototype.setcol = function () {
-        if (parseInt(this.res) > 700) {
-            this.col = '#000000';
-        }
-        else {
-            this.col = this.colour.getval(this.idx, '#ffffff');
-        }
+        this.col = this.colour.getval(this.idx, '#ffffff');
     };
     return Mmaqi;
 })(Aqi);
@@ -268,6 +279,6 @@ function compare(a, b) {
         return Math.round((1 - ((b1 * a2) / (a1 * b2))) * 100);
     }
     else {
-        return undefined;
+        return 'Invalid';
     }
 }
