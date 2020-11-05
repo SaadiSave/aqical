@@ -176,7 +176,7 @@ class Naqi(Aqi):
         else:
             self.col = self.__colour.get(self.__idx, '#ffffff')
 
-class Baqi(Aqi):
+class Mmaqi(Aqi):
     def __init__(self, pdict) -> None:
         Aqi.__init__(self, pdict)
         try:
@@ -185,22 +185,33 @@ class Baqi(Aqi):
             pass
         if not self.vals:
             raise ValueError("pdict should contain atleast one other pollutant than 'co' for Eaqi")
-        self.__BAQI: Dict[str, List[int]] = {
+        self.__MmAQI: Dict[str, List[int]] = {
             'AQI': [1, 2, 3, 4, 5],
-            'pm2': [10, 20, 25, 50, 75],
-            'pm10': [20, 40, 50, 100, 150],
-            'no2': [40, 90, 120, 230, 340],
+            'pm2': [10, 25, 50, 75, 150],
+            'pm10': [20, 50, 75, 150, 230],
+            'no2': [40, 80, 120, 230, 340],
             'o3': [50, 100, 130, 240, 380],
-            'so2': [100, 200, 350, 500, 750]
+            'so2': [20, 80, 200, 500, 750],
+            'co' : [20, 100, 150, 250, 340]
         }
         self.__idx: int = 0
-        self.__DES: Dict[int, Tuple[str, str]] = {
+        self.__DES: Dict[int, str] = {
+            1: 'Good',
+            2: 'Fair',
+            3: 'Moderate',
+            4: 'Poor',
+            5: 'Very Poor',
+            6: 'Extremely poor',
+            7: 'Severe'
+        }
+        self.__HM: Dict[int, Tuple[str, str]] = {
             1: ('The air quality is good. Enjoy your usual outdoor activities.', 'The air quality is good. Enjoy your usual outdoor activities.'),
             2: ('Enjoy your usual outdoor activities.', 'Enjoy your usual outdoor activities.'),
             3: ('Enjoy your usual outdoor activities.', 'Consider reducing intense outdoor activities, if you experience symptoms.'),
             4: ('Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.', 'Consider reducing physical activities, particularly outdoors, especially if you experience symptoms.'),
             5: ('Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.', 'Reduce physical activities, particularly outdoors, especially if you experience symptoms.'),
-            6: ('Reduce physical activities outdoors.', 'Avoid physical activities outdoors.')
+            6: ('Reduce physical activities outdoors.', 'Avoid physical activities outdoors.'),
+            7: ('Avoid physical activities outdoors.', 'Do not go outdoors')
         }
         self.__Ival: Dict[int, Tuple[int, int]] = {
             1: (0, 50),
@@ -215,14 +226,15 @@ class Baqi(Aqi):
             3: '#ffff00',
             4: '#f75133',
             5: '#800000',
-            6: '#800080'
+            6: '#800080',
+            7: '#000000'
         }
 
     def set_res(self):
         caqi: List[int] = []
         idx: List[int] = []
         for i in self.vals:
-            thresh = self.__BAQI.get(i)
+            thresh = self.__MmAQI.get(i)
             if self.vals.get(i) > thresh[4]:
                 caqi.append(int(round((((401 / thresh[4]) * (self.vals.get(i) - thresh[4])) + 401), 0)))
                 idx.append(6)
@@ -247,17 +259,11 @@ class Baqi(Aqi):
         self.__idx = max(idx)
 
     def set_des(self):
-        if int(self.res) > 500:
-            self.des = 'DO NOT STEP OUTSIDE YOUR HOME. SHUT ALL WINDOWS.'
-        else:
-            a, b = self.__DES.get(self.__idx, ('Invalid', 'Invalid'))
-            self.des = f'Healthy Individuals: {a} \nIndividuals with pre-existing conditions: {b}'
+        a, b = self.__HM.get(self.__idx, ('Invalid', 'Invalid'))
+        self.des = f'{self.__DES.get(self.__idx)}Healthy Individuals: {a} \nIndividuals with pre-existing conditions: {b}'
 
     def set_col(self):
-        if self.des == 'DO NOT STEP OUTSIDE YOUR HOME. SHUT ALL WINDOWS.':
-            self.col = '#000000'
-        else:
-            self.col = self.__colour.get(self.__idx, '#ffffff')
+        self.col = self.__colour.get(self.__idx, '#ffffff')
 
 
 def convert(pollutant: str, value: float, unit: str):

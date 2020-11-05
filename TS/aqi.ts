@@ -99,6 +99,7 @@ export class Naqi extends Aqi {
     NAQI: dict;
     idx: number;
     DES: dict;
+    HM: dict;
     Ival: dict;
     colour: dict;
 
@@ -171,9 +172,10 @@ export class Naqi extends Aqi {
 }
 
 export class Mmaqi extends Aqi {
-    NAQI: dict;
+    MmAQI: dict;
     idx: number;
     DES: dict;
+    HM: dict;
     Ival: dict;
     colour: dict;
 
@@ -186,17 +188,18 @@ export class Mmaqi extends Aqi {
                 this.vals.update('co', (this.vals.getval('co') / 100))
             }
         } catch (error) {}
-        this.NAQI = new dict(['pm2', 'pm10', 'no2', 'o3', 'so2', 'co'], [[30, 60, 90, 120, 250], [50, 100, 250, 350, 430], [40, 80, 180, 280, 400], [50, 100, 168, 208, 748], [40, 80, 380, 800, 1600], [10, 20, 100, 170, 340]]);
-        this.DES = new dict([1, 2, 3, 4, 5, 6], ['Good', 'Satisfactory', 'Moderate', 'Poor', 'Very Poor', 'Severe']);
+        this.MmAQI = new dict(['pm2', 'pm10', 'no2', 'o3', 'so2', 'co'], [[10, 25, 50, 75, 150], [20, 50, 75, 150, 230], [40, 80, 120, 230, 340], [50, 100, 130, 240, 380], [20, 80, 200, 500, 750], [20, 100, 150, 250, 340]]);
+        this.DES = new dict([1, 2, 3, 4, 5, 6, 7], ['Good', 'Fair', 'Moderate', 'Poor', 'Very Poor', 'Extremely Poor', 'Severe']);
+        this.HM = new dict([1, 2, 3, 4, 5, 6, 7], [['The air quality is good. Enjoy your usual outdoor activities.', 'The air quality is good. Enjoy your usual outdoor activities.'], ['Enjoy your usual outdoor activities.', 'Enjoy your usual outdoor activities.'], ['Enjoy your usual outdoor activities.', 'Consider reducing intense outdoor activities, if you experience symptoms.'], ['Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.', 'Consider reducing physical activities, particularly outdoors, especially if you experience symptoms.'], ['Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.', 'Reduce physical activities, particularly outdoors, especially if you experience symptoms.'], ['Reduce physical activities outdoors.', 'Avoid physical activities outdoors.'], ['Avoid physical activities outdoors.', 'Do not go outdoors.']]);
         this.Ival = new dict([1, 2, 3, 4, 5], [[0, 50], [51, 100], [101, 200], [201, 300], [301, 400]]);
-        this.colour = new dict([1, 2, 3, 4, 5, 6], ['#009933', '#58ff09', '#ffff00', '#ffa500', '#ff0000', '#990000']);
+        this.colour = new dict([1, 2, 3, 4, 5, 6, 7], ['#0000ff', '#00cc99', '#ffff00', '#f75133', '#800000', '#800080', '#000000']);
     }
     setres() {
         let caqi: Array<number> = [];
         let ind: Array<number> = [];
         for (let i = 0; i < this.vals.keys.length; i++) {
             const x = this.vals.keys[i];
-            let thresh = this.NAQI.getval(x);
+            let thresh = this.MmAQI.getval(x);
             if (this.vals.getval(x) > thresh[4]) {
                 caqi.push(Math.round((((401 / thresh[4]) * (this.vals.getval(x) - thresh[4])) + 401)));
                 ind.push(6);
@@ -228,20 +231,16 @@ export class Mmaqi extends Aqi {
         }
         this.res = Math.max(...caqi).toString();
         this.idx = Math.max(...ind);
+        if (parseInt(this.res) > 500) {
+            this.idx = 7
+        }
     }
     setdes() {
-        if (parseInt(this.res) > 500) {
-            this.des = 'Severe. Avoid going outdoors.'
-        } else {
-            this.des = this.DES.getval(this.idx)
-        }
+        let [a, b] = this.HM.getval(this.idx, ['Invalid', 'Invalid']);
+        this.des = `${this.DES.getval(this.idx, 'Invalid')}\nHealthy individuals: ${a}\nIndividuals with pre-existing conditions: ${b}`;
     }
     setcol() {
-        if (parseInt(this.res) > 700) {
-            this.col = '#000000'
-        } else {
-            this.col = this.colour.getval(this.idx, '#ffffff')
-        }
+        this.col = this.colour.getval(this.idx, '#ffffff')
     }
 }
 

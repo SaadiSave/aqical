@@ -1,7 +1,7 @@
-import { Aqi, Eaqi, dict, Naqi } from './aqi';
+import { Aqi, Eaqi, dict, Naqi, Mmaqi } from './aqi';
 // Testing
-let pd = new dict(['pm2'], [260]);
-let O = new Naqi(pd);
+let pd = new dict(['co'], [42400]);
+let O = new Mmaqi(pd);
 O.setres();
 console.log(O.res);
 O.setdes();
