@@ -86,8 +86,9 @@ class Eaqi(Aqi):
 
     def set_des(self):
         if self.des == '':
-            a = self.__DES.get(self.__idx, ('Invalid', 'Invalid'))
-            self.des = f'Healthy Individuals: {a[0]} \nIndividuals with pre-existing conditions: {a[1]}'
+            a, b = self.__DES.get(self.__idx, ('Invalid', 'Invalid'))
+            self.des = f'Health messages:\nGeneral population: {a} \nSensitive populations: {b}'
+    
     def set_col(self):
         if self.des == 'How are you even alive?':
             self.col = '#000000'
@@ -119,6 +120,14 @@ class Naqi(Aqi):
             4: 'Poor',
             5: 'Very Poor',
             6: 'Severe'
+        }
+        self.__HM: Dict[int, str] = {
+            1: 'Minimal Impact',
+            2: 'May cause minor breathing discomfort to sensitive people',
+            3: 'May cause breathing discomfort to the people with lung disease such as asthma and discomfort to people with heart disease, children and older adults',
+            4: 'May cause breathing discomfort to people on prolonged exposure and discomfort to people with heart disease with short exposure',
+            5: 'May cause respiratory illness to the people on prolonged exposure. Effects may be more pronounced in people with lung and heart diseases',
+            6: 'May cause respiratory effects even on healthy people and serious health impacts on people with lung/heart diseases. The health impacts may be experienced even during light physical activity'
         }
         self.__Ival: Dict[int, Tuple[int, int]] = {
             1: (0, 50),
@@ -168,7 +177,7 @@ class Naqi(Aqi):
         if int(self.res) > 500:
             self.des = 'DO NOT STEP OUTSIDE YOUR HOME. SHUT ALL WINDOWS.'
         else:
-            self.des = self.__DES.get(self.__idx, '')
+            self.des = f'Description: {self.__DES.get(self.__idx)}\nHealth message: {self.__HM.get(self.__idx)}'
 
     def set_col(self):
         if self.des == 'DO NOT STEP OUTSIDE YOUR HOME. SHUT ALL WINDOWS.':
@@ -256,7 +265,7 @@ class Mmaqi(Aqi):
 
     def set_des(self):
         a, b = self.__HM.get(self.__idx, ('Invalid', 'Invalid'))
-        self.des = f'{self.__DES.get(self.__idx)}Healthy Individuals: {a} \nIndividuals with pre-existing conditions: {b}'
+        self.des = f'{self.__DES.get(self.__idx)}\nHealth messages:\nGeneral population: {a} \nSensitive populations: {b}'
 
     def set_col(self):
         self.col = self.__colour.get(self.__idx, '#ffffff')
