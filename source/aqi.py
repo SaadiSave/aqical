@@ -257,6 +257,8 @@ class Mmaqi(Aqi):
 
         self.res = str(max(caqi))
         self.__idx = max(idx)
+        if (int(self.res)> 500):
+            self.__idx = 7
 
     def set_des(self):
         a, b = self.__HM.get(self.__idx, ('Invalid', 'Invalid'))

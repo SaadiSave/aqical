@@ -12,9 +12,9 @@ export class dict {
     getval(key: any, otherwise: any = undefined): any {
         let x: number = this.keys.indexOf(key);
         if (x === -1) {
-            return otherwise
+            return otherwise;
         } else {
-            return this.vals[x]
+            return this.vals[x];
         }
     }
     update(key: any, val: any) {
@@ -23,7 +23,7 @@ export class dict {
             this.keys.push(key);
             this.vals.push(val);
         } else {
-            this.vals[x] = val
+            this.vals[x] = val;
         }
     }
 }
@@ -65,13 +65,13 @@ export class Eaqi extends Aqi {
             const x = this.vals.keys[i];
             let thresh = this.EAQI.getval(x);
             if (this.vals.getval(x) > thresh[5]) {
-                this.des = 'How are you still alive?'
+                this.des = 'How are you still alive?';
             }
             let j = 0;
             for (let k = 0; k < thresh.length; k++) {
                 j = thresh[k];
                 if (this.vals.getval(x) <= j) {
-                    break
+                    break;
                 }
             }
             let y = thresh.indexOf(j) + 1;
@@ -88,9 +88,9 @@ export class Eaqi extends Aqi {
     }
     setcol() {
         if (this.des === 'How are you still alive?') {
-            this.col = '#000000'
+            this.col = '#000000';
         } else {
-            this.col = this.colour.getval(this.idx, '#ffffff')
+            this.col = this.colour.getval(this.idx, '#ffffff');
         }
     }
 }
@@ -107,9 +107,9 @@ export class Naqi extends Aqi {
         super(pdict);
         try {
             if (this.vals.getval('co') === undefined) {
-                throw Error('key co does not exist')
+                throw Error('key co does not exist');
             } else {
-                this.vals.update('co', (this.vals.getval('co') / 100))
+                this.vals.update('co', (this.vals.getval('co') / 100));
             }
         } catch (error) {}
         this.NAQI = new dict(['pm2', 'pm10', 'no2', 'o3', 'so2', 'co'], [[30, 60, 90, 120, 250], [50, 100, 250, 350, 430], [40, 80, 180, 280, 400], [50, 100, 168, 208, 748], [40, 80, 380, 800, 1600], [10, 20, 100, 170, 340]]);
@@ -131,7 +131,7 @@ export class Naqi extends Aqi {
                 for (let k = 0; k < thresh.length; k++) {
                     j = thresh[k];
                     if (this.vals.getval(x) <= j) {
-                        break
+                        break;
                     }
                 }
                 let y = thresh.indexOf(j) + 1;
@@ -146,7 +146,7 @@ export class Naqi extends Aqi {
                 let [Il, Ih] = this.Ival.getval(z, [0, 0]);
                 let Bl = 0;
                 if (y !== 0) {
-                    Bl = thresh[y - 1] + 1
+                    Bl = thresh[y - 1] + 1;
                 }
                 let Bh = j;
                 caqi.push(Math.round((((Ih - Il) / (Bh - Bl)) * (this.vals.getval(x) - Bl)) + Il));
@@ -157,16 +157,16 @@ export class Naqi extends Aqi {
     }
     setdes() {
         if (parseInt(this.res) > 500) {
-            this.des = 'Severe. Avoid going outdoors.'
+            this.des = 'Severe. Avoid going outdoors.';
         } else {
-            this.des = this.DES.getval(this.idx)
+            this.des = this.DES.getval(this.idx);
         }
     }
     setcol() {
         if (parseInt(this.res) > 700) {
-            this.col = '#000000'
+            this.col = '#000000';
         } else {
-            this.col = this.colour.getval(this.idx, '#ffffff')
+            this.col = this.colour.getval(this.idx, '#ffffff');
         }
     }
 }
@@ -183,9 +183,9 @@ export class Mmaqi extends Aqi {
         super(pdict);
         try {
             if (this.vals.getval('co') === undefined) {
-                throw Error('key co does not exist')
+                throw Error('key co does not exist');
             } else {
-                this.vals.update('co', (this.vals.getval('co') / 100))
+                this.vals.update('co', (this.vals.getval('co') / 100));
             }
         } catch (error) {}
         this.MmAQI = new dict(['pm2', 'pm10', 'no2', 'o3', 'so2', 'co'], [[10, 25, 50, 75, 150], [20, 50, 75, 150, 230], [40, 80, 120, 230, 340], [50, 100, 130, 240, 380], [20, 80, 200, 500, 750], [20, 100, 150, 250, 340]]);
@@ -208,7 +208,7 @@ export class Mmaqi extends Aqi {
                 for (let k = 0; k < thresh.length; k++) {
                     j = thresh[k];
                     if (this.vals.getval(x) <= j) {
-                        break
+                        break;
                     }
                 }
                 let y = thresh.indexOf(j) + 1;
@@ -223,7 +223,7 @@ export class Mmaqi extends Aqi {
                 let [Il, Ih] = this.Ival.getval(z, [0, 0]);
                 let Bl = 0;
                 if (y !== 0) {
-                    Bl = thresh[y - 1] + 1
+                    Bl = thresh[y - 1] + 1;
                 }
                 let Bh = j;
                 caqi.push(Math.round((((Ih - Il) / (Bh - Bl)) * (this.vals.getval(x) - Bl)) + Il));
@@ -232,7 +232,7 @@ export class Mmaqi extends Aqi {
         this.res = Math.max(...caqi).toString();
         this.idx = Math.max(...ind);
         if (parseInt(this.res) > 500) {
-            this.idx = 7
+            this.idx = 7;
         }
     }
     setdes() {
@@ -240,7 +240,7 @@ export class Mmaqi extends Aqi {
         this.des = `${this.DES.getval(this.idx, 'Invalid')}\nHealthy individuals: ${a}\nIndividuals with pre-existing conditions: ${b}`;
     }
     setcol() {
-        this.col = this.colour.getval(this.idx, '#ffffff')
+        this.col = this.colour.getval(this.idx, '#ffffff');
     }
 }
 
@@ -267,8 +267,8 @@ export function compare(a: Array<number>, b: Array<number>): number | any {
    let [a1, a2] = a;
    let [b1, b2] = b;
    if ((a1 <= a2) && (b1 <= b2)) {
-       return Math.round((1 - ((b1 * a2) / (a1 * b2))) * 100)
+       return Math.round((1 - ((b1 * a2) / (a1 * b2))) * 100);
    } else {
-       return undefined
+       return undefined;
    }
 }
