@@ -95,7 +95,7 @@ var Eaqi = (function (_super) {
     Eaqi.prototype.setdes = function () {
         if (this.des === '') {
             var _a = this.DES.getval(this.idx, ['Invalid', 'Invalid']), a = _a[0], b = _a[1];
-            this.des = "Health messages\nGeneral population: " + a + " \nSensitive populations: " + b;
+            this.des = "Health messages:\nGeneral population: " + a + "\nSensitive populations: " + b;
         }
     };
     Eaqi.prototype.setcol = function () {
@@ -267,7 +267,6 @@ function convert(pollutant, value, unit) {
         var m = y.getval(pollutant);
         value = value * 0.0409 * m;
     }
-    else { }
     return Math.round(value * 100) / 100;
 }
 exports.convert = convert;

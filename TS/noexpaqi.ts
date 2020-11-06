@@ -98,7 +98,7 @@
         setdes() {
             if (this.des === '') {
                 let [a, b] = this.DES.getval(this.idx, ['Invalid', 'Invalid']);
-                this.des = `Health messages\nGeneral population: ${a} \nSensitive populations: ${b}`;
+                this.des = `Health messages:\nGeneral population: ${a}\nSensitive populations: ${b}`;
             }
         }
         setcol() {
@@ -268,7 +268,7 @@
         } else if (unit === 'ppb') {
             let m = y.getval(pollutant);
             value = value * 0.0409 * m;
-        } else {}
+        }
         return Math.round(value * 100) / 100
     }
     
