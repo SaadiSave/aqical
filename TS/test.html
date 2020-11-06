@@ -4,19 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script type="text/javascript" src="noexpaqi.js"></script>
+    <script src="noexpaqi.js"></script>
 </head>
 <body>
-    <script>
-        function exp() {
-            a = new dict(['pm2'], [7.5]);
-            O = new Naqi(a)
-            O.setres()
-            console.log(O.res)
-        }
-    </script>
+    <p id="ars"></p>
     <form>
-        <input type="button" value="Click" onclick="exp()">
+    <input type="button" value="Click" onclick="var a = new dict(['pm10'], [150]); O = new Mmaqi(a); O.setres(), O.setdes(); O.setcol(); document.getElementById('ars').innerText = `${O.res}\n${O.des}`; document.getElementById('ars').style.backgroundColor = O.col; if (O.col === '#000000'){document.getElementById('ars').style.color = '#ffffff'}">
     </form>
 </body>
 </html>
