@@ -87,7 +87,7 @@ class Eaqi(Aqi):
     def set_des(self):
         if self.des == '':
             a, b = self.__DES.get(self.__idx, ('Invalid', 'Invalid'))
-            self.des = f'Health messages:\nGeneral population: {a} \nSensitive populations: {b}'
+            self.des = f'Health messages:\nGeneral population: {a}\nSensitive populations: {b}'
     
     def set_col(self):
         if self.des == 'How are you even alive?':
@@ -175,12 +175,12 @@ class Naqi(Aqi):
 
     def set_des(self):
         if int(self.res) > 500:
-            self.des = 'DO NOT STEP OUTSIDE YOUR HOME. SHUT ALL WINDOWS.'
+            self.des = 'Extremely severe. Avoid going outdoors.'
         else:
             self.des = f'Description: {self.__DES.get(self.__idx)}\nHealth message: {self.__HM.get(self.__idx)}'
 
     def set_col(self):
-        if self.des == 'DO NOT STEP OUTSIDE YOUR HOME. SHUT ALL WINDOWS.':
+        if self.des == 'Extremely severe. Avoid going outdoors.':
             self.col = '#000000'
         else:
             self.col = self.__colour.get(self.__idx, '#ffffff')
@@ -189,7 +189,7 @@ class Mmaqi(Aqi):
     def __init__(self, pdict) -> None:
         Aqi.__init__(self, pdict)
         try:
-            self.vals.pop('co')
+            self.vals['co'] /= 100
         except KeyError:
             pass
         if not self.vals:
@@ -266,7 +266,7 @@ class Mmaqi(Aqi):
 
         self.res = str(max(caqi))
         self.__idx = max(idx)
-        if (int(self.res)> 500):
+        if (int(self.res) > 500):
             self.__idx = 7
 
     def set_des(self):
@@ -290,8 +290,6 @@ def convert(pollutant: str, value: float, unit: str):
     elif unit == 'ppb':
         mass = y[pollutant]
         value *= 0.0409 * mass
-    else:
-        pass
     return round(value, 2)
 
 
