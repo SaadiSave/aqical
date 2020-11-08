@@ -88,7 +88,7 @@ class Eaqi(Aqi):
         if self.des == '':
             a, b = self.__DES.get(self.__idx, ('Invalid', 'Invalid'))
             self.des = f'Health messages:\nGeneral population: {a}\nSensitive populations: {b}'
-
+    
     def set_col(self):
         if self.des == 'How are you even alive?':
             self.col = '#000000'
@@ -192,13 +192,15 @@ class Mmaqi(Aqi):
             self.vals['co'] /= 100
         except KeyError:
             pass
+        if not self.vals:
+            raise ValueError("pdict should contain atleast one other pollutant than 'co' for Eaqi")
         self.__MmAQI: Dict[str, List[int]] = {
             'AQI': [1, 2, 3, 4, 5],
             'pm2': [10, 25, 50, 75, 150],
             'pm10': [20, 50, 75, 150, 230],
             'no2': [40, 80, 120, 230, 340],
             'o3': [50, 100, 130, 240, 380],
-            'so2': [40, 80, 200, 500, 750],
+            'so2': [20, 80, 200, 500, 750],
             'co' : [20, 100, 150, 250, 340]
         }
         self.__idx: int = 0
