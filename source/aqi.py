@@ -192,8 +192,6 @@ class Mmaqi(Aqi):
             self.vals['co'] /= 100
         except KeyError:
             pass
-        if not self.vals:
-            raise ValueError("pdict should contain atleast one other pollutant than 'co' for Eaqi")
         self.__MmAQI: Dict[str, List[int]] = {
             'AQI': [1, 2, 3, 4, 5],
             'pm2': [10, 25, 50, 75, 150],
