@@ -94,6 +94,6 @@ def home():
             color = d.col
         return render_template("home.html", f = show, color = color, des1 = des1)
 
-@app.route("/aqi", methods=["POST"])
+@app.route("/aqi")
 def aqi():
-    return request.body
+    return render_template("homepage.html")
