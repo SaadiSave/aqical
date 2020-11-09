@@ -1,0 +1,108 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <link href="../static/1.css" rel="stylesheet">
+        <script type="text/javascript" src="../TS/noexpaqi.js"></script>
+        <title>AQI calculator Universal</title>
+    </head>
+    <body>
+        <script>
+            document.addEventListener('DOMContentLoaded',() => {
+                document.querySelector('#type').onchange = () => {
+                    if (document.querySelector('#type').value === 'Comp'){
+                        document.querySelector('#system').innerHTML = '<option value="EvN">EAQI vs NAQI</option><option value="EvM">EAQI vs Mmaqi</option><option value="MvN">Mmaqi vs NAQI</option>';
+                    } else {
+                        document.querySelector('#system').innerHTML = '<option value="EAQI">EAQI</option><option value="NAQI">NAQI</option><option value="Mmaqi">Mmaqi</option>';
+                    }
+                };
+            });
+            function isFloat(evt) {
+
+                var charCode = (event.which) ? event.which : event.keyCode;
+                if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+                    return false;
+                }
+                else {
+                    //if dot sign entered more than once then don't allow to enter dot sign again. 46 is the code for dot sign
+                    var parts = evt.srcElement.value.split('.');
+                    if (parts.length > 1 && charCode == 46)
+                      {
+                        return false;
+                      }
+
+
+                    return true;
+
+            }
+            }
+
+        </script>
+        <h1>AQI calculator Universal</h1>
+        <form action="/" method="post">
+            <div class="flex">
+            <div class="form">
+                {% if message %}
+                    <div><b>{{ message }}</b></div>
+                {% endif %}
+                <select name="type" id="type" style="width:230px">
+                    <option value="Comp">Comparision</option>
+                    <option value="SI">Single Index</option>
+                </select><p></p><br>
+                <select name="system" id="system" style="width:230px">
+                    <option value="EvN">EAQI vs NAQI</option>
+                    <option value="EvM">EAQI vs Mmaqi</option>
+                    <option value="MvN">Mmaqi vs NAQI</option>
+                </select><p></p><br>
+                <div class="input">
+                PM₂.₅ <input type="text" id="valuePM2.5" name="valuePM2.5" style="width: 100px; margin-left:10px" onkeypress="return isFloat(event)"  />
+                <select id="unitPM2.5" name="unitPM2.5">
+                    <option value="ug">µg/m³</option>
+                </select><p></p>
+                </div>
+                <div class="input">
+                PM₁₀ <input type="text" id="valuePM10" name="valuePM10" style="width: 100px; margin-left:15px" onkeypress="return isFloat(event)"  />
+                <select id="unitPM10" name="unitPM10">
+                    <option value="ug">µg/m³</option>
+                </select><p></p>
+                </div>
+                <div class="input">
+                CO <input type="text" id="valueCO" name="valueCO" style="width: 100px; margin-left:28px" onkeypress="return isFloat(event)"  />
+                <select id="unitCO" name="unitCO">
+                    <option value="ug">µg/m³</option>
+                    <option value="ppm">ppm</option>
+                    <option value="ppb">ppb</option>
+                </select><p></p>
+                </div>
+                <div class="input">
+                NO₂ <input type="text" id="valueNO2" name="valueNO2" style="width: 100px; margin-left:20px" onkeypress="return isFloat(event)"  />
+                <select id="unitNO2" name="unitNO2">
+                    <option value="ug">µg/m³</option>
+                    <option value="ppm">ppm</option>
+                    <option value="ppb">ppb</option>
+                </select><p></p>
+                </div>
+                <div class="input">
+                O₃ <input type="text" id="valueO3" name="valueO3" style="width: 100px; margin-left:32px" onkeypress="return isFloat(event)"  />
+                <select id="unitO3" name="unitO3">
+                    <option value="ug">µg/m³</option>
+                    <option value="ppm">ppm</option>
+                    <option value="ppb">ppb</option>
+                </select><p></p>
+                </div>
+                <div class="input">
+                SO₂ <input type="text" id="valueSO2" name="valueSO2" style="width: 100px; margin-left:23px" onkeypress="return isFloat(event)"  />
+                <select id="unitSO2" name="unitSO2">
+                    <option value="ug">µg/m³</option>
+                    <option value="ppm">ppm</option>
+                    <option value="ppb">ppb</option>
+                </select><p></p>
+                </div>
+                <div class="input">
+                </div>
+            </div>
+            <div id="result"></div>
+            </div>
+            <input id="submit" type="button" class="btn btn-primary" value="Submit" style="float:right; margin-right:15px;width:100px">
+            <input id="clear" type="button" class="btn btn-secondary" value="Clear" style="float:right; margin-right:15px;width:100px"><p></p>
+        </form>
