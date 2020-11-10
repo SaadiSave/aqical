@@ -9,19 +9,31 @@
     <body>
         <script>
             document.addEventListener('DOMContentLoaded',() => {
+                document.querySelectorAll('.output').forEach(result => {
+                    result.style.height = parseInt(document.querySelector('.flex').offsetHeight / 4);
+                });
                 document.querySelector('#type').onchange = () => {
                     if (document.querySelector('#type').value === 'Comp'){
-                        document.querySelector('#system').innerHTML = '<option value="EvN">EAQI vs NAQI</option><option value="EvM">EAQI vs MMAQI</option><option value="MvN">MMAQI vs NAQI</option>';
+                        document.querySelector('#system').innerHTML = '<option value="EvN">EAQI vs NAQI</option><option value="EvM">EAQI vs MMAQI</option><option value="MvN">MMAQI vs NAQI</option><option value="EvMvN">EAQI vs MMAQI va NAQI</option>';
                         document.querySelector('#co').style.display = 'block';
+                        document.querySelectorAll('.output').forEach(result => {
+                            result.style.display = 'none';
+                        });
+                        document.querySelector('#result1').style.display = 'block';
                     } else {
                         document.querySelector('#system').innerHTML = '<option value="EAQI">EAQI</option><option value="NAQI">NAQI</option><option value="MMAQI">MMAQI</option>';
                         document.querySelector('#co').style.display = 'none';
                         document.querySelector('#valueCO').value='';
+                        document.querySelectorAll('.output').forEach(result => {
+                            result.style.display = 'block';
+                        });
                     }
                 };
-                document.querySelector('#clear').addEventListener('click',() => {
-                   document.querySelector('#result').innerHTML = '';
-                   document.querySelector('#type').value="comp"
+                document.querySelector('#input').addEventListener('reset',() => {
+                   document.querySelectorAll('.output').forEach(result => {
+                       result.innerHTML = '';
+                   });
+                   document.querySelector('#type').value="comp";
                    document.querySelector('#system').innerHTML = '<option value="EvN">EAQI vs NAQI</option><option value="EvM">EAQI vs MMAQI</option><option value="MvN">MMAQI vs NAQI</option>';
                    document.querySelector('#co').style.display = 'block';
                 });
@@ -80,13 +92,14 @@
                     <div><b>{{ message }}</b></div>
                 {% endif %}
                 <select name="type" id="type" style="width:230px" class="form-control">
-                    <option value="Comp">Comparision</option>
+                    <option value="Comp" selected>Comparision</option>
                     <option value="SI">Single Index</option>
                 </select><p></p><br>
                 <select name="system" id="system" style="width:230px" class="form-control">
-                    <option value="EvN">EAQI vs NAQI</option>
+                    <option value="EvN" selected>EAQI vs NAQI</option>
                     <option value="EvM">EAQI vs Mmaqi</option>
                     <option value="MvN">Mmaqi vs NAQI</option>
+                    <option value="EvMvN">EAQI vs MMAQI va NAQI</option>
                 </select><p></p><br>
                 <div>
                 PM₂.₅ <input type="text" id="valuePM2" name="valuePM2" style="width: 100px; margin-left:10px" onkeypress="return isFloat(event)" class="input1" />
@@ -133,7 +146,11 @@
                 </select><p></p><br>
                 </div>
             </div>
-            <div id="result" class="output"></div>
+            <div>
+                <div id="result1" class="output">e</div>
+                <div id="result2" class="output" style="display:none">w</div>
+                <div id="result2" class="output" style="display:none">d</div>
+            </div>
             </div>
             <input id="submit" type="button" class="btn btn-primary" value="Submit" style="float:right; margin-right:15px;width:100px">
             <input id="clear" type="reset" class="btn btn-secondary" value="Clear" style="float:right; margin-right:15px;width:100px"><p></p>
