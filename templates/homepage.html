@@ -20,6 +20,9 @@
                 };
                 document.querySelector('#clear').addEventListener('click',() => {
                    document.querySelector('#result').innerHTML = '';
+                   document.querySelector('#type').value="comp"
+                   document.querySelector('#system').innerHTML = '<option value="EvN">EAQI vs NAQI</option><option value="EvM">EAQI vs MMAQI</option><option value="MvN">MMAQI vs NAQI</option>';
+                   document.querySelector('#co').style.display = 'block';
                 });
                 document.querySelector('#system').onchange = () => {
                     if (document.querySelector('#type').value === "SI" && document.querySelector('#system').value === "EAQI") {
