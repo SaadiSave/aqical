@@ -16,6 +16,7 @@
                     } else {
                         document.querySelector('#system').innerHTML = '<option value="EAQI">EAQI</option><option value="NAQI">NAQI</option><option value="MMAQI">MMAQI</option>';
                         document.querySelector('#co').style.display = 'none';
+                        document.querySelector('#valueCO').value='';
                     }
                 };
                 document.querySelector('#clear').addEventListener('click',() => {
@@ -27,9 +28,27 @@
                 document.querySelector('#system').onchange = () => {
                     if (document.querySelector('#type').value === "SI" && document.querySelector('#system').value === "EAQI") {
                         document.querySelector('#co').style.display = 'none';
+                        ddocument.querySelector('#valueCO').value='';
                     } else {
                         document.querySelector('#co').style.display = 'block';
                     }
+                };
+                document.querySelector('#submit').onclick = () => {
+                    let dict = {
+                        'pm2': parseInt(document.querySelector('#valuePM2').value),
+                        'pm10':parseInt(document.querySelector('#valuePM10').value),
+                        'no2':parseInt(document.querySelector('#valueNO2').value),
+                        'so2':parseInt(document.querySelector('#valueSO2').value),
+                        'o3':parseInt(document.querySelector('#valueO3').value),
+                        'co':parseInt(document.querySelector('#valueCO').value)
+                    };
+                    for (const key in dict){
+                        if (isNaN(dict[key])) {
+                            delete dict[key]
+                        }
+                    }
+                    console.log(dict);
+                    document.querySelector('#input').reset();
                 };
             });
             function isFloat(evt) {
@@ -54,7 +73,7 @@
 
         </script>
         <h1>AQI calculator Universal</h1>
-        <form action="/" method="post">
+        <form action="/" method="post" id="input">
             <div class="flex">
             <div class="form-group">
                 {% if message %}
@@ -70,8 +89,8 @@
                     <option value="MvN">Mmaqi vs NAQI</option>
                 </select><p></p><br>
                 <div>
-                PM₂.₅ <input type="text" id="valuePM2.5" name="valuePM2.5" style="width: 100px; margin-left:10px" onkeypress="return isFloat(event)" class="input1" />
-                <select id="unitPM2.5" name="unitPM2.5" class="input1">
+                PM₂.₅ <input type="text" id="valuePM2" name="valuePM2" style="width: 100px; margin-left:10px" onkeypress="return isFloat(event)" class="input1" />
+                <select id="unitPM2" name="unitPM2" class="input1">
                     <option value="ug">µg/m³</option>
                 </select><p></p><br>
                 </div>
