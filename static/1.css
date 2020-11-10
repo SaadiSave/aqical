@@ -11,3 +11,13 @@ h1 {
 form {
     margin-left: 15px;
 }
+
+.input1 {
+    border-radius: 5px;
+    border: solid 1px #CCCCCC;
+    height: 30px;
+}
+
+.output {
+    margin:15px;
+}

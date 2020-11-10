@@ -16,6 +16,9 @@
                         document.querySelector('#system').innerHTML = '<option value="EAQI">EAQI</option><option value="NAQI">NAQI</option><option value="Mmaqi">Mmaqi</option>';
                     }
                 };
+                document.querySelector('#clear').addEventListener('click',() => {
+                   document.querySelector('#result').innerHTML = '';
+                });
             });
             function isFloat(evt) {
 
@@ -41,68 +44,66 @@
         <h1>AQI calculator Universal</h1>
         <form action="/" method="post">
             <div class="flex">
-            <div class="form">
+            <div class="form-group">
                 {% if message %}
                     <div><b>{{ message }}</b></div>
                 {% endif %}
-                <select name="type" id="type" style="width:230px">
+                <select name="type" id="type" style="width:230px" class="form-control">
                     <option value="Comp">Comparision</option>
                     <option value="SI">Single Index</option>
                 </select><p></p><br>
-                <select name="system" id="system" style="width:230px">
+                <select name="system" id="system" style="width:230px" class="form-control">
                     <option value="EvN">EAQI vs NAQI</option>
                     <option value="EvM">EAQI vs Mmaqi</option>
                     <option value="MvN">Mmaqi vs NAQI</option>
                 </select><p></p><br>
-                <div class="input">
-                PM₂.₅ <input type="text" id="valuePM2.5" name="valuePM2.5" style="width: 100px; margin-left:10px" onkeypress="return isFloat(event)"  />
-                <select id="unitPM2.5" name="unitPM2.5">
+                <div>
+                PM₂.₅ <input type="text" id="valuePM2.5" name="valuePM2.5" style="width: 100px; margin-left:10px" onkeypress="return isFloat(event)" class="input1" />
+                <select id="unitPM2.5" name="unitPM2.5" class="input1">
                     <option value="ug">µg/m³</option>
-                </select><p></p>
+                </select><p></p><br>
                 </div>
-                <div class="input">
-                PM₁₀ <input type="text" id="valuePM10" name="valuePM10" style="width: 100px; margin-left:15px" onkeypress="return isFloat(event)"  />
-                <select id="unitPM10" name="unitPM10">
+                <div>
+                PM₁₀ <input type="text" id="valuePM10" name="valuePM10" style="width: 100px; margin-left:15px" onkeypress="return isFloat(event)" class="input1"  />
+                <select id="unitPM10" name="unitPM10" class="input1">
                     <option value="ug">µg/m³</option>
-                </select><p></p>
+                </select><p></p><br>
                 </div>
-                <div class="input">
-                CO <input type="text" id="valueCO" name="valueCO" style="width: 100px; margin-left:28px" onkeypress="return isFloat(event)"  />
-                <select id="unitCO" name="unitCO">
-                    <option value="ug">µg/m³</option>
-                    <option value="ppm">ppm</option>
-                    <option value="ppb">ppb</option>
-                </select><p></p>
-                </div>
-                <div class="input">
-                NO₂ <input type="text" id="valueNO2" name="valueNO2" style="width: 100px; margin-left:20px" onkeypress="return isFloat(event)"  />
-                <select id="unitNO2" name="unitNO2">
+                <div>
+                CO <input type="text" id="valueCO" name="valueCO" style="width: 100px; margin-left:28px" onkeypress="return isFloat(event)" class="input1"  />
+                <select id="unitCO" name="unitCO" class="input1">
                     <option value="ug">µg/m³</option>
                     <option value="ppm">ppm</option>
                     <option value="ppb">ppb</option>
-                </select><p></p>
+                </select><p></p><br>
                 </div>
-                <div class="input">
-                O₃ <input type="text" id="valueO3" name="valueO3" style="width: 100px; margin-left:32px" onkeypress="return isFloat(event)"  />
-                <select id="unitO3" name="unitO3">
+                <div>
+                NO₂ <input type="text" id="valueNO2" name="valueNO2" style="width: 100px; margin-left:20px" onkeypress="return isFloat(event)" class="input1"  />
+                <select id="unitNO2" name="unitNO2" class="input1">
                     <option value="ug">µg/m³</option>
                     <option value="ppm">ppm</option>
                     <option value="ppb">ppb</option>
-                </select><p></p>
+                </select><p></p><br>
                 </div>
-                <div class="input">
-                SO₂ <input type="text" id="valueSO2" name="valueSO2" style="width: 100px; margin-left:23px" onkeypress="return isFloat(event)"  />
-                <select id="unitSO2" name="unitSO2">
+                <div>
+                O₃ <input type="text" id="valueO3" name="valueO3" style="width: 100px; margin-left:32px" onkeypress="return isFloat(event)" class="input1"  />
+                <select id="unitO3" name="unitO3" class="input1">
                     <option value="ug">µg/m³</option>
                     <option value="ppm">ppm</option>
                     <option value="ppb">ppb</option>
-                </select><p></p>
+                </select><p></p><br>
                 </div>
-                <div class="input">
+                <div>
+                SO₂ <input type="text" id="valueSO2" name="valueSO2" style="width: 100px; margin-left:23px" onkeypress="return isFloat(event)" class="input1"  />
+                <select id="unitSO2" name="unitSO2" class="input1">
+                    <option value="ug">µg/m³</option>
+                    <option value="ppm">ppm</option>
+                    <option value="ppb">ppb</option>
+                </select><p></p><br>
                 </div>
             </div>
-            <div id="result"></div>
+            <div id="result" class="output"></div>
             </div>
             <input id="submit" type="button" class="btn btn-primary" value="Submit" style="float:right; margin-right:15px;width:100px">
-            <input id="clear" type="button" class="btn btn-secondary" value="Clear" style="float:right; margin-right:15px;width:100px"><p></p>
+            <input id="clear" type="reset" class="btn btn-secondary" value="Clear" style="float:right; margin-right:15px;width:100px"><p></p>
         </form>
