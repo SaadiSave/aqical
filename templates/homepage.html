@@ -11,14 +11,23 @@
             document.addEventListener('DOMContentLoaded',() => {
                 document.querySelector('#type').onchange = () => {
                     if (document.querySelector('#type').value === 'Comp'){
-                        document.querySelector('#system').innerHTML = '<option value="EvN">EAQI vs NAQI</option><option value="EvM">EAQI vs Mmaqi</option><option value="MvN">Mmaqi vs NAQI</option>';
+                        document.querySelector('#system').innerHTML = '<option value="EvN">EAQI vs NAQI</option><option value="EvM">EAQI vs MMAQI</option><option value="MvN">MMAQI vs NAQI</option>';
+                        document.querySelector('#co').style.display = 'block';
                     } else {
-                        document.querySelector('#system').innerHTML = '<option value="EAQI">EAQI</option><option value="NAQI">NAQI</option><option value="Mmaqi">Mmaqi</option>';
+                        document.querySelector('#system').innerHTML = '<option value="EAQI">EAQI</option><option value="NAQI">NAQI</option><option value="MMAQI">MMAQI</option>';
+                        document.querySelector('#co').style.display = 'none';
                     }
                 };
                 document.querySelector('#clear').addEventListener('click',() => {
                    document.querySelector('#result').innerHTML = '';
                 });
+                document.querySelector('#system').onchange = () => {
+                    if (document.querySelector('#type').value === "SI" && document.querySelector('#system').value === "EAQI") {
+                        document.querySelector('#co').style.display = 'none';
+                    } else {
+                        document.querySelector('#co').style.display = 'block';
+                    }
+                };
             });
             function isFloat(evt) {
 
@@ -70,14 +79,6 @@
                 </select><p></p><br>
                 </div>
                 <div>
-                CO <input type="text" id="valueCO" name="valueCO" style="width: 100px; margin-left:28px" onkeypress="return isFloat(event)" class="input1"  />
-                <select id="unitCO" name="unitCO" class="input1">
-                    <option value="ug">µg/m³</option>
-                    <option value="ppm">ppm</option>
-                    <option value="ppb">ppb</option>
-                </select><p></p><br>
-                </div>
-                <div>
                 NO₂ <input type="text" id="valueNO2" name="valueNO2" style="width: 100px; margin-left:20px" onkeypress="return isFloat(event)" class="input1"  />
                 <select id="unitNO2" name="unitNO2" class="input1">
                     <option value="ug">µg/m³</option>
@@ -96,6 +97,14 @@
                 <div>
                 SO₂ <input type="text" id="valueSO2" name="valueSO2" style="width: 100px; margin-left:23px" onkeypress="return isFloat(event)" class="input1"  />
                 <select id="unitSO2" name="unitSO2" class="input1">
+                    <option value="ug">µg/m³</option>
+                    <option value="ppm">ppm</option>
+                    <option value="ppb">ppb</option>
+                </select><p></p><br>
+                </div>
+                <div id="co">
+                CO <input type="text" id="valueCO" name="valueCO" style="width: 100px; margin-left:28px" onkeypress="return isFloat(event)" class="input1"  />
+                <select id="unitCO" name="unitCO" class="input1">
                     <option value="ug">µg/m³</option>
                     <option value="ppm">ppm</option>
                     <option value="ppb">ppb</option>
