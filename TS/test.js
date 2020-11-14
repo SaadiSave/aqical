@@ -1,7 +1,9 @@
-var aqi_1 = require('./aqi');
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const aqi_1 = require("./aqi");
 // Testing
-var pd = new aqi_1.dict(['co'], [42400]);
-var O = new aqi_1.Mmaqi(pd);
+let pd = new aqi_1.dict(['co'], [34400]);
+let O = new aqi_1.Mmaqi(pd);
 O.setres();
 console.log(O.res);
 O.setdes();

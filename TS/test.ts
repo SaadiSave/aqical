@@ -1,6 +1,6 @@
 import { Aqi, Eaqi, dict, Naqi, Mmaqi } from './aqi';
 // Testing
-let pd = new dict(['co'], [42400]);
+let pd = new dict(['co'], [34400]);
 let O = new Mmaqi(pd);
 O.setres();
 console.log(O.res);

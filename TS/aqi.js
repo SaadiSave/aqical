@@ -1,3 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.compare = exports.convert = exports.Mmaqi = exports.Naqi = exports.Eaqi = exports.Aqi = exports.dict = void 0;
 /* AQICALC for the calculation of air quality index
     Copyright (C) 2020  Varun Jain , Saadi Save
 
@@ -13,7 +16,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-export class dict {
+class dict {
     constructor(keys, vals) {
         this.keys = keys;
         this.vals = vals;
@@ -41,13 +44,15 @@ export class dict {
         }
     }
 }
-export class Aqi {
+exports.dict = dict;
+class Aqi {
     constructor(pdict) {
         this.vals = pdict;
         this.des = '';
     }
 }
-export class Eaqi extends Aqi {
+exports.Aqi = Aqi;
+class Eaqi extends Aqi {
     constructor(pdict) {
         super(pdict);
         let x = this.vals.keys.indexOf('co');
@@ -96,7 +101,8 @@ export class Eaqi extends Aqi {
         }
     }
 }
-export class Naqi extends Aqi {
+exports.Eaqi = Eaqi;
+class Naqi extends Aqi {
     constructor(pdict) {
         super(pdict);
         try {
@@ -170,7 +176,8 @@ export class Naqi extends Aqi {
         }
     }
 }
-export class Mmaqi extends Aqi {
+exports.Naqi = Naqi;
+class Mmaqi extends Aqi {
     constructor(pdict) {
         super(pdict);
         try {
@@ -238,7 +245,8 @@ export class Mmaqi extends Aqi {
         this.col = this.colour.getval(this.idx, '#ffffff');
     }
 }
-export function convert(pollutant, value, unit) {
+exports.Mmaqi = Mmaqi;
+function convert(pollutant, value, unit) {
     let y = new dict(['co', 'no2', 'o3', 'so2'], [28, 46, 48, 64]);
     if (unit === 'ppm') {
         let m = y.getval(pollutant);
@@ -250,7 +258,8 @@ export function convert(pollutant, value, unit) {
     }
     return Math.round(value * 100) / 100;
 }
-export function compare(a, b) {
+exports.convert = convert;
+function compare(a, b) {
     /*
     a is the index to be compared with b
     format:
@@ -267,3 +276,4 @@ export function compare(a, b) {
         return 'Invalid';
     }
 }
+exports.compare = compare;
