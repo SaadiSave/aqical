@@ -22,7 +22,7 @@ class dict {
         }
     }
     getval(key, otherwise = undefined) {
-        let x = this.keys.indexOf(key);
+        const x = this.keys.indexOf(key);
         if (x === -1) {
             return otherwise;
         }
@@ -31,7 +31,7 @@ class dict {
         }
     }
     update(key, val) {
-        let x = this.keys.indexOf(key);
+        const x = this.keys.indexOf(key);
         if (x === -1) {
             this.keys.push(key);
             this.vals.push(val);
@@ -50,7 +50,7 @@ class Aqi {
 class Eaqi extends Aqi {
     constructor(pdict) {
         super(pdict);
-        let x = this.vals.keys.indexOf('co');
+        const x = this.vals.keys.indexOf('co');
         if (x !== -1) {
             this.vals.keys.splice(x, 1);
             this.vals.vals.splice(x, 1);
@@ -61,10 +61,10 @@ class Eaqi extends Aqi {
         this.colour = new dict([1, 2, 3, 4, 5, 6], ['#0000ff', '#00cc99', '#ffff00', '#f75133', '#800000', '#800080']);
     }
     setres() {
-        let caqi = [];
+        const caqi = [];
         for (let i = 0; i < this.vals.keys.length; i++) {
             const x = this.vals.keys[i];
-            let thresh = this.EAQI.getval(x);
+            const thresh = this.EAQI.getval(x);
             if (this.vals.getval(x) > thresh[5]) {
                 this.des = 'How are you still alive?';
             }
@@ -75,7 +75,7 @@ class Eaqi extends Aqi {
                     break;
                 }
             }
-            let y = thresh.indexOf(j) + 1;
+            const y = thresh.indexOf(j) + 1;
             caqi.push(y);
         }
         this.idx = Math.max(...caqi);
@@ -83,7 +83,7 @@ class Eaqi extends Aqi {
     }
     setdes() {
         if (this.des === '') {
-            let [a, b] = this.DES.getval(this.idx, ['Invalid', 'Invalid']);
+            const [a, b] = this.DES.getval(this.idx, ['Invalid', 'Invalid']);
             this.des = `Health messages:\nGeneral population: ${a}\nSensitive populations: ${b}`;
         }
     }
@@ -115,11 +115,11 @@ class Naqi extends Aqi {
         this.colour = new dict([1, 2, 3, 4, 5, 6], ['#009933', '#58ff09', '#ffff00', '#ffa500', '#ff0000', '#990000']);
     }
     setres() {
-        let caqi = [];
-        let ind = [];
+        const caqi = [];
+        const ind = [];
         for (let i = 0; i < this.vals.keys.length; i++) {
             const x = this.vals.keys[i];
-            let thresh = this.NAQI.getval(x);
+            const thresh = this.NAQI.getval(x);
             if (this.vals.getval(x) > thresh[4]) {
                 caqi.push(Math.round((((401 / thresh[4]) * (this.vals.getval(x) - thresh[4])) + 401)));
                 ind.push(6);
@@ -141,12 +141,12 @@ class Naqi extends Aqi {
                     }
                 }
                 const z = y + 1;
-                let [Il, Ih] = this.Ival.getval(z, [0, 0]);
+                const [Il, Ih] = this.Ival.getval(z, [0, 0]);
                 let Bl = 0;
                 if (y !== 0) {
                     Bl = thresh[y - 1] + 1;
                 }
-                let Bh = j;
+                const Bh = j;
                 caqi.push(Math.round((((Ih - Il) / (Bh - Bl)) * (this.vals.getval(x) - Bl)) + Il));
             }
         }
@@ -189,11 +189,11 @@ class Mmaqi extends Aqi {
         this.colour = new dict([1, 2, 3, 4, 5, 6, 7], ['#0000ff', '#00cc99', '#ffff00', '#f75133', '#800000', '#800080', '#000000']);
     }
     setres() {
-        let caqi = [];
-        let ind = [];
+        const caqi = [];
+        const ind = [];
         for (let i = 0; i < this.vals.keys.length; i++) {
             const x = this.vals.keys[i];
-            let thresh = this.MmAQI.getval(x);
+            const thresh = this.MmAQI.getval(x);
             if (this.vals.getval(x) > thresh[4]) {
                 caqi.push(Math.round((((401 / thresh[4]) * (this.vals.getval(x) - thresh[4])) + 401)));
                 ind.push(6);
@@ -215,12 +215,12 @@ class Mmaqi extends Aqi {
                     }
                 }
                 const z = y + 1;
-                let [Il, Ih] = this.Ival.getval(z, [0, 0]);
+                const [Il, Ih] = this.Ival.getval(z, [0, 0]);
                 let Bl = 0;
                 if (y !== 0) {
                     Bl = thresh[y - 1] + 1;
                 }
-                let Bh = j;
+                const Bh = j;
                 caqi.push(Math.round((((Ih - Il) / (Bh - Bl)) * (this.vals.getval(x) - Bl)) + Il));
             }
         }
@@ -231,7 +231,7 @@ class Mmaqi extends Aqi {
         }
     }
     setdes() {
-        let [a, b] = this.HM.getval(this.idx, ['Invalid', 'Invalid']);
+        const [a, b] = this.HM.getval(this.idx, ['Invalid', 'Invalid']);
         this.des = `${this.DES.getval(this.idx, 'Invalid')}\nHealth messages:\nGeneral population: ${a}\nSensitive populations: ${b}`;
     }
     setcol() {
@@ -239,13 +239,13 @@ class Mmaqi extends Aqi {
     }
 }
 function convert(pollutant, value, unit) {
-    let y = new dict(['co', 'no2', 'o3', 'so2'], [28, 46, 48, 64]);
+    const y = new dict(['co', 'no2', 'o3', 'so2'], [28, 46, 48, 64]);
     if (unit === 'ppm') {
-        let m = y.getval(pollutant);
+        const m = y.getval(pollutant);
         value = value * 40.9 * m;
     }
     else if (unit === 'ppb') {
-        let m = y.getval(pollutant);
+        const m = y.getval(pollutant);
         value = value * 0.0409 * m;
     }
     return Math.round(value * 100) / 100;
@@ -258,8 +258,8 @@ function compare(a, b) {
     b = [bval, bmax]
     compare(a, b)
     */
-    let [a1, a2] = a;
-    let [b1, b2] = b;
+    const [a1, a2] = a;
+    const [b1, b2] = b;
     if ((a1 <= a2) && (b1 <= b2)) {
         return Math.round((1 - ((b1 * a2) / (a1 * b2))) * 100);
     }
