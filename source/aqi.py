@@ -199,7 +199,7 @@ class Mmaqi(Aqi):
             'no2': [40, 80, 120, 230, 340],
             'o3': [50, 100, 130, 240, 380],
             'so2': [40, 80, 200, 500, 750],
-            'co' : [20, 100, 150, 250, 340]
+            'co' : [30, 100, 150, 250, 340]
         }
         self.__idx: int = 0
         self.__DES: Dict[int, str] = {
@@ -209,7 +209,8 @@ class Mmaqi(Aqi):
             4: 'Poor',
             5: 'Very Poor',
             6: 'Extremely poor',
-            7: 'Severe'
+            7: 'Severe',
+            8: 'Extremely Severe'
         }
         self.__HM: Dict[int, Tuple[str, str]] = {
             1: ('The air quality is good. Enjoy your usual outdoor activities.', 'The air quality is good. Enjoy your usual outdoor activities.'),
@@ -218,7 +219,8 @@ class Mmaqi(Aqi):
             4: ('Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.', 'Consider reducing physical activities, particularly outdoors, especially if you experience symptoms.'),
             5: ('Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.', 'Reduce physical activities, particularly outdoors, especially if you experience symptoms.'),
             6: ('Reduce physical activities outdoors.', 'Avoid physical activities outdoors.'),
-            7: ('Avoid physical activities outdoors.', 'Do not go outdoors')
+            7: ('Avoid physical activities outdoors.', 'Do not go outdoors'),
+            8: ('Do not go outdoors. An air purifier is recommended.', 'Avoid coming into contact with any outdoor pollution. An air purifier is essential.')
         }
         self.__Ival: Dict[int, Tuple[int, int]] = {
             1: (0, 50),
@@ -234,7 +236,8 @@ class Mmaqi(Aqi):
             4: '#f75133',
             5: '#800000',
             6: '#800080',
-            7: '#000000'
+            7: '#000000',
+            8: '#000000'
         }
 
     def set_res(self):
@@ -264,8 +267,10 @@ class Mmaqi(Aqi):
 
         self.res = str(max(caqi))
         self.__idx = max(idx)
-        if (int(self.res) > 500):
+        if (int(self.res) > 500 and int(self.res) < 850):
             self.__idx = 7
+        elif int(self.res) >= 850:
+            self.__idx = 8
 
     def set_des(self):
         a, b = self.__HM.get(self.__idx, ('Invalid', 'Invalid'))

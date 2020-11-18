@@ -56,11 +56,11 @@ export class Aqi {
 }
 
 export class Eaqi extends Aqi {
-    EAQI: dict
-    IDX: dict
-    idx: number
-    DES: dict
-    colour: dict
+    private EAQI: dict
+    private IDX: dict
+    private idx: number
+    private DES: dict
+    private colour: dict
 
     constructor(pdict: dict) {
         super(pdict)
@@ -111,12 +111,12 @@ export class Eaqi extends Aqi {
 }
 
 export class Naqi extends Aqi {
-    NAQI: dict
-    idx: number
-    DES: dict
-    HM: dict
-    Ival: dict
-    colour: dict
+    private NAQI: dict
+    private idx: number
+    private DES: dict
+    private HM: dict
+    private Ival: dict
+    private colour: dict
 
     constructor(pdict: dict) {
         super(pdict)
@@ -188,12 +188,12 @@ export class Naqi extends Aqi {
 }
 
 export class Mmaqi extends Aqi {
-    MmAQI: dict
-    idx: number
-    DES: dict
-    HM: dict
-    Ival: dict
-    colour: dict
+    private MmAQI: dict
+    private idx: number
+    private DES: dict
+    private HM: dict
+    private Ival: dict
+    private colour: dict
 
     constructor(pdict: dict) {
         super(pdict)
@@ -204,11 +204,11 @@ export class Mmaqi extends Aqi {
                 this.vals.update('co', (this.vals.getval('co') / 100))
             }
         } catch (error) {}
-        this.MmAQI = new dict(['pm2', 'pm10', 'no2', 'o3', 'so2', 'co'], [[10, 25, 50, 75, 150], [20, 50, 75, 150, 230], [40, 80, 120, 230, 340], [50, 100, 130, 240, 380], [40, 80, 200, 500, 750], [20, 100, 150, 250, 340]])
-        this.DES = new dict([1, 2, 3, 4, 5, 6, 7], ['Good', 'Fair', 'Moderate', 'Poor', 'Very Poor', 'Extremely Poor', 'Severe'])
-        this.HM = new dict([1, 2, 3, 4, 5, 6, 7], [['The air quality is good. Enjoy your usual outdoor activities.', 'The air quality is good. Enjoy your usual outdoor activities.'], ['Enjoy your usual outdoor activities.', 'Enjoy your usual outdoor activities.'], ['Enjoy your usual outdoor activities.', 'Consider reducing intense outdoor activities, if you experience symptoms.'], ['Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.', 'Consider reducing physical activities, particularly outdoors, especially if you experience symptoms.'], ['Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.', 'Reduce physical activities, particularly outdoors, especially if you experience symptoms.'], ['Reduce physical activities outdoors.', 'Avoid physical activities outdoors.'], ['Avoid physical activities outdoors.', 'Do not go outdoors.']])
+        this.MmAQI = new dict(['pm2', 'pm10', 'no2', 'o3', 'so2', 'co'], [[10, 25, 50, 75, 150], [20, 50, 75, 150, 230], [40, 80, 120, 230, 340], [50, 100, 130, 240, 380], [40, 80, 200, 500, 750], [30, 100, 150, 250, 340]])
+        this.DES = new dict([1, 2, 3, 4, 5, 6, 7, 8], ['Good', 'Fair', 'Moderate', 'Poor', 'Very Poor', 'Extremely Poor', 'Severe', 'Extremely Severe'])
+        this.HM = new dict([1, 2, 3, 4, 5, 6, 7, 8], [['The air quality is good. Enjoy your usual outdoor activities.', 'The air quality is good. Enjoy your usual outdoor activities.'], ['Enjoy your usual outdoor activities.', 'Enjoy your usual outdoor activities.'], ['Enjoy your usual outdoor activities.', 'Consider reducing intense outdoor activities, if you experience symptoms.'], ['Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.', 'Consider reducing physical activities, particularly outdoors, especially if you experience symptoms.'], ['Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.', 'Reduce physical activities, particularly outdoors, especially if you experience symptoms.'], ['Reduce physical activities outdoors.', 'Avoid physical activities outdoors.'], ['Avoid physical activities outdoors.', 'Do not go outdoors.'], ['Do not go outdoors. An air purifier is recommended.', 'Avoid coming into contact with any outdoor pollution. An air purifier is essential.']])
         this.Ival = new dict([1, 2, 3, 4, 5], [[0, 50], [51, 100], [101, 200], [201, 300], [301, 400]])
-        this.colour = new dict([1, 2, 3, 4, 5, 6, 7], ['#0000ff', '#00cc99', '#ffff00', '#f75133', '#800000', '#800080', '#000000'])
+        this.colour = new dict([1, 2, 3, 4, 5, 6, 7, 8], ['#0000ff', '#00cc99', '#ffff00', '#f75133', '#800000', '#800080', '#000000', '#000000'])
     }
     setres(): void {
         const caqi: Array<number> = []
@@ -247,8 +247,10 @@ export class Mmaqi extends Aqi {
         }
         this.res = Math.max(...caqi).toString()
         this.idx = Math.max(...ind)
-        if (parseInt(this.res) > 500) {
+        if (parseInt(this.res) > 500 && parseInt(this.res) < 850) {
             this.idx = 7
+        } else if (parseInt(this.res) >= 850) {
+            this.idx = 8
         }
     }
     setdes(): void {
