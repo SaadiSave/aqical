@@ -88,7 +88,7 @@ class Eaqi(Aqi):
         if self.des == '':
             a, b = self.__DES.get(self.__idx, ('Invalid', 'Invalid'))
             self.des = f'Health messages:\nGeneral population: {a}\nSensitive populations: {b}'
-    
+
     def set_col(self):
         if self.des == 'How are you even alive?':
             self.col = '#000000'

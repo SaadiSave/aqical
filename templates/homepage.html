@@ -3,7 +3,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
         <link href="../static/1.css" rel="stylesheet">
-        <script type="text/javascript" src="../TS/noexpaqi.js"></script>
+        <script type="text/javascript" src="../static/noexpaqi.js"></script>
         <title>AQI calculator Universal</title>
     </head>
     <body>
@@ -36,6 +36,7 @@
                    document.querySelector('#type').value="comp";
                    document.querySelector('#system').innerHTML = '<option value="EvN">EAQI vs NAQI</option><option value="EvM">EAQI vs MMAQI</option><option value="MvN">MMAQI vs NAQI</option>';
                    document.querySelector('#co').style.display = 'block';
+                   document.getElementById('message').children[0].innerHTML = '';
                 });
                 document.querySelector('#system').onchange = () => {
                     if (document.querySelector('#type').value === "SI" && document.querySelector('#system').value === "EAQI") {
@@ -46,21 +47,45 @@
                     }
                 };
                 document.querySelector('#submit').onclick = () => {
-                    let dict = {
-                        'pm2': parseInt(document.querySelector('#valuePM2').value),
-                        'pm10':parseInt(document.querySelector('#valuePM10').value),
-                        'no2':parseInt(document.querySelector('#valueNO2').value),
-                        'so2':parseInt(document.querySelector('#valueSO2').value),
-                        'o3':parseInt(document.querySelector('#valueO3').value),
-                        'co':parseInt(document.querySelector('#valueCO').value)
+                    let d = {
+                        'pm2': convert('pm2',parseInt(document.querySelector('#valuePM2').value),document.querySelector('#unitPM2').value),
+                        'pm10':convert('pm10',parseInt(document.querySelector('#valuePM10').value),document.querySelector('#unitPM10').value),
+                        'no2':convert('no2',parseInt(document.querySelector('#valueNO2').value),document.querySelector('#unitNO2').value),
+                        'so2':convert('so2',parseInt(document.querySelector('#valueSO2').value),document.querySelector('#unitSO2').value),
+                        'o3':convert('o3',parseInt(document.querySelector('#valueO3').value),document.querySelector('#unitO3').value),
+                        'co':convert('co',parseInt(document.querySelector('#valueCO').value),document.querySelector('#unitCO').value)
                     };
-                    for (const key in dict){
-                        if (isNaN(dict[key])) {
-                            delete dict[key]
+                    for (const key in d){
+                        if (isNaN(d[key])) {
+                            delete d[key];
                         }
                     }
-                    console.log(dict);
+                    var a = new dict(Object.keys(d),Object.values(d));
+                    type = document.querySelector('#type').value;
+                    system = document.querySelector('#system').value;
                     document.querySelector('#input').reset();
+                    if (type === "Comp"){
+                        if ((a.keys.length === 1) && (a.keys[0] === 'co')){
+                            document.getElementById('message').children[0].innerHTML = 'Atleast 1 field other than CO required';
+                        } else {
+                            document.getElementById('message').children[0].innerHTML = '';
+                            if (system === "EvN"){
+                                A = new Eaqi(a);A.setres();
+                                O = new Naqi(a);O.setres();
+                                idx = A.idx;
+                                res = O.res;
+                                if (res > 500){
+                                    max = res;
+                                } else {
+                                    max = 500;
+                                }
+                                b = compare([idx,6],[res,max]);
+                                if (b >= 0){
+                                    document.querySelector('#result1').innerHTML = `NAQI is ${b}% less than EAQI`;
+                                }
+                            }
+                        }
+                    }
                 };
             });
             function isFloat(evt) {
@@ -88,9 +113,7 @@
         <form action="/" method="post" id="input">
             <div class="flex">
             <div class="form-group">
-                {% if message %}
-                    <div><b>{{ message }}</b></div>
-                {% endif %}
+                    <div id='message'><b></b></div>
                 <select name="type" id="type" style="width:230px" class="form-control">
                     <option value="Comp" selected>Comparision</option>
                     <option value="SI">Single Index</option>
@@ -147,9 +170,9 @@
                 </div>
             </div>
             <div>
-                <div id="result1" class="output">e</div>
-                <div id="result2" class="output" style="display:none">w</div>
-                <div id="result2" class="output" style="display:none">d</div>
+                <div id="result1" class="output"></div>
+                <div id="result2" class="output" style="display:none"></div>
+                <div id="result3" class="output" style="display:none"></div>
             </div>
             </div>
             <input id="submit" type="button" class="btn btn-primary" value="Submit" style="float:right; margin-right:15px;width:100px">
