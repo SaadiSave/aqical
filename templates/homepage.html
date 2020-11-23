@@ -14,20 +14,17 @@
                 });
                 document.querySelector('#type').onchange = () => {
                     if (document.querySelector('#type').value === 'Comp'){
-                        document.querySelector('#system').innerHTML = '<option value="EvN">EAQI vs NAQI</option><option value="EvM">EAQI vs MMAQI</option><option value="MvN">MMAQI vs NAQI</option><option value="EvMvN">EAQI vs MMAQI vs NAQI</option>';
+                        document.querySelector('#system').innerHTML = '<option value="EvN">EAQI vs NAQI</option><option value="EvM">EAQI vs MMAQI</option><option value="MvN">MMAQI vs NAQI</option>';
                         document.querySelector('#co').style.display = 'block';
                         document.querySelectorAll('.output').forEach(result => {
-                            result.style.display = 'none';
-                            result.innerHTML = ''
+                            result.innerHTML = '';
                         });
-                        document.querySelector('#result1').style.display = 'block';
                     } else {
                         document.querySelector('#system').innerHTML = '<option value="EAQI">EAQI</option><option value="NAQI">NAQI</option><option value="MMAQI">MMAQI</option>';
                         document.querySelector('#co').style.display = 'none';
                         document.querySelector('#valueCO').value='';
                         document.querySelectorAll('.output').forEach(result => {
-                            result.style.display = 'block';
-                            result.innerHTML = ''
+                            result.innerHTML = '';
                         });
                     }
                 };
@@ -36,14 +33,16 @@
                        result.innerHTML = '';
                    });
                    document.querySelector('#type').value="comp";
-                   document.querySelector('#system').innerHTML = '<option value="EvN">EAQI vs NAQI</option><option value="EvM">EAQI vs MMAQI</option><option value="MvN">MMAQI vs NAQI</option><option value="EvMvN">EAQI vs MMAQI vs NAQI</option>';
+                   document.querySelector('#system').innerHTML = '<option value="EAQI">EAQI</option><option value="NAQI">NAQI</option><option value="MMAQI">MMAQI</option>s';
                    document.querySelector('#co').style.display = 'block';
                    document.getElementById('message').children[0].innerHTML = '';
                 });
                 document.querySelector('#system').onchange = () => {
                     document.querySelectorAll('.output').forEach(result => {
-                            result.innerHTML = ''
+                            result.innerHTML = '';
                         });
+                        document.querySelector('#result3').style.backgroundColor = '#e0e2db';
+                        document.querySelector('#result3').color = 'black';
                     if (document.querySelector('#type').value === "SI" && document.querySelector('#system').value === "EAQI") {
                         document.querySelector('#co').style.display = 'none';
                         ddocument.querySelector('#valueCO').value='';
@@ -76,95 +75,62 @@
                             } else {
                                 document.getElementById('message').children[0].innerHTML = '';
                                 if (system === "EvN"){
-                                    A = new Eaqi(a);A.setres();
-                                    O = new Naqi(a);O.setres();
+                                    A = new Eaqi(a);A.setres();A.setdes();A.setcol();
+                                    O = new Naqi(a);O.setres();O.setdes();O.setcol();
                                     idx = A.idx;
                                     res = O.res;
-                                    if (res > 500){
-                                        max = res;
-                                    } else {
-                                        max = 500;
-                                    }
-                                    b = compare([idx,6],[res,max]);
-                                    if (b >= 0){
-                                        document.querySelector('#result1').innerHTML = `NAQI is ${b}% less than EAQI`;
-                                    } else {
-                                        document.querySelector('#result1').innerHTML = `NAQI is ${b}% greater than EAQI`;
+                                    document.querySelector('#result2').innerHTML = `NAQI<br>${res}<br>${O.des.replace(/\n/g,'<br>' )}`;
+                                    document.querySelector('#result2').style.backgroundColor = O.col;
+                                    document.querySelector('#result2').style.color = textcol(O.col);
+                                    document.querySelector('#result1').innerHTML = `EAQI<br>${A.res}<br>${A.des.replace(/\n/g,'<br>' )}`;
+                                    document.querySelector('#result1').style.backgroundColor = A.col;
+                                    document.querySelector('#result1').style.color = textcol(A.col);
+                                    if (res < 500){
+                                        b = compare([idx,6],[res,500]);
+                                        if (b > 0){
+                                            document.querySelector('#result3').innerHTML = `NAQI is ${b}% less than EAQI`;
+                                        } else {
+                                            document.querySelector('#result3').innerHTML = `NAQI is ${b}% greater than EAQI`;
+                                        }
                                     }
                                 } else if (system === 'EvM') {
-                                    A = new Eaqi(a);A.setres();
-                                    O = new Mmaqi(a);O.setres();
+                                    A = new Eaqi(a);A.setres();A.setdes();A.setcol();
+                                    O = new Mmaqi(a);O.setres();O.setdes();O.setcol();
                                     idx = A.idx;
                                     res = O.res;
-                                    if (res > 500){
-                                        max = res;
-                                    } else {
-                                        max = 500;
-                                    }
-                                    b = compare([idx,6],[res,max]);
-                                    if (b >= 0){
-                                        document.querySelector('#result1').innerHTML = `MMAQI is ${b}% less than EAQI`;
-                                    } else {
-                                        document.querySelector('#result1').innerHTML = `MMAQI is ${b}% greater than EAQI`;
+                                    document.querySelector('#result2').innerHTML = `MMAQI<br>${res}<br>${O.des.replace(/\n/g,'<br>' )}`;
+                                    document.querySelector('#result2').style.backgroundColor = O.col;
+                                    document.querySelector('#result2').style.color = textcol(O.col);
+                                    document.querySelector('#result1').innerHTML = `EAQI<br>${A.res}<br>${A.des.replace(/\n/g,'<br>' )}`;
+                                    document.querySelector('#result1').style.backgroundColor = A.col;
+                                    document.querySelector('#result1').style.color = textcol(A.col);
+                                    if (res < 500){
+                                        b = compare([idx,6],[res,500]);
+                                        if (b > 0){
+                                            document.querySelector('#result3').innerHTML = `MMAQI is ${b}% less than EAQI`;
+                                        } else {
+                                            document.querySelector('#result3').innerHTML = `MMAQI is ${b}% greater than EAQI`;
+                                        }
                                     }
                                 } else if (system === 'MvN') {
-                                    A = new Naqi(a);A.setres();
-                                    O = new Mmaqi(a);O.setres();
+                                    A = new Naqi(a);A.setres();A.setdes();A.setcol();
+                                    O = new Mmaqi(a);O.setres();O.setdes();O.setcol();
                                     resn = A.res;
                                     resm = O.res;
-                                    if (resn > 500){
-                                        maxn = resn;
-                                    } else {
-                                        maxn = 500;
-                                    }
-                                    if (resm > 500){
-                                        maxm = resm;
-                                    } else {
-                                        maxm = 500;
-                                    }
+                                    document.querySelector('#result1').innerHTML = `MMAQI<br>${resm}<br>${O.des.replace(/\n/g,'<br>' )}`;
+                                    document.querySelector('#result1').style.backgroundColor = O.col;
+                                    document.querySelector('#result1').style.color = textcol(O.col);
+                                    document.querySelector('#result2').innerHTML = `NAQI<br>${resn}<br>${A.des.replace(/\n/g,'<br>' )}`;
+                                    document.querySelector('#result2').style.backgroundColor = A.col;
+                                    document.querySelector('#result2').style.color = textcol(A.col);
+                                    maxn = 500;
+                                    maxm = 500;
                                     b = compare([resm, maxm],[resn,maxn]);
                                     if (b >= 0){
-                                        document.querySelector('#result1').innerHTML = `NAQI is ${b}% less than MMAQI`;
+                                        document.querySelector('#result3').innerHTML = `NAQI is ${b}% less than MMAQI`;
                                     } else {
-                                        document.querySelector('#result1').innerHTML = `NAQI is ${b}% greater than MMAQI`;
+                                        document.querySelector('#result3').innerHTML = `NAQI is ${b}% greater than MMAQI`;
                                     }
-                                } else {
-                                    A = new Naqi(a);A.setres();
-                                    O = new Mmaqi(a);O.setres();
-                                    E = new Eaqi(a);E.setres();
-                                    idx = E.idx;
-                                    resn = A.res;
-                                    resm = O.res;
-                                    if (resn > 500){
-                                        maxn = resn;
-                                    } else {
-                                        maxn = 500;
-                                    }
-                                    if (resm > 500){
-                                        maxm = resm;
-                                    } else {
-                                        maxm = 500;
-                                    }
-                                    b = compare([idx,6],[resm,maxm]);
-                                    if (b >= 0){
-                                        s1 = `MMAQI is ${b}% less than EAQI`;
-                                    } else {
-                                        s1 = `MMAQI is ${b}% greater than EAQI`;
-                                    }
-                                    c = compare([idx,6],[resn,maxn]);
-                                    if (c >= 0){
-                                        s2 = `NAQI is ${c}% less than EAQI`;
-                                    } else {
-                                        s2 = `NAQI is ${c}% greater than EAQI`;
-                                    }
-                                    d = compare([resm, maxm],[resn,maxn]);
-                                    if (d >= 0){
-                                        s3 = `NAQI is ${d}% less than MMAQI`;
-                                    } else {
-                                        s3 = `NAQI is ${d}% greater than MMAQI`;
-                                    }
-                                    console.log(`${s1}<br>${s2}<br>${s3}`);
-                                    document.querySelector('#result1').innerHTML = `${s1}<br>${s2}<br>${s3}`;
                                 }
                             }
                         } else {
@@ -173,41 +139,32 @@
                                 A = new Eaqi(a);
                                 A.setres();A.setdes();A.setcol();
                                 document.querySelectorAll('.output').forEach(result => {
-                                    result.style.backgroundColor = A.col
-                                    if (A.col === '#000000'){
-                                        result.style.color = '#ffffff';
-                                    } else {
-                                        result.style.color = '#000000';
-                                    }
+                                    result.style.backgroundColor = A.col;
+                                    result.style.color = textcol(A.col);
+                                    result.style.display = 'block';
                                 });
                                 document.querySelector('#result1').innerHTML = A.res;
-                                document.querySelector('#result2').innerHTML = A.des.replace(/\n/g,'<br>' )
+                                document.querySelector('#result2').innerHTML = A.des.replace(/\n/g,'<br>' );
                             } else if (system === 'NAQI'){
                                 A = new Naqi(a);
                                 A.setres();A.setdes();A.setcol();
                                 document.querySelectorAll('.output').forEach(result => {
-                                    result.style.backgroundColor = A.col
-                                    if (A.col === '#000000'){
-                                        result.style.color = '#ffffff';
-                                    } else {
-                                        result.style.color = '#000000';
-                                    }
+                                    result.style.backgroundColor = A.col;
+                                    result.style.color = textcol(A.col);
+                                    result.style.display = 'block';
                                 });
                                 document.querySelector('#result1').innerHTML = A.res;
-                                document.querySelector('#result2').innerHTML = A.des.replace(/\n/g,'<br>' )
+                                document.querySelector('#result2').innerHTML = A.des.replace(/\n/g,'<br>' );
                             } else {
                                 A = new Mmaqi(a);
                                 A.setres();A.setdes();A.setcol();
                                 document.querySelectorAll('.output').forEach(result => {
-                                    result.style.backgroundColor = A.col
-                                    if (A.col === '#000000'){
-                                        result.style.color = '#ffffff';
-                                    } else {
-                                        result.style.color = '#000000';
-                                    }
+                                    result.style.backgroundColor = A.col;
+                                    result.style.color = textcol(A.col);
+                                    result.style.display = 'block';
                                 });
                                 document.querySelector('#result1').innerHTML = A.res;
-                                document.querySelector('#result2').innerHTML = A.des.replace(/\n/g,'<br>' )
+                                document.querySelector('#result2').innerHTML = A.des.replace(/\n/g,'<br>' );
                             }
                         }
                     }
@@ -264,14 +221,13 @@
             <div class="form-group">
                     <div id='message'><b></b></div>
                 <select name="type" id="type" style="width:230px" class="form-control">
-                    <option value="Comp" selected>Comparision</option>
-                    <option value="SI">Single Index</option>
+                    <option value="Comp">Comparision</option>
+                    <option value="SI" selected>Single Index</option>
                 </select><p></p><br>
                 <select name="system" id="system" style="width:230px" class="form-control">
-                    <option value="EvN" selected>EAQI vs NAQI</option>
-                    <option value="EvM">EAQI vs Mmaqi</option>
-                    <option value="MvN">Mmaqi vs NAQI</option>
-                    <option value="EvMvN">EAQI vs MMAQI vs NAQI</option>
+                    <option value="EAQI">EAQI</option>
+                    <option value="NAQI">NAQI</option>
+                    <option value="MMAQI">MMAQI</option>
                 </select><p></p><br>
                 <div>
                 PM₂.₅ <input type="text" id="valuePM2" name="valuePM2" style="width: 100px; margin-left:10px" onkeypress="return isFloat(event)" class="input1" />
@@ -309,8 +265,8 @@
                     <option value="ppb">ppb</option>
                 </select><p></p><br>
                 </div>
-                <div id="co">
-                CO <input type="text" id="valueCO" name="valueCO" style="width: 100px; margin-left:28px" onkeypress="return isFloat(event)" class="input1"  />
+                <div id="co" style=" display:none;">
+                CO <input type="text" id="valueCO" name="valueCO" style="width: 100px; margin-left:28px;" onkeypress="return isFloat(event)" class="input1"  />
                 <select id="unitCO" name="unitCO" class="input1">
                     <option value="ug">µg/m³</option>
                     <option value="ppm">ppm</option>
@@ -319,8 +275,9 @@
                 </div>
             </div>
             <div>
-                <div id="result1" class="output" ></div>
-                <div id="result2" class="output" style="display:none"></div>
+                <div id="result1" class="output"></div>
+                <div id="result2" class="output"></div>
+                <div id="result3" class="output" style="background-color:#e0e2db"></div>
             </div>
             </div>
             <input id="submit" type="button" class="btn btn-primary" value="Submit" style="float:right; margin-right:15px;width:100px">
