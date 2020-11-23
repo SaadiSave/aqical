@@ -284,9 +284,5 @@ export function compare(a: Array<number>, b: Array<number>): number | string {
     */
     const [a1, a2] = a
     const [b1, b2] = b
-    if ((a1 <= a2) && (b1 <= b2)) {
-        return Math.round((1 - ((b1 * a2) / (a1 * b2))) * 100)
-    } else {
-        return 'Invalid'
-    }
+    return Math.round((1 - ((b1 * a2) / (a1 * b2))) * 100)
 }

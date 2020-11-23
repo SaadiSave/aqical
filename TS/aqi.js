@@ -1,6 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.compare = exports.convert = exports.Mmaqi = exports.Naqi = exports.Eaqi = exports.Aqi = exports.dict = void 0;
 /* AQICALC for the calculation of air quality index
     Copyright (C) 2020  Varun Jain , Saadi Save
 
@@ -16,7 +13,7 @@ exports.compare = exports.convert = exports.Mmaqi = exports.Naqi = exports.Eaqi 
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-class dict {
+export class dict {
     constructor(keys, vals) {
         this.keys = keys;
         this.vals = vals;
@@ -44,15 +41,13 @@ class dict {
         }
     }
 }
-exports.dict = dict;
-class Aqi {
+export class Aqi {
     constructor(pdict) {
         this.vals = pdict;
         this.des = '';
     }
 }
-exports.Aqi = Aqi;
-class Eaqi extends Aqi {
+export class Eaqi extends Aqi {
     constructor(pdict) {
         super(pdict);
         const x = this.vals.keys.indexOf('co');
@@ -101,8 +96,7 @@ class Eaqi extends Aqi {
         }
     }
 }
-exports.Eaqi = Eaqi;
-class Naqi extends Aqi {
+export class Naqi extends Aqi {
     constructor(pdict) {
         super(pdict);
         try {
@@ -176,8 +170,7 @@ class Naqi extends Aqi {
         }
     }
 }
-exports.Naqi = Naqi;
-class Mmaqi extends Aqi {
+export class Mmaqi extends Aqi {
     constructor(pdict) {
         super(pdict);
         try {
@@ -248,8 +241,7 @@ class Mmaqi extends Aqi {
         this.col = this.colour.getval(this.idx, '#ffffff');
     }
 }
-exports.Mmaqi = Mmaqi;
-function convert(pollutant, value, unit) {
+export function convert(pollutant, value, unit) {
     const y = new dict(['co', 'no2', 'o3', 'so2'], [28, 46, 48, 64]);
     if (unit === 'ppm') {
         const m = y.getval(pollutant);
@@ -261,8 +253,7 @@ function convert(pollutant, value, unit) {
     }
     return Math.round(value * 100) / 100;
 }
-exports.convert = convert;
-function compare(a, b) {
+export function compare(a, b) {
     /*
     a is the index to be compared with b
     format:
@@ -272,11 +263,5 @@ function compare(a, b) {
     */
     const [a1, a2] = a;
     const [b1, b2] = b;
-    if ((a1 <= a2) && (b1 <= b2)) {
-        return Math.round((1 - ((b1 * a2) / (a1 * b2))) * 100);
-    }
-    else {
-        return 'Invalid';
-    }
+    return Math.round((1 - ((b1 * a2) / (a1 * b2))) * 100);
 }
-exports.compare = compare;
