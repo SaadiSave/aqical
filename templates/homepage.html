@@ -33,9 +33,9 @@
                    document.querySelectorAll('.output').forEach(result => {
                        result.innerHTML = '';
                    });
-                   document.querySelector('#type').value="comp";
+                   document.querySelector('#type').value="SI";
                    document.querySelector('#system').innerHTML = '<option value="EAQI">EAQI</option><option value="NAQI">NAQI</option><option value="MMAQI">MMAQI</option>s';
-                   document.querySelector('#co').style.display = 'block';
+                   document.querySelector('#co').style.display = 'none';
                    document.getElementById('message').children[0].innerHTML = '';
                 });
                 document.querySelector('#system').onchange = () => {
@@ -140,8 +140,10 @@
                                 A = new Eaqi(a);
                                 A.setres();A.setdes();A.setcol();
                                 document.querySelectorAll('.output').forEach(result => {
-                                    result.style.backgroundColor = A.col;
-                                    result.style.color = textcol(A.col);
+                                    if (result.id !== 'result3'){
+                                        result.style.backgroundColor = A.col;
+                                        result.style.color = textcol(A.col);
+                                    }
                                     result.style.display = 'block';
                                 });
                                 document.querySelector('#result1').innerHTML = A.res;
@@ -150,8 +152,10 @@
                                 A = new Naqi(a);
                                 A.setres();A.setdes();A.setcol();
                                 document.querySelectorAll('.output').forEach(result => {
-                                    result.style.backgroundColor = A.col;
-                                    result.style.color = textcol(A.col);
+                                    if (result.id !== 'result3'){
+                                        result.style.backgroundColor = A.col;
+                                        result.style.color = textcol(A.col);
+                                    }
                                     result.style.display = 'block';
                                 });
                                 document.querySelector('#result1').innerHTML = A.res;
@@ -160,8 +164,10 @@
                                 A = new Mmaqi(a);
                                 A.setres();A.setdes();A.setcol();
                                 document.querySelectorAll('.output').forEach(result => {
-                                    result.style.backgroundColor = A.col;
-                                    result.style.color = textcol(A.col);
+                                    if (result.id !== 'result3'){
+                                        result.style.backgroundColor = A.col;
+                                        result.style.color = textcol(A.col);
+                                    }
                                     result.style.display = 'block';
                                 });
                                 document.querySelector('#result1').innerHTML = A.res;

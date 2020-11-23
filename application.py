@@ -96,4 +96,8 @@ def home():
 
 @app.route("/aqi")
 def aqi():
+    return render_template("homepage.min.html")
+
+@app.route("/aqi2")
+def aqi2():
     return render_template("homepage.html")
