@@ -211,7 +211,7 @@ class Mmaqi(Aqi):
             5: 'Very Poor',
             6: 'Extremely poor',
             7: 'Severe',
-            8: 'Extremely Severe'
+            8: 'Hazardous'
         }
         self.__HM: dict[int, tuple[str, str]] = {
             1: ('The air quality is good. Enjoy your usual outdoor activities.', 'The air quality is good. Enjoy your usual outdoor activities.'),
@@ -268,9 +268,9 @@ class Mmaqi(Aqi):
 
         self.res = str(max(caqi))
         self.__idx = max(idx)
-        if (int(self.res) > 500 and int(self.res) < 850):
+        if (int(self.res) > 500 and int(self.res) < 775):
             self.__idx = 7
-        elif int(self.res) >= 850:
+        elif int(self.res) >= 775:
             self.__idx = 8
 
     def set_des(self):

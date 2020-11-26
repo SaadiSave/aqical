@@ -1,3 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.compare = exports.convert = exports.Mmaqi = exports.Naqi = exports.Eaqi = exports.Aqi = exports.dict = void 0;
 /* AQICALC for the calculation of air quality index
     Copyright (C) 2020  Varun Jain , Saadi Save
 
@@ -13,7 +16,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-export class dict {
+class dict {
     constructor(keys, vals) {
         this.keys = keys;
         this.vals = vals;
@@ -41,13 +44,15 @@ export class dict {
         }
     }
 }
-export class Aqi {
+exports.dict = dict;
+class Aqi {
     constructor(pdict) {
         this.vals = pdict;
         this.des = '';
     }
 }
-export class Eaqi extends Aqi {
+exports.Aqi = Aqi;
+class Eaqi extends Aqi {
     constructor(pdict) {
         super(pdict);
         const x = this.vals.keys.indexOf('co');
@@ -96,7 +101,8 @@ export class Eaqi extends Aqi {
         }
     }
 }
-export class Naqi extends Aqi {
+exports.Eaqi = Eaqi;
+class Naqi extends Aqi {
     constructor(pdict) {
         super(pdict);
         try {
@@ -170,7 +176,8 @@ export class Naqi extends Aqi {
         }
     }
 }
-export class Mmaqi extends Aqi {
+exports.Naqi = Naqi;
+class Mmaqi extends Aqi {
     constructor(pdict) {
         super(pdict);
         try {
@@ -183,7 +190,7 @@ export class Mmaqi extends Aqi {
         }
         catch (error) { }
         this.MmAQI = new dict(['pm2', 'pm10', 'no2', 'o3', 'so2', 'co'], [[10, 25, 50, 75, 150], [20, 50, 75, 150, 230], [40, 80, 120, 230, 340], [50, 100, 130, 240, 380], [40, 80, 200, 500, 750], [30, 100, 150, 250, 340]]);
-        this.DES = new dict([1, 2, 3, 4, 5, 6, 7, 8], ['Good', 'Fair', 'Moderate', 'Poor', 'Very Poor', 'Extremely Poor', 'Severe', 'Extremely Severe']);
+        this.DES = new dict([1, 2, 3, 4, 5, 6, 7, 8], ['Good', 'Fair', 'Moderate', 'Poor', 'Very Poor', 'Extremely Poor', 'Severe', 'Hazardous']);
         this.HM = new dict([1, 2, 3, 4, 5, 6, 7, 8], [['The air quality is good. Enjoy your usual outdoor activities.', 'The air quality is good. Enjoy your usual outdoor activities.'], ['Enjoy your usual outdoor activities.', 'Enjoy your usual outdoor activities.'], ['Enjoy your usual outdoor activities.', 'Consider reducing intense outdoor activities, if you experience symptoms.'], ['Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.', 'Consider reducing physical activities, particularly outdoors, especially if you experience symptoms.'], ['Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.', 'Reduce physical activities, particularly outdoors, especially if you experience symptoms.'], ['Reduce physical activities outdoors.', 'Avoid physical activities outdoors.'], ['Avoid physical activities outdoors.', 'Do not go outdoors.'], ['Do not go outdoors. An air purifier is recommended.', 'Avoid coming into contact with any outdoor pollution. An air purifier is essential.']]);
         this.Ival = new dict([1, 2, 3, 4, 5], [[0, 50], [51, 100], [101, 200], [201, 300], [301, 400]]);
         this.colour = new dict([1, 2, 3, 4, 5, 6, 7, 8], ['#0000ff', '#00cc99', '#ffff00', '#f75133', '#800000', '#800080', '#000000', '#000000']);
@@ -226,10 +233,10 @@ export class Mmaqi extends Aqi {
         }
         this.res = Math.max(...caqi).toString();
         this.idx = Math.max(...ind);
-        if (parseInt(this.res) > 500 && parseInt(this.res) < 850) {
+        if (parseInt(this.res) > 500 && parseInt(this.res) < 775) {
             this.idx = 7;
         }
-        else if (parseInt(this.res) >= 850) {
+        else if (parseInt(this.res) >= 775) {
             this.idx = 8;
         }
     }
@@ -241,7 +248,8 @@ export class Mmaqi extends Aqi {
         this.col = this.colour.getval(this.idx, '#ffffff');
     }
 }
-export function convert(pollutant, value, unit) {
+exports.Mmaqi = Mmaqi;
+function convert(pollutant, value, unit) {
     const y = new dict(['co', 'no2', 'o3', 'so2'], [28, 46, 48, 64]);
     if (unit === 'ppm') {
         const m = y.getval(pollutant);
@@ -253,7 +261,8 @@ export function convert(pollutant, value, unit) {
     }
     return Math.round(value * 100) / 100;
 }
-export function compare(a, b) {
+exports.convert = convert;
+function compare(a, b) {
     /*
     a is the index to be compared with b
     format:
@@ -265,3 +274,4 @@ export function compare(a, b) {
     const [b1, b2] = b;
     return Math.round((1 - ((b1 * a2) / (a1 * b2))) * 100);
 }
+exports.compare = compare;
