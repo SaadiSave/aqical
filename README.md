@@ -51,7 +51,7 @@ compare((aval, amax),(bval, bmax))
 ```
 ##### Convert
 ```python
-# returns conversion to µg/m<sup>3</sup>
+# returns conversion to µg/m³
 # pollutant can have unit of ppm, ppb or µg/m³
 # Accepted pollutants: 'so2', 'no2', 'co', 'o3'
 convert('so2', 27.9, ppb)
