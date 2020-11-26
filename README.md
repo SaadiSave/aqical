@@ -46,14 +46,15 @@ x.col
 ##### Compare
 ```python
 # used to compare two values
-# compares bval with aval using bmax and amax
-x = compare([aval, amax],[bval, bmax]
+# returns percentage by which b is less than a
+compare((aval, amax),(bval, bmax))
 ```
 ##### Convert
 ```python
-# pollutant can have unit of ppm, ppb or µg/m<sup>3</sup>
+# returns conversion to µg/m<sup>3</sup>
+# pollutant can have unit of ppm, ppb or µg/m³
 # Accepted pollutants: 'so2', 'no2', 'co', 'o3'
-x = convert('so2', 27.9, ppb)
+convert('so2', 27.9, ppb)
 ```
 ### TypeScript
 #### Initialisation
@@ -93,6 +94,20 @@ x.res
 x.des
 // colour
 x.col
+```
+#### Other features
+##### Compare
+```typescript
+// used to compare two values
+// returns percentage by which b is less than a
+compare([aval, amax],[bval, bmax])
+```
+##### Convert
+```typescript
+// returns conversion to µg/m³
+// pollutant can have unit of ppm, ppb or µg/m³
+// Accepted pollutants: 'so2', 'no2', 'co', 'o3'
+convert('so2', 27.9, ppb)
 ```
 
 <br>
