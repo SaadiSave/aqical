@@ -89,7 +89,7 @@ class Eaqi(Aqi):
         if self.des == '':
             a, b = self.__DES.get(self.__idx, ('Invalid', 'Invalid'))
             self.des = f'Health messages:\nGeneral population: {a}\nSensitive populations: {b}'
-    
+
     def set_col(self):
         if self.des == 'How are you even alive?':
             self.col = '#000000'
@@ -304,7 +304,4 @@ def compare(a: tuple[int, int], b: tuple[int, int]) -> int:
     """
     a1, a2 = a
     b1, b2 = b
-    if (a1 <= a2) and (b1 <= b2):
-        return int(round((1 - ((b1 * a2) / (a1 * b2))) * 100, 0))
-    else:
-        return 0
+    return int(round((1 - ((b1 * a2) / (a1 * b2))) * 100, 0))

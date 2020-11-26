@@ -303,7 +303,4 @@ def compare(a: Tuple[int, int], b: Tuple[int, int]) -> Union[int, str]:
     """
     a1, a2 = a
     b1, b2 = b
-    if (a1 <= a2) and (b1 <= b2):
-        return int(round((1 - ((b1 * a2) / (a1 * b2))) * 100, 0))
-    else:
-        return 'Invalid'
+    return int(round((1 - ((b1 * a2) / (a1 * b2))) * 100, 0))

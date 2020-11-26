@@ -5,6 +5,56 @@
 
 ## Usage
 ### Python
+#### Initialisation
+```python
+# Accepted keys for pd: 'pm2', 'pm10', 'so2', 'no2', 'co', 'o3'
+pd = {'pm2' : 78.5, 'pm10' : 39.2, ...}
+
+# European Air Quality Index (EU)
+x = Eaqi(pd)
+
+# National Air Quality Index (India)
+x = Naqi(pd)
+
+# Custom index made during the research
+x = Mmaqi(pd)
+```
+#### Setting Values
+```python
+# result
+x.set_res()
+# description
+x.set_des()
+# colour
+x.set_col()
+```
+#### Getting Values
+Value | Type
+----- | ----
+res | string
+col | string
+des | string
+```python
+# result
+x.res
+# description
+x.des
+# colour
+x.col
+```
+#### Other features
+##### Compare
+```python
+# used to compare two values
+# compares bval with aval using bmax and amax
+x = compare([aval, amax],[bval, bmax]
+```
+##### Convert
+```python
+# pollutant can have unit of ppm, ppb or µg/m<sup>3</sup>
+# Accepted pollutants: 'so2', 'no2', 'co', 'o3'
+x = convert('so2', 27.9, ppb)
+```
 ### TypeScript
 #### Initialisation
 ```typescript
