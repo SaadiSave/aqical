@@ -72,7 +72,7 @@ export class Eaqi extends Aqi {
         this.EAQI = new dict(['pm2', 'pm10', 'no2', 'o3', 'so2'], [[10, 20, 25, 50, 75, 800], [20, 40, 50, 100, 150, 1200], [40, 90, 120, 230, 340, 1000], [50, 100, 130, 240, 380, 800], [100, 200, 350, 500, 750, 1250]])
         this.IDX = new dict([1, 2, 3, 4, 5, 6], ['Good', 'Fair', 'Moderate', 'Poor', 'Very Poor', 'Extremely Poor'])
         this.DES = new dict([1, 2, 3, 4, 5, 6], [['The air quality is good. Enjoy your usual outdoor activities.', 'The air quality is good. Enjoy your usual outdoor activities.'], ['Enjoy your usual outdoor activities.', 'Enjoy your usual outdoor activities.'], ['Enjoy your usual outdoor activities.', 'Consider reducing intense outdoor activities, if you experience symptoms.'], ['Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.', 'Consider reducing physical activities, particularly outdoors, especially if you experience symptoms.'], ['Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.', 'Reduce physical activities, particularly outdoors, especially if you experience symptoms.'], ['Reduce physical activities outdoors.', 'Avoid physical activities outdoors.']])
-        this.colour = new dict([1, 2, 3, 4, 5, 6], ['#0000ff', '#00cc99', '#ffff00', '#f75133', '#800000', '#800080'])
+        this.colour = new dict([1, 2, 3, 4, 5, 6], ['#50f0e6', '#50ccaa', '#f0e641', '#ff5050', '#960032', '#7d2181'])
     }
     setres(): void {
         const caqi: Array<number> = []
@@ -208,7 +208,7 @@ export class Mmaqi extends Aqi {
         this.DES = new dict([1, 2, 3, 4, 5, 6, 7, 8], ['Good', 'Fair', 'Moderate', 'Poor', 'Very Poor', 'Extremely Poor', 'Severe', 'Hazardous'])
         this.HM = new dict([1, 2, 3, 4, 5, 6, 7, 8], [['The air quality is good. Enjoy your usual outdoor activities.', 'The air quality is good. Enjoy your usual outdoor activities.'], ['Enjoy your usual outdoor activities.', 'Enjoy your usual outdoor activities.'], ['Enjoy your usual outdoor activities.', 'Consider reducing intense outdoor activities, if you experience symptoms.'], ['Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.', 'Consider reducing physical activities, particularly outdoors, especially if you experience symptoms.'], ['Consider reducing intense activities outdoors, if you experience symptoms such as sore eyes, a cough or sore throat.', 'Reduce physical activities, particularly outdoors, especially if you experience symptoms.'], ['Reduce physical activities outdoors.', 'Avoid physical activities outdoors.'], ['Avoid physical activities outdoors.', 'Do not go outdoors.'], ['Do not go outdoors. An air purifier is recommended.', 'Avoid coming into contact with any outdoor pollution. An air purifier is essential.']])
         this.Ival = new dict([1, 2, 3, 4, 5], [[0, 50], [51, 100], [101, 200], [201, 300], [301, 400]])
-        this.colour = new dict([1, 2, 3, 4, 5, 6, 7, 8], ['#0000ff', '#00cc99', '#ffff00', '#f75133', '#800000', '#800080', '#000000', '#000000'])
+        this.colour = new dict([1, 2, 3, 4, 5, 6, 7, 8], ['#50f0e6', '#50ccaa', '#f0e641', '#ff5050', '#960032', '#7d2181', '#000000', '#000000'])
     }
     setres(): void {
         const caqi: Array<number> = []
