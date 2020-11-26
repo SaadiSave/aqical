@@ -63,12 +63,12 @@ class Eaqi(Aqi):
             6: ('Reduce physical activities outdoors.', 'Avoid physical activities outdoors.')
         }
         self.__colour: Dict[int, str] = {
-            1: '#00ffff',
-            2: '#00cc99',
-            3: '#ffff00',
-            4: '#f75133',
-            5: '#800000',
-            6: '#800080'
+            1: '#50f0e6',
+            2: '#50ccaa',
+            3: '#f0e641',
+            4: '#ff5050',
+            5: '#960032',
+            6: '#7d2181'
         }
 
     def set_res(self):
@@ -230,12 +230,12 @@ class Mmaqi(Aqi):
             5: (301, 400)
         }
         self.__colour: Dict[int, str] = {
-            1: '#00ffff',
-            2: '#00cc99',
-            3: '#ffff00',
-            4: '#f75133',
-            5: '#800000',
-            6: '#800080',
+            1: '#50f0e6',
+            2: '#50ccaa',
+            3: '#f0e641',
+            4: '#ff5050',
+            5: '#960032',
+            6: '#7d2181',
             7: '#000000',
             8: '#000000'
         }
