@@ -277,6 +277,7 @@ export function convert(pollutant: string, value: number, unit: string): number 
 export function compare(a: Array<number>, b: Array<number>): number | string {
     /*
     a is the index to be compared with b 
+    Calculates how much less b is compared to a
     format:
     a = [aval, amax]
     b = [bval, bmax]
