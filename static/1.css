@@ -9,7 +9,7 @@ h1 {
 }
 
 form {
-    margin-left: 15px;
+    margin-left: 1rem;
 }
 
 .input1 {
@@ -19,6 +19,7 @@ form {
 }
 
 .output {
-    margin-left:15px;
+    margin-left:1rem;
+    margin-right: 1rem;
     font-size: 13pt;
 }
