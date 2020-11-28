@@ -68,6 +68,7 @@
                     }
                     if (Object.keys(d).length !== 0){
                         var a = new dict(Object.keys(d),Object.values(d));
+                        var b = new dict(Object.keys(d),Object.values(d));
                         type = document.querySelector('#type').value;
                         system = document.querySelector('#system').value;
                         document.querySelector('#input').reset();
@@ -78,7 +79,7 @@
                                 document.getElementById('message').children[0].innerHTML = '';
                                 if (system === "EvN"){
                                     A = new Eaqi(a);A.setres();A.setdes();A.setcol();
-                                    O = new Naqi(a);O.setres();O.setdes();O.setcol();
+                                    O = new Naqi(b);O.setres();O.setdes();O.setcol();
                                     idx = A.idx;
                                     res = O.res;
                                     document.querySelector('#result2').innerHTML = `NAQI<br>${res}<br>${O.des.replace(/\n/g,'<br>' )}`;
@@ -97,7 +98,7 @@
                                     }
                                 } else if (system === 'EvM') {
                                     A = new Eaqi(a);A.setres();A.setdes();A.setcol();
-                                    O = new Mmaqi(a);O.setres();O.setdes();O.setcol();
+                                    O = new Mmaqi(b);O.setres();O.setdes();O.setcol();
                                     idx = A.idx;
                                     res = O.res;
                                     document.querySelector('#result2').innerHTML = `MMAQI<br>${res}<br>${O.des.replace(/\n/g,'<br>' )}`;
@@ -116,7 +117,7 @@
                                     }
                                 } else if (system === 'MvN') {
                                     A = new Naqi(a);A.setres();A.setdes();A.setcol();
-                                    O = new Mmaqi(a);O.setres();O.setdes();O.setcol();
+                                    O = new Mmaqi(b);O.setres();O.setdes();O.setcol();
                                     resn = A.res;
                                     resm = O.res;
                                     document.querySelector('#result1').innerHTML = `MMAQI<br>${resm}<br>${O.des.replace(/\n/g,'<br>' )}`;
@@ -128,9 +129,10 @@
                                     maxn = 500;
                                     maxm = 500;
                                     b = compare([resm, maxm],[resn,maxn]);
-                                    if (b >= 0){
+                                    if (b > 0){
                                         document.querySelector('#result3').innerHTML = `NAQI is ${b}% less than MMAQI`;
                                     } else {
+                                        b *= -1;
                                         document.querySelector('#result3').innerHTML = `NAQI is ${b}% greater than MMAQI`;
                                     }
                                 }
