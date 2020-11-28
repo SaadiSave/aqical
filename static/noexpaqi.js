@@ -255,7 +255,8 @@ function convert(pollutant, value, unit) {
 }
 function compare(a, b) {
     /*
-    a is the index to be compared with b
+    b is the index to be compared with a
+    Calculates how much less b is compared to a
     format:
     a = [aval, amax]
     b = [bval, bmax]
