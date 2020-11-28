@@ -13,18 +13,18 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-export class dict {
-    keys: Array<any>
-    vals: Array<any>
+export class dict<t, y> {
+    keys: Array<t>
+    vals: Array<y>
 
-    constructor(keys: Array<any>, vals: Array<any>) {
+    constructor(keys: Array<t>, vals: Array<y>) {
         this.keys = keys
         this.vals = vals
         if (this.keys.length !== this.vals.length) {
             throw Error('The number of keys is not equal to the number of values. This dict is invalid.')
         }
     }
-    getval(key: any, otherwise: any = undefined): any {
+    getval(key: t, otherwise: y = undefined): y {
         const x: number = this.keys.indexOf(key)
         if (x === -1) {
             return otherwise
@@ -32,7 +32,7 @@ export class dict {
             return this.vals[x]
         }
     }
-    update(key: any, val: any): void {
+    update(key: t, val: y): void {
         const x: number = this.keys.indexOf(key)
         if (x === -1) {
             this.keys.push(key)
@@ -44,25 +44,25 @@ export class dict {
 }
 
 export class Aqi {
-    vals: dict
+    vals: dict<string, number>
     res: string
     des: string
     col: string
 
-    constructor(pdict: dict) {
+    constructor(pdict: dict<string, number>) {
         this.vals = pdict
         this.des = ''
     }
 }
 
 export class Eaqi extends Aqi {
-    private EAQI: dict
-    private IDX: dict
+    private EAQI: dict<string, Array<number>>
+    private IDX: dict<number, string>
     private idx: number
-    private DES: dict
-    private colour: dict
+    private DES: dict<number, Array<string>>
+    private colour: dict<number, string>
 
-    constructor(pdict: dict) {
+    constructor(pdict: dict<string, number>) {
         super(pdict)
         const x = this.vals.keys.indexOf('co')
         if(x !== -1) {
@@ -111,14 +111,14 @@ export class Eaqi extends Aqi {
 }
 
 export class Naqi extends Aqi {
-    private NAQI: dict
+    private NAQI: dict<string, Array<number>>
     private idx: number
-    private DES: dict
-    private HM: dict
-    private Ival: dict
-    private colour: dict
+    private DES: dict<number, string>
+    private HM: dict<number, string>
+    private Ival: dict<number, Array<number>>
+    private colour: dict<number, string>
 
-    constructor(pdict: dict) {
+    constructor(pdict: dict<string, number>) {
         super(pdict)
         try {
             if (this.vals.getval('co') === undefined) {
@@ -188,14 +188,14 @@ export class Naqi extends Aqi {
 }
 
 export class Mmaqi extends Aqi {
-    private MmAQI: dict
+    private MmAQI: dict<string, Array<number>>
     private idx: number
-    private DES: dict
-    private HM: dict
-    private Ival: dict
-    private colour: dict
+    private DES: dict<number, string>
+    private HM: dict<number, Array<string>>
+    private Ival: dict<number, Array<number>>
+    private colour: dict<number, string>
 
-    constructor(pdict: dict) {
+    constructor(pdict: dict<string, number>) {
         super(pdict)
         try {
             if (this.vals.getval('co') === undefined) {
