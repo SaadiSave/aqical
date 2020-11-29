@@ -54,6 +54,17 @@ document.addEventListener('DOMContentLoaded',() => {
                 delete d[key];
             }
         }
+        for (const i in Object.values) {
+            try {
+                const x = parseFloat(i);
+                if (x === NaN) {
+                    throw ("TypeError: Expected 'number'. Recieved 'string'");
+                }
+            } catch (error) {
+                alert("Only numbers can be entered.");
+                console.log(error);
+            }
+        }
         if (Object.keys(d).length !== 0){
             var a = new dict(Object.keys(d),Object.values(d));
             var b = new dict(Object.keys(d),Object.values(d));
