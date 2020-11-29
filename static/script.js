@@ -42,27 +42,16 @@ document.addEventListener('DOMContentLoaded',() => {
     };
     document.querySelector('#submit').onclick = () => {
         let d = {
-            'pm2': convert('pm2',parseInt(document.querySelector('#valuePM2').value),document.querySelector('#unitPM2').value),
-            'pm10':convert('pm10',parseInt(document.querySelector('#valuePM10').value),document.querySelector('#unitPM10').value),
-            'no2':convert('no2',parseInt(document.querySelector('#valueNO2').value),document.querySelector('#unitNO2').value),
-            'so2':convert('so2',parseInt(document.querySelector('#valueSO2').value),document.querySelector('#unitSO2').value),
-            'o3':convert('o3',parseInt(document.querySelector('#valueO3').value),document.querySelector('#unitO3').value),
-            'co':convert('co',parseInt(document.querySelector('#valueCO').value),document.querySelector('#unitCO').value)
+            'pm2': convert('pm2',parseFloat(document.querySelector('#valuePM2').value),document.querySelector('#unitPM2').value),
+            'pm10':convert('pm10',parseFloat(document.querySelector('#valuePM10').value),document.querySelector('#unitPM10').value),
+            'no2':convert('no2',parseFloat(document.querySelector('#valueNO2').value),document.querySelector('#unitNO2').value),
+            'so2':convert('so2',parseFloat(document.querySelector('#valueSO2').value),document.querySelector('#unitSO2').value),
+            'o3':convert('o3',parseFloat(document.querySelector('#valueO3').value),document.querySelector('#unitO3').value),
+            'co':convert('co',parseFloat(document.querySelector('#valueCO').value),document.querySelector('#unitCO').value)
         };
         for (const key in d){
             if (isNaN(d[key])) {
                 delete d[key];
-            }
-        }
-        for (const i in Object.values) {
-            try {
-                const x = parseFloat(i);
-                if (x === NaN) {
-                    throw ("TypeError: Expected 'number'. Recieved 'string'");
-                }
-            } catch (error) {
-                alert("Only numbers can be entered.");
-                console.log(error);
             }
         }
         if (Object.keys(d).length !== 0){
