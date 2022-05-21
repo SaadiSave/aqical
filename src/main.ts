@@ -1,10 +1,12 @@
-import App from './App.svelte';
+import App from './App.svelte'
+import { testEAQI, testMMAQI, testNAQI } from "../lib/test"
+
+testEAQI()
+testNAQI()
+testMMAQI()
 
 const app = new App({
-	target: document.body,
-	props: {
-		name: 'world'
-	}
-});
+  target: document.getElementById('app')!
+})
 
-export default app;
+export default app
