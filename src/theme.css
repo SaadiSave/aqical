@@ -1,0 +1,21 @@
+[theme = "dark"] {
+    --text: #c5c5c5;
+    --bg: #0f1419;
+    --btn: #03498b;
+    --btnActive: var(--bg);
+    --btnText: #c5c5c5;
+    --btnSecondary: #708790;
+    --btnSecondaryText: #2e2727;
+}
+
+[theme = "light"] {
+    --text: #262625;
+    --bg: #e1e1db;
+    --btn: #045bb0;
+    --btnActive: #1a8eff;
+    --btnText: #e1e1db;
+    --btnSecondary: #708790;
+    --btnSecondaryText: #2e2727;
+}
+
+body { background: var(--bg) }

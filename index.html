@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" href="./src/assets/stopwar.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script type="module">
+    import { detectTheme } from "./src/util"
+
+    localStorage.setItem("theme", detectTheme())
+
+    document.documentElement.setAttribute("theme", detectTheme())
+</script>
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="icon" href="./src/assets/stopwar.svg"/>
+    <link rel="stylesheet" href="./src/theme.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Svelte + TS + Vite App</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="./src/main.ts"></script>
-  </body>
+</head>
+<body>
+<div id="app"></div>
+<script type="module" src="./src/main.ts"></script>
+</body>
 </html>
